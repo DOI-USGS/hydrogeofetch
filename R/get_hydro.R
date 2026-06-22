@@ -129,8 +129,7 @@ get_gagesII <- function(AOI = NULL, id = NULL, t_srs = NULL, buffer = .5,
 #' for an extended search. Default = 20,000. Returned results are arrange
 #' by distance from POINT AOI
 #' @importFrom xml2 xml_root xml_children xml_attr read_xml
-#' @importFrom sf st_geometry_type st_transform st_buffer st_as_sf
-#' st_bbox st_nearest_feature st_distance
+#' @importFrom sf st_geometry_type st_transform st_buffer st_as_sf st_bbox st_nearest_feature st_distance
 #' @importFrom dplyr filter mutate
 #' @export
 

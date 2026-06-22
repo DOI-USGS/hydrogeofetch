@@ -116,14 +116,10 @@
 #'     \item{hu12_outlet}{sf data.frame. HUC12 pour points upstream of outlet.}
 #'   }
 #'
-#' @importFrom sf st_transform st_geometry st_area st_buffer st_union
-#'   st_as_sfc st_bbox st_centroid st_distance st_sf st_sfc st_crs
-#'   st_drop_geometry
+#' @importFrom sf st_transform st_geometry st_area st_buffer st_union st_as_sfc st_bbox st_centroid st_distance st_sf st_sfc st_crs st_drop_geometry
 #' @importFrom units set_units
 #' @importFrom dplyr select filter bind_rows
-#' @importFrom hydroloom navigate_hydro_network
-#'   navigate_network_dfs add_toids index_points_to_lines
-#'   disambiguate_indexes
+#' @importFrom hydroloom navigate_hydro_network navigate_network_dfs add_toids index_points_to_lines disambiguate_indexes
 #' @importFrom dataRetrieval findNLDI
 #' @export
 #' @examples

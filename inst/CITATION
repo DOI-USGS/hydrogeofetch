@@ -2,12 +2,12 @@ citHeader("To cite hydrogeofetch in publications, please use:")
 
 bibentry(bibtype = "Manual",
          author = "David Blodgett",
-         title = "hydrogeofetch: Hydrologic Geospatial Fabric Data Extraction Tool Chain",
+         title = "hydrogeofetch: Hydrologic Geospatial Fabric Extraction Tool Chain",
          publisher = "U.S. Geological Survey",
          address="Reston, VA",
          version = "2.0.0",
          institution = "U.S. Geological Survey",
          year = 2026,
-         url = "TBD",
-         textVersion = "Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial Fabric Data Extraction Tool Chain, TBD-DOI"
+         url = "https://doi.org/10.5066/P13UWPUR",
+         textVersion = "Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial Fabric Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR"
 )

@@ -23,10 +23,40 @@ so code pinned to `nhdplusTools` will continue to run.
 
 ## hydrogeofetch: Tools for Accessing and Working with the NHDPlus and other US hydrographic data.
 
+## Major changes in 2.0.0
+
+Indexing, network navigation, and network attribute functions have moved
+to [**hydroloom**](https://doi-usgs.github.io/hydroloom/). hydrogeofetch
+is now focused on data access and NHD-specific preparation; hydroloom
+handles the general-purpose network analysis that was previously bundled
+here.
+
+If you use any of the following, you now need `library(hydroloom)`:
+
+- **Indexing** (`get_flowline_index`, `get_waterbody_index`,
+  `disambiguate_flowline_indexes`) →
+  [`hydroloom::index_points_to_lines()`](https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html),
+  [`index_points_to_waterbodies()`](https://doi-usgs.github.io/hydroloom/reference/index_points_to_waterbodies.html),
+  [`disambiguate_indexes()`](https://doi-usgs.github.io/hydroloom/reference/disambiguate_indexes.html)
+- **Navigation** (`get_UT`, `get_DM`, `get_UM`, `get_DD`,
+  `navigate_network`) →
+  [`hydroloom::navigate_hydro_network()`](https://doi-usgs.github.io/hydroloom/reference/navigate_hydro_network.html)
+- **Network attributes** (`get_streamorder`, `get_levelpaths`,
+  `get_pathlength`, `calculate_total_drainage_area`, etc.) → hydroloom’s
+  [`add_streamorder()`](https://doi-usgs.github.io/hydroloom/reference/add_streamorder.html),
+  [`add_levelpaths()`](https://doi-usgs.github.io/hydroloom/reference/add_levelpaths.html),
+  [`add_pathlength()`](https://doi-usgs.github.io/hydroloom/reference/add_pathlength.html),
+  [`accumulate_downstream()`](https://doi-usgs.github.io/hydroloom/reference/accumulate_downstream.html)
+
+The typical workflow is now: use hydrogeofetch to fetch and prepare NHD
+data, then hand off to hydroloom for indexing, navigation, and network
+analysis. See `vignette("migrating_from_nhdplusTools")` for a complete
+mapping of old to new function names.
+
 ### Recommended Citation:
 
       Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial
-      Fabric Data Extraction Tool Chain, TBD-DOI
+      Fabric Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
 
 ### Installation:
 
@@ -54,17 +84,18 @@ page**](https://doi-usgs.github.io/nhdplusTools/reference/).
 ### Data:
 
 `hydrogeofetch` provides easy access to data associated with the U.S.
-National Hydrography Dataset. Many functions are thin wrappers around
-functions that have been migrated to `hydroloom`.
+National Hydrography Dataset. Network analysis and spatial indexing live
+in [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 
 ## Package Vision
 
-The `hydrogeofetch` package is intended to provide a reusable set of
-tools to subset, relate data to, and generate network attributes for
-U.S. NHDPlus data.
+The `hydrogeofetch` package provides tools to discover, download,
+subset, and prepare U.S. NHDPlus data. Network analysis (navigation,
+indexing, attribute generation) belongs in
+[`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 
 General, globally applicable functionality has been moved to
-[`hydroloom`](https://github.com/DOI-USGS/hydroloom)
+[`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 
 `hydrogeofetch` implements a data model consistent with both the
 [NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus)
@@ -93,13 +124,10 @@ dataset.
 
 ##### Indexing
 
-One of the most important roles of the NHDPlus is as a connecting
-network for ancillary data and models. The first step in any workflow
-that uses the network like this is indexing relevant data to the
-network. A number of methods for indexing exist, they can be broken into
-two main categories: linear referencing and catchment indexing. Both
-operate on features represented by points, lines, and polygons.
-`hydrogeofetch` supports both linear and catchment indexing.
+Indexing data to the hydrographic network (linear referencing and
+catchment indexing) is handled by
+[`hydroloom`](https://doi-usgs.github.io/hydroloom/). `hydrogeofetch`
+provides the data access needed to set up indexing workflows.
 
 ### Data Model
 
@@ -173,16 +201,6 @@ NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-data) database.
 Resolution](https://www.usgs.gov/national-hydrography/nhdplus-high-resolution)
 is also supported.
 
-### Related similar packages:
-
-<https://github.com/mbtyers/riverdist>\
-<https://github.com/jsta/nhdR>\
-<https://github.com/lawinslow/hydrolinks>\
-<https://github.com/mikejohnson51/HydroData>\
-<https://github.com/ropensci/FedData>\
-<https://github.com/hyriver/pygeohydro> … others – please suggest
-additions?
-
 ### Build and release:
 
 Development happens on GitHub (doi-usgs/nhdplusTools). Official builds
@@ -240,13 +258,13 @@ package a community created resource for us all to gain from and won’t
 be able to do that without your help!
 
 1)  Contributions should be thoroughly tested with
-    [`testthat`](https://testthat.r-lib.org/).\
+    [`testthat`](https://testthat.r-lib.org/).  
 2)  Code style should attempt to follow the [`tidyverse` style
-    guide.](https://style.tidyverse.org/)\
+    guide.](https://style.tidyverse.org/)  
 3)  Please attempt to describe what you want to do prior to contributing
-    by submitting an issue.\
+    by submitting an issue.  
 4)  Please follow the typical github [fork - pull-request
-    workflow.](https://gist.github.com/Chaser324/ce0505fbed06b947d962)\
+    workflow.](https://gist.github.com/Chaser324/ce0505fbed06b947d962)  
 5)  Make sure you use roxygen and run Check before contributing. More on
     this front as the package matures.
 

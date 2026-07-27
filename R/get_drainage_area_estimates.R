@@ -1572,6 +1572,23 @@ assemble_da_estimates <- function(hu12_result, extra_and_local) {
   )
 }
 
+#' Check that a split catchment response is usable
+#'
+#' \code{\link{get_split_catchment}} returns NULL when the processing service
+#' is unavailable or rejects the request, and the service can also return a
+#' feature collection without the expected \code{catchment} /
+#' \code{splitCatchment} pair. Both cases must be caught before area math.
+#'
+#' @param x object returned by \code{get_split_catchment} or supplied via the
+#'   \code{split_catchments} argument.
+#' @return logical. TRUE when \code{x} is an sf data.frame carrying both a
+#'   \code{catchment} and a \code{splitCatchment} feature.
+#' @noRd
+valid_split_catchment <- function(x) {
+  inherits(x, "sf") && nrow(x) > 0 && "id" %in% names(x) &&
+    all(c("catchment", "splitCatchment") %in% x$id)
+}
+
 #' Compute gap area between outlet and HUC12 outlets
 #'
 #' Splits the catchment at each HUC12 outlet, navigates upstream from each
@@ -1596,9 +1613,9 @@ assemble_da_estimates <- function(hu12_result, extra_and_local) {
 #'   TRUE, the outlet catchment is split at the gage point and only the
 #'   upstream portion contributes to gap area.
 #' @return list with \code{extra_net} (data.frame), \code{extra_catchments}
-#'   (sf data.frame), \code{split_catchment} (sf data.frame),
-#'   \code{extra_and_local} (numeric area in sq km),
-#'   \code{outlet_split_catchment} (sf data.frame or NULL).
+#'   (sf data.frame), \code{split_catchment} (sf data.frame or NULL when no
+#'   split catchment could be retrieved), \code{extra_and_local} (numeric area
+#'   in sq km), \code{outlet_split_catchment} (sf data.frame or NULL).
 #' @noRd
 compute_gap_area <- function(outlet_huc, all_net, nav_net = all_net,
   split_catchments = NULL, gap_catchments = NULL, outlet_info = NULL) {
@@ -1617,18 +1634,25 @@ compute_gap_area <- function(outlet_huc, all_net, nav_net = all_net,
       split_catch <- get_split_catchment(
         st_geometry(oh),
         upstream = FALSE
-      ) |> st_transform(5070)
+      )
     } else {
       split_catch <- split_catchments[[as.character(oh$comid)]]
     }
 
-    split_catch$dasqkm <- as.numeric(set_units(st_area(split_catch), "km^2"))
-    split_catches[[i]] <- split_catch
+    if(valid_split_catchment(split_catch)) {
+      split_catch <- st_transform(split_catch, 5070)
+      split_catch$dasqkm <- as.numeric(set_units(st_area(split_catch), "km^2"))
+      split_catches[[i]] <- split_catch
 
-    local_dasqkm <-
-      split_catch$dasqkm[split_catch$id == "catchment"] -
-      split_catch$dasqkm[split_catch$id == "splitCatchment"]
-    total_local_dasqkm <- total_local_dasqkm + local_dasqkm
+      local_dasqkm <-
+        split_catch$dasqkm[split_catch$id == "catchment"] -
+        split_catch$dasqkm[split_catch$id == "splitCatchment"]
+      total_local_dasqkm <- total_local_dasqkm + local_dasqkm
+    } else {
+      warning("No split catchment available for HUC12 outlet COMID ",
+        oh$comid, "; its local area is omitted from the drainage area ",
+        "estimate.", call. = FALSE)
+    }
 
     ut_comids <- navigate_hydro_network(nav_net, oh$comid, mode = "UT")
     all_hu12_outlet_ut <- union(all_hu12_outlet_ut, ut_comids)
@@ -1651,7 +1675,10 @@ compute_gap_area <- function(outlet_huc, all_net, nav_net = all_net,
     outlet_split_catchment <- tryCatch({
       sc <- get_split_catchment(
         outlet_info$gage_point, upstream = FALSE
-      ) |> st_transform(5070)
+      )
+      if(!valid_split_catchment(sc))
+        stop("processing service returned no usable split catchment")
+      sc <- st_transform(sc, 5070)
       sc$dasqkm <- as.numeric(set_units(st_area(sc), "km^2"))
       sc
     }, error = function(e) {

@@ -271,6 +271,67 @@ test_that("union_huc12_sets deduplicates and adds missing", {
   expect_equal(nrow(hydrogeofetch:::union_huc12_sets(empty, base)), 2)
 })
 
+test_that("valid_split_catchment rejects degraded service responses", {
+  poly <- sf::st_sfc(
+    sf::st_polygon(list(rbind(c(0, 0), c(1, 0), c(1, 1), c(0, 1), c(0, 0)))),
+    crs = 5070
+  )
+
+  good <- sf::st_sf(id = c("catchment", "splitCatchment"),
+                    geometry = c(poly, poly))
+  expect_true(hydrogeofetch:::valid_split_catchment(good))
+
+  # get_split_catchment returns NULL when the processing service fails
+  expect_false(hydrogeofetch:::valid_split_catchment(NULL))
+
+  # service returned features but not the expected pair
+  expect_false(hydrogeofetch:::valid_split_catchment(
+    sf::st_sf(id = "catchment", geometry = poly)))
+  expect_false(hydrogeofetch:::valid_split_catchment(
+    sf::st_sf(other = "x", geometry = poly)))
+  expect_false(hydrogeofetch:::valid_split_catchment(
+    sf::st_sf(geometry = sf::st_sfc(crs = 5070))))
+})
+
+test_that("compute_gap_area degrades when split catchment is unavailable", {
+  # 1 -> 2 -> 3 (outlet) on one levelpath, HUC12 outlet at comid 1.
+  # Nothing is upstream of comid 1, so the gap is comids 2 and 3.
+  all_net <- data.frame(
+    comid = c(1, 2, 3),
+    toid = c(2, 3, 0),
+    areasqkm = rep(10, 3),
+    levelpathi = rep(1, 3),
+    hydroseq = c(3, 2, 1),
+    dnhydroseq = c(2, 1, 0),
+    dnminorhyd = rep(0, 3)
+  )
+
+  pt <- sf::st_sfc(sf::st_point(c(-89.5, 43)), crs = 4326)
+  outlet_huc <- sf::st_sf(comid = 1, identifier = "070900020101",
+                          geometry = pt)
+
+  poly <- sf::st_sfc(
+    sf::st_polygon(list(rbind(c(0, 0), c(1, 0), c(1, 1), c(0, 1), c(0, 0)))),
+    crs = 5070
+  )
+  gap_catchments <- sf::st_sf(comid = c(2, 3), geometry = c(poly, poly))
+
+  # empty list -> lookup yields NULL, standing in for a failed service call
+  expect_warning(
+    result <- hydrogeofetch:::compute_gap_area(
+      outlet_huc, all_net,
+      split_catchments = list(),
+      gap_catchments = gap_catchments
+    ),
+    "No split catchment available for HUC12 outlet COMID 1"
+  )
+
+  # gap area still computed from the extra network, local area omitted
+  expect_equal(result$extra_and_local, 20)
+  expect_null(result$split_catchment)
+  expect_s3_class(result$extra_catchments, "sf")
+})
+
 test_that("get_drainage_area_estimates Black Earth Creek smoke test", {
   skip_if_no_integration()
 

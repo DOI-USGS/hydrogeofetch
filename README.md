@@ -55,7 +55,8 @@ mapping of old to new function names.
 
 ### Recommended Citation:
 
-    Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial Fabric Data Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
+      Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial
+      Fabric Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
 
 ### Installation:
 
@@ -89,10 +90,9 @@ in [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 ## Package Vision
 
 The `hydrogeofetch` package provides tools to discover, download,
-subset, and prepare U.S. hydrographic data. NHDPlus is its primary
-dataset, and it increasingly supports others, such as 3DHP and
-mainstems. Network analysis (navigation, indexing, attribute generation)
-belongs in [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
+subset, and prepare U.S. NHDPlus data. Network analysis (navigation,
+indexing, attribute generation) belongs in
+[`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 
 General, globally applicable functionality has been moved to
 [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
@@ -202,16 +202,6 @@ NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-data) database.
 [NHDPlus High
 Resolution](https://www.usgs.gov/national-hydrography/nhdplus-high-resolution)
 is also supported.
-
-### Related similar packages:
-
-<https://github.com/mbtyers/riverdist>  
-<https://github.com/jsta/nhdR>  
-<https://github.com/lawinslow/hydrolinks>  
-<https://github.com/mikejohnson51/HydroData>  
-<https://github.com/ropensci/FedData>  
-<https://github.com/hyriver/pygeohydro> … others – please suggest
-additions?
 
 ### Build and release:
 

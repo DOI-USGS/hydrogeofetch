@@ -20,6 +20,8 @@ temp.R
 revdep
 docs/*demo*
 CLAUDE.md
+CONTEXT.md
+AGENTS.md
 dev
 vignettes/*.html
 vignettes/*_figures/

@@ -179,7 +179,18 @@ query_usgs_arcrest <- function(AOI = NULL,  ids = NULL,
         out[i] <- list(hgf_sf(URL, body = post_body, encode = "form"))
       }
 
-      if(inherits(out[[1]], "data.frame")) {
+      # a page that failed comes back NULL from hgf_sf; drop those so bind_rows
+      # doesn't choke on them and warn that the result is incomplete.
+      ok <- vapply(out, inherits, logical(1), what = "data.frame")
+
+      if(any(!ok)) {
+        warning(sum(!ok), " of ", length(ok),
+                " feature requests failed, returned features are incomplete.",
+                call. = FALSE)
+        out <- out[ok]
+      }
+
+      if(length(out) > 0) {
         out <- bind_rows(unify_types(out))
 
         if("id3dhp" %in% names(out)) {

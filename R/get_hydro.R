@@ -165,11 +165,10 @@ get_nwis <- function(AOI = NULL, t_srs = NULL, buffer = 20000){
                 bb$xmax, ",", bb$ymax,
                 "&siteType=ST&siteStatus=active")
 
+  # go through the package request helper so transient failures are retried
+  # rather than being reported as an empty result
   get_xml <- function(u) {
-    u <- suppressWarnings(url(u, "rb"))
-    out <- read_xml(u)
-    close(u)
-    out
+    read_xml(httr2::resp_body_string(httr2::req_perform(build_hgf_req(u))))
   }
 
   resp <- tryCatch(get_xml(u), error = function(e) NULL)

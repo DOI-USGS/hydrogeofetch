@@ -115,20 +115,22 @@ test_that("basin works", {
 
 test_that("get feature works", {
   skip_if_no_integration()
-  # TODO: re-enable once NLDI consistently returns the `mainstem` column
-  # for USGS-05428500 (intermittently absent → ncol(f) == 8 vs 9).
-  # skip("in process API fix")
+
+  # NLDI adds and drops optional columns (mainstem, X, Y) without notice, so
+  # assert on the stable core rather than an exact column count.
+  core_atts <- c("sourceName", "identifier", "comid", "name",
+                 "reachcode", "measure", "geometry")
 
   f <- get_nldi_feature(list(featureSource = "nwissite", featureID = "USGS-05428500"))
 
   expect_equal(nrow(f), 1)
-  expect_equal(ncol(f), 9)
+  expect_true(all(core_atts %in% names(f)))
   expect_equal(f$identifier, "USGS-05428500")
 
   f <- get_nldi_feature(list("nwissite", "USGS-05428500"))
 
   expect_equal(nrow(f), 1)
-  expect_equal(ncol(f), 9)
+  expect_true(all(core_atts %in% names(f)))
   expect_equal(f$identifier, "USGS-05428500")
 
 })
@@ -227,7 +229,7 @@ test_that("xs", {
   expect_true(all(c("distance_m", "elevation_m") %in% names(xs)))
 
   expect_error(get_xs_points(point1, point2, 100, 2),
-               "res input must be on of 1, 3, 5, 10, 30, 60")
+               "res input must be one of 1, 3, 5, 10, 30, 60")
 
   point1 <- sf::st_sfc(sf::st_point(x = c(-105.9667, 36.17602)), crs = 4326)
   point2 <- sf::st_sfc(sf::st_point(x = c(-105.97768, 36.17526)), crs = 4326)

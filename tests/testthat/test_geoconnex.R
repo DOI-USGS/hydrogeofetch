@@ -11,6 +11,10 @@ test_that("discover", {
 
 test_that("get", {
 
+  # debug_hydrogeofetch=true in the environment makes every request emit a
+  # "GET <url>" message, which would break the expect_silent below.
+  local_mocked_bindings(nhdplus_debug = function() FALSE, .package = "hydrogeofetch")
+
   with_mock_hgf("geoconnex_get", {
     expect_warning(avail <- get_geoconnex_reference())
 

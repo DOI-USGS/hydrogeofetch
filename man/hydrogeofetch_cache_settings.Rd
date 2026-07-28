@@ -7,7 +7,7 @@
 hydrogeofetch_cache_settings(mode = NULL, timeout = NULL)
 }
 \arguments{
-\item{mode}{character 'memory' or 'filesystem'}
+\item{mode}{character 'memory' (default) or 'filesystem'}
 
 \item{timeout}{numeric number of seconds until caches invalidate}
 }
@@ -22,4 +22,8 @@ Mode and timeout can also be set using environment variables.
 `HYDROGEOFETCH_MEMOISE_CACHE` and `HYDROGEOFETCH_MEMOISE_TIMEOUT` are
 used unless overridden with this function. The old `NHDPLUSTOOLS_*`
 names are still recognized as a fallback.
+
+The default mode is 'memory', so cached responses live only as long as the
+R session. Set 'filesystem' to persist them in \link{hydrogeofetch_data_dir},
+and see \link{hydrogeofetch_cache_clear} to remove them again.
 }

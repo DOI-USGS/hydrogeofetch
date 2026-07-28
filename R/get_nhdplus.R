@@ -53,7 +53,7 @@ get_nhdplus <- function(AOI = NULL,
   if(!is.null(AOI)){
 
     if(all(!methods::is(AOI,"sf"), !methods::is(AOI,"sfc"))){
-      stop("AOI must be of class sf.", .call = FALSE)
+      stop("AOI must be of class sf.", call. = FALSE)
     }
 
     if(st_geometry_type(AOI) == "POINT"){
@@ -73,9 +73,9 @@ get_nhdplus <- function(AOI = NULL,
   }
 
   if(!is.null(AOI) & !is.null(c(nwis, comid))){
-    stop("Either IDs (comid, nwis) or a spatial AOI can be passed.",.call = FALSE)
+    stop("Either IDs (comid, nwis) or a spatial AOI can be passed.", call. = FALSE)
   } else if(is.null(AOI) & is.null(c(nwis, comid))){
-    stop("IDs (comid, nwis) or a spatial AOI must be passed.",.call = FALSE)
+    stop("IDs (comid, nwis) or a spatial AOI must be passed.", call. = FALSE)
   }
 
   hy_realizations = c("flowline", "catchment", 'outlet')

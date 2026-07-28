@@ -33,6 +33,13 @@ the user data dir indicated by \link{hydrogeofetch_data_dir}.
 }
 \examples{
 \donttest{
+# the lookup table is cached in hydrogeofetch_data_dir(); point it at a
+# temporary directory so this example does not write to user space.
+old_dir <- hydrogeofetch_data_dir()
+hydrogeofetch_data_dir(tempdir())
+
 add_mainstems(data.frame(comid = c(2804607, 2804621)))
+
+hydrogeofetch_data_dir(old_dir)
 }
 }

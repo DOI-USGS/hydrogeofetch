@@ -210,6 +210,9 @@ download_vaa <- function(path = get_vaa_path(updated_network), force = FALSE, up
 #' If no search term is provided the entire table is returned.
 #' @param source character \code{"usgs"} (default) or \code{"streamcat"}.
 #' @param cache logical should cached metadata be used?
+#' @return data.frame of characteristic metadata with columns ID, description,
+#' units, datasetLabel, datasetURL, themeLabel, themeURL, watershedType, sbid,
+#' end, s3_url, and http_url. NULL if the metadata service is unavailable.
 #' @importFrom utils read.delim
 #' @export
 #' @examples
@@ -325,6 +328,9 @@ get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) 
 #' (for metrics like BankfullDepth, IWI, etc.). Ignored when
 #' \code{source = "usgs"} where the area of interest is encoded in the
 #' variable name prefix (e.g. CAT_, TOT_, ACC_).
+#' @return data.frame with columns characteristic_id, comid,
+#' characteristic_value, and percent_nodata. NULL if no requested variables
+#' were found or the data store is unavailable.
 #' @importFrom dplyr bind_rows filter select everything collect all_of
 #' @importFrom arrow s3_bucket open_dataset
 #' @export

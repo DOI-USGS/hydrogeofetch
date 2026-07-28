@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 # hydrogeofetch <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/master/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools) [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/nhdplusTools)](https://cran.r-project.org/package=nhdplusTools) [![CRAN](https://www.r-pkg.org/badges/version/nhdplusTools)](https://cran.r-project.org/package=nhdplusTools)
+![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
 
 ## Renamed from `nhdplusTools`
 

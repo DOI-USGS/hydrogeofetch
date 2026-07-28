@@ -14,6 +14,11 @@ If no search term is provided the entire table is returned.}
 
 \item{cache}{logical should cached metadata be used?}
 }
+\value{
+data.frame of characteristic metadata with columns ID, description,
+units, datasetLabel, datasetURL, themeLabel, themeURL, watershedType, sbid,
+end, s3_url, and http_url. NULL if the metadata service is unavailable.
+}
 \description{
 Download and cache table of catchment characteristics.
 

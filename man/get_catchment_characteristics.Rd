@@ -33,6 +33,11 @@ watershed), \code{"catrp100"} (catchment riparian 100m buffer),
 \code{source = "usgs"} where the area of interest is encoded in the
 variable name prefix (e.g. CAT_, TOT_, ACC_).}
 }
+\value{
+data.frame with columns characteristic_id, comid,
+characteristic_value, and percent_nodata. NULL if no requested variables
+were found or the data store is unavailable.
+}
 \description{
 Downloads (subsets of) catchment characteristics from a cloud data
 store. See \link{get_characteristics_metadata} for available characteristics.

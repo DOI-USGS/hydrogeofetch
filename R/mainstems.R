@@ -123,7 +123,14 @@ parse_replacement_uris <- function(x) {
 #' @export
 #' @examples
 #' \donttest{
+#' # the lookup table is cached in hydrogeofetch_data_dir(); point it at a
+#' # temporary directory so this example does not write to user space.
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(tempdir())
+#'
 #' add_mainstems(data.frame(comid = c(2804607, 2804621)))
+#'
+#' hydrogeofetch_data_dir(old_dir)
 #' }
 add_mainstems <- function(x, join_col = NULL, join_col_type = NULL) {
 
@@ -223,7 +230,12 @@ get_mainstem_geometry <- function(uris) {
 #' @export
 #' @examples
 #' \donttest{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(tempdir())
+#'
 #' check_mainstems(c(2086165, 2086637))
+#'
+#' hydrogeofetch_data_dir(old_dir)
 #' }
 check_mainstems <- function(x) {
 
@@ -264,10 +276,15 @@ check_mainstems <- function(x) {
 #' @export
 #' @examples
 #' \donttest{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(tempdir())
+#'
 #' pt <- sf::st_sf(mainstemid = 2086165,
 #'                 geometry = sf::st_sfc(sf::st_point(c(-75.567, 43.176)),
 #'                                       crs = 4326))
 #' update_mainstems(pt)
+#'
+#' hydrogeofetch_data_dir(old_dir)
 #' }
 update_mainstems <- function(x, mainstem_col = NULL, search_radius = NULL) {
 

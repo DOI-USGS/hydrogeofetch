@@ -33,9 +33,14 @@ replacement are left unchanged and flagged "unresolved". See
 }
 \examples{
 \donttest{
+old_dir <- hydrogeofetch_data_dir()
+hydrogeofetch_data_dir(tempdir())
+
 pt <- sf::st_sf(mainstemid = 2086165,
                 geometry = sf::st_sfc(sf::st_point(c(-75.567, 43.176)),
                                       crs = 4326))
 update_mainstems(pt)
+
+hydrogeofetch_data_dir(old_dir)
 }
 }

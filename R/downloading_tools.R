@@ -197,7 +197,8 @@ download_nhdplusv2 <- function(outdir,
 
     message("Extracting data ...")
 
-    system(paste0("7z -o", path.expand(outdir), " x ", file), intern = TRUE)
+    system(paste0(shQuote(try_7z), " -o", path.expand(outdir), " x ", file),
+           intern = TRUE)
 
   }
 
@@ -316,17 +317,18 @@ download_rf1 <- function(outdir,
 
 #' @title Utility to see in 7z is local
 #' @description Checks if 7z is on system. If not, provides an informative error
+#' @return character path to the 7z executable to call
 #' @noRd
 check7z <- function() {
 
   tryCatch({
     system("7z", intern = TRUE)
+    "7z"
   }, error = function(e) {
     # 7z not on PATH; check default Windows install location
     win_path <- "C:/Program Files/7-Zip/7z.exe"
     if(.Platform$OS.type == "windows" && file.exists(win_path)) {
-      Sys.setenv(PATH = paste(Sys.getenv("PATH"), dirname(win_path), sep = ";"))
-      return(invisible(TRUE))
+      return(win_path)
     }
     stop(simpleError(
       "Please Install 7zip (Windows) or p7zip (MacOS/Unix). Choose accordingly:
@@ -342,14 +344,27 @@ check7z <- function() {
 # httr2 helpers — all HTTP in the package flows through these  #
 #################################################################
 
+#' @description builds a request with a bounded lifetime so a hung service
+#' cannot stall a call indefinitely. `timeout` caps the whole request and is
+#' used for the API calls; bulk downloads pass NULL so a slow-but-progressing
+#' transfer is not cut off, and rely on the connect timeout alone.
 #' @importFrom httr2 request req_perform
 #' @noRd
-build_hgf_req <- function(url, body = NULL, content_type = NULL, encode = NULL) {
+build_hgf_req <- function(url, body = NULL, content_type = NULL, encode = NULL,
+                          timeout = 300) {
   req <- httr2::request(url) |>
     httr2::req_user_agent(
       paste0("hydrogeofetch/", utils::packageVersion("hydrogeofetch"))
     ) |>
     httr2::req_retry(max_tries = 3)
+
+  # req_timeout() covers connection setup too, and zeroes connecttimeout, so
+  # the two are set as alternatives rather than together.
+  req <- if(is.null(timeout)) {
+    httr2::req_options(req, connecttimeout = 30)
+  } else {
+    httr2::req_timeout(req, timeout)
+  }
 
   if(nhdplus_debug()) {
     message(if(is.null(body)) "GET " else "POST ", url)
@@ -396,7 +411,7 @@ hgf_sf <- function(url, body = NULL, content_type = NULL, encode = NULL) {
 #' @noRd
 hgf_download <- function(url, path, progress = TRUE) {
   tryCatch({
-    req <- build_hgf_req(url)
+    req <- build_hgf_req(url, timeout = NULL)
     if(progress && interactive()) req <- httr2::req_progress(req)
     httr2::req_perform(req, path = path)
     invisible(path)
@@ -419,10 +434,10 @@ check_query_params <- function(AOI, ids, type, where, source, t_srs, buffer) {
 
   if(!is.null(AOI) & !is.null(ids)) {
     # Check if AOI and IDs are both given
-    stop("Either IDs or a spatial AOI can be passed.", .call = FALSE)
+    stop("Either IDs or a spatial AOI can be passed.", call. = FALSE)
   } else if(is.null(AOI) & is.null(ids) & !(!is.null(where) && grepl("IN", where))) {
     # Check if AOI and IDs are both NULL
-    stop("IDs or a spatial AOI must be passed.", .call = FALSE)
+    stop("IDs or a spatial AOI must be passed.", call. = FALSE)
   } else if(!(type %in% source$user_call)) {
     # Check that "type" is valid
     stop(paste("Type not available must be one of:",

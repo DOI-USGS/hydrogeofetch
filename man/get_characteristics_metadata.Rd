@@ -37,6 +37,13 @@ LakeCat metrics, https://usepa.github.io/StreamCatTools
 }
 \examples{
 \donttest{
+# the metadata table is cached in hydrogeofetch_data_dir(); point it at a
+# temporary directory so this example does not write to user space.
+old_dir <- hydrogeofetch_data_dir()
+hydrogeofetch_data_dir(file.path(tempdir(check = TRUE), "meta_demo"))
+
 get_characteristics_metadata()
+
+hydrogeofetch_data_dir(old_dir)
 }
 }

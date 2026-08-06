@@ -63,7 +63,6 @@
 #' @importFrom hydroloom navigate_hydro_network
 #' @examples
 #' \donttest{
-#' options("rgdal_show_exportToProj4_warnings"="none")
 #' # Beware plot_nhdplus caches data to the default location.
 #' # If you do not want data in "user space" change the default.
 #' old_dir <- hydrogeofetch::hydrogeofetch_data_dir()

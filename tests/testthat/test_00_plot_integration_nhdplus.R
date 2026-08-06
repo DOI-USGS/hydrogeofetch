@@ -1,7 +1,6 @@
 source(system.file("extdata/sample_data.R", package = "hydrogeofetch"))
 
 test_that("basics work", {
-  options("rgdal_show_exportToProj4_warnings"="none")
 
   skip_if_no_integration()
   skip_on_os("mac")

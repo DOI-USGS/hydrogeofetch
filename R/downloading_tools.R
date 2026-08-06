@@ -154,23 +154,23 @@ download_nhd_internal <- function(bucket, file_list_snip, prefix, nhd_dir, hu_li
 #' https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data
 #' for more information and metadata about this data.
 #'
-#' Default downloads lower-48 only. See examples for islands. No Alaska data
-#' are available.
+#' Default downloads lower-48 only. Pass the island archive URL to `url` to get
+#' Hawaii, Puerto Rico, the Virgin Islands, and the Pacific Islands instead. No
+#' Alaska data are available.
+#'
+#' The lower-48 archive is roughly 8 GB and extraction needs 7zip installed, so
+#' this function has no example. Pass any writable directory as \code{outdir};
+#' the archive is downloaded there, extracted in place, and the path to the
+#' geodatabase returned:
+#' 
+#' \preformatted{
+#' download_nhdplusv2(file.path(tempdir(), "nhdplusv2"))}
 #'
 #' @param outdir The folder path where data should be downloaded and extracted
 #' @param url the location of the online resource
 #' @param progress boolean display download progress?
 #' @return character path to the local geodatabase
 #' @export
-#' @examples
-#' \dontrun{
-#'   download_nhdplusv2("./data/nhd/")
-#'
-#'   download_nhdplusv2(outdir = "./inst/",
-#'       url = paste0("https://dmap-data-commons-ow.s3.amazonaws.com/NHDPlusV21/",
-#'                    "Data/NationalData/NHDPlusV21_NationalData_Seamless",
-#'                    "_Geodatabase_HI_PR_VI_PI_03.7z"))
-#' }
 
 download_nhdplusv2 <- function(outdir,
                                url = paste0("https://dmap-data-commons-ow.s3.amazonaws.com/NHDPlusV21/",
@@ -219,14 +219,15 @@ download_nhdplusv2 <- function(outdir,
 #' Please see:
 #' https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.xml
 #' for metadata.
+#'
+#' The national archive is roughly 3 GB, so this function has no example. The
+#' "hydrogeofetch Data Access Overview" article works through a download in its
+#' Watershed Boundary Dataset section.
+#' 
 #' @inheritParams download_nhdplusv2
 #' @return character path to the local geodatabase
 #' @export
 #' @importFrom zip unzip
-#' @examples
-#' \dontrun{
-#'   download_wbd("./data/wbd/")
-#' }
 
 download_wbd <- function(outdir,
                          url = paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/",
@@ -279,13 +280,15 @@ gunzip_keep <- function(file) {
 #' @title Download the seamless Reach File (RF1) Database
 #' @description This function downloads and decompresses staged RF1 data.
 #' See: https://water.usgs.gov/GIS/metadata/usgswrd/XML/erf1_2.xml for metadata.
+#'
+#' The archive is roughly 46 MB and the server is slow, so this function has no
+#' example. Pass any writable directory as \code{outdir}; the gzipped e00 is
+#' downloaded there, decompressed in place, and the path to the e00 returned:
+#' \preformatted{
+#' download_rf1(file.path(tempdir(), "rf1"))}
 #' @inheritParams download_nhdplusv2
 #' @return character path to the local e00 file
 #' @export
-#' @examples
-#' \dontrun{
-#'   download_rf1("./data/rf1/")
-#' }
 
 download_rf1 <- function(outdir,
                          url = "https://water.usgs.gov/GIS/dsdl/erf1_2.e00.gz",

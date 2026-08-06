@@ -24,18 +24,23 @@ get_vaa_path <- function(updated_network = FALSE) {
 
 #' @title Available NHDPlusV2 Attributes
 #' @description Find variables available from the NHDPlusV2 attribute data.frame
+#'
+#' Calling this function downloads the attribute table to \link{get_vaa_path}
+#' if it is not already cached there. The table is roughly 260 MB, so this
+#' function has no example. 
+#' 
+#' \preformatted{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(), "vaa"))
+#'
+#' get_vaa_names()
+#'
+#' hydrogeofetch_data_dir(old_dir)}
+#' 
 #' @inherit download_vaa details
 #' @inheritParams get_vaa
 #' @return character vector
 #' @export
-#' @examples
-#' \dontrun{
-#' # This will download the vaa file to the path from get_vaa_path()
-#' get_vaa_names()
-#'
-#' #cleanup if desired
-#' unlink(dirname(get_vaa_path()), recursive = TRUE)
-#' }
 get_vaa_names <- function(updated_network = FALSE) {
   path <- get_vaa_path(updated_network = updated_network)
 
@@ -46,6 +51,21 @@ get_vaa_names <- function(updated_network = FALSE) {
 
 #' @title NHDPlusV2 Attribute Subset
 #' @description Return requested NHDPlusV2 Attributes.
+#'
+#' Calling this function downloads the attribute table to \link{get_vaa_path}
+#' if it is not already cached there. The base table is roughly 260 MB and the
+#' updated network table another 170 MB, so this function has no example. To
+#' try it without writing to your user data directory, point
+#' \link{hydrogeofetch_data_dir} at a temporary path first:
+#' \preformatted{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(), "vaa"))
+#'
+#' get_vaa("slope")
+#' get_vaa(c("slope", "lengthkm"))
+#' get_vaa("reachcode", updated_network = TRUE)
+#'
+#' hydrogeofetch_data_dir(old_dir)}
 #' @inherit download_vaa details
 #' @param atts character The variable names you would like, always includes comid
 #' @param path character path where the file should be saved. Default is a
@@ -58,19 +78,6 @@ get_vaa_names <- function(updated_network = FALSE) {
 #' \doi{10.5066/P976XCVT}.
 #' @return data.frame containing requested VAA data
 #' @export
-#' @examples
-#' \dontrun{
-#' # This will download the vaa file to the path from get_vaa_path()
-#'
-#' get_vaa("slope")
-#' get_vaa(c("slope", "lengthkm"))
-#'
-#' get_vaa(updated_network = TRUE)
-#' get_vaa("reachcode", updated_network = TRUE)
-#'
-#' #cleanup if desired
-#' unlink(dirname(get_vaa_path()), recursive = TRUE)
-#' }
 
 get_vaa <- function(atts = NULL,
                     path = get_vaa_path(),
@@ -217,7 +224,14 @@ download_vaa <- function(path = get_vaa_path(updated_network), force = FALSE, up
 #' @export
 #' @examples
 #' \donttest{
+#' # the metadata table is cached in hydrogeofetch_data_dir(); point it at a
+#' # temporary directory so this example does not write to user space.
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(check = TRUE), "meta_demo"))
+#'
 #' get_characteristics_metadata()
+#'
+#' hydrogeofetch_data_dir(old_dir)
 #' }
 get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) {
 

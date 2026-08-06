@@ -137,6 +137,17 @@ get_catchment_areas <- function(comids, refactored_areas = NULL){
 #' "split_catchment_areasqkm", and "split_area_prop". If not provided, it will
 #' be retrieved from `refactored_areas` and/or \link{get_vaa}.
 #'
+#' @return data.frame with one row per unique `id` in `lookup_table`. Always
+#' contains `id`, `areasqkm_sum` (total catchment area contributing to that
+#' `id`), and `lengthkm_sum` (total flowline length). Each characteristic named
+#' in `vars` adds a column called `<characteristic_id>_<statistic>`, where the
+#' statistic suffix is one of "area_wtd", "length_wtd", "sum", "min", or "max"
+#' following the `summary_statistic` requested for it -- for example
+#' `CAT_IMPV11_area_wtd` or `CAT_BASIN_AREA_sum`. Where the source reports a
+#' no-data fraction, a matching `percent_nodata_<characteristic_id>_area_wtd`
+#' column is included. Returns `NULL` if `catchment_characteristics` was not
+#' supplied and could not be retrieved from the web service.
+#'
 #' @examples
 #' \donttest{
 #' vars <- data.frame(characteristic_id = c("CAT_IMPV11","CAT_BASIN_AREA"),

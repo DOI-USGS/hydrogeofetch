@@ -26,11 +26,6 @@ resolve a superseded mainstem id to its replacement.
 }
 \examples{
 \donttest{
-old_dir <- hydrogeofetch_data_dir()
-hydrogeofetch_data_dir(tempdir())
-
 check_mainstems(c(2086165, 2086637))
-
-hydrogeofetch_data_dir(old_dir)
 }
 }

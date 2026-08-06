@@ -112,6 +112,20 @@ parse_replacement_uris <- function(x) {
 #' \href{https://github.com/internetofwater/ref_rivers/releases}{here}. The
 #' csv source data is downloaded once, converted to parquet, and cached in
 #' the user data dir indicated by \link{hydrogeofetch_data_dir}.
+#'
+#' The NHDPlusV2 lookup csv is roughly 120 MB and the NHDPlusHR lookup
+#' roughly 50 MB, so the mainstem functions have no examples. The first call
+#' for a given type downloads and converts the table; later calls in the same
+#' session read a cached parquet file and are fast. 
+#' 
+#' \preformatted{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(), "mainstems"))
+#'
+#' add_mainstems(data.frame(comid = c(2804607, 2804621)))
+#'
+#' hydrogeofetch_data_dir(old_dir)}
+#' 
 #' @param x data.frame or sf containing an identifier column joinable to
 #' NHDPlusV2 or NHDPlusHR.
 #' @param join_col character name of the identifier column in \code{x}.
@@ -121,17 +135,6 @@ parse_replacement_uris <- function(x) {
 #' automatically from \code{join_col} if not provided.
 #' @return \code{x} with mainstem_uri and mainstemid columns added.
 #' @export
-#' @examples
-#' \donttest{
-#' # the lookup table is cached in hydrogeofetch_data_dir(); point it at a
-#' # temporary directory so this example does not write to user space.
-#' old_dir <- hydrogeofetch_data_dir()
-#' hydrogeofetch_data_dir(tempdir())
-#'
-#' add_mainstems(data.frame(comid = c(2804607, 2804621)))
-#'
-#' hydrogeofetch_data_dir(old_dir)
-#' }
 add_mainstems <- function(x, join_col = NULL, join_col_type = NULL) {
 
   names_x <- names(x)
@@ -230,12 +233,7 @@ get_mainstem_geometry <- function(uris) {
 #' @export
 #' @examples
 #' \donttest{
-#' old_dir <- hydrogeofetch_data_dir()
-#' hydrogeofetch_data_dir(tempdir())
-#'
 #' check_mainstems(c(2086165, 2086637))
-#'
-#' hydrogeofetch_data_dir(old_dir)
 #' }
 check_mainstems <- function(x) {
 
@@ -276,15 +274,10 @@ check_mainstems <- function(x) {
 #' @export
 #' @examples
 #' \donttest{
-#' old_dir <- hydrogeofetch_data_dir()
-#' hydrogeofetch_data_dir(tempdir())
-#'
 #' pt <- sf::st_sf(mainstemid = 2086165,
 #'                 geometry = sf::st_sfc(sf::st_point(c(-75.567, 43.176)),
 #'                                       crs = 4326))
 #' update_mainstems(pt)
-#'
-#' hydrogeofetch_data_dir(old_dir)
 #' }
 update_mainstems <- function(x, mainstem_col = NULL, search_radius = NULL) {
 

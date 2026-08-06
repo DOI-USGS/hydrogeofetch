@@ -30,6 +30,21 @@ data.frame containing requested VAA data
 }
 \description{
 Return requested NHDPlusV2 Attributes.
+
+Calling this function downloads the attribute table to \link{get_vaa_path}
+if it is not already cached there. The base table is roughly 260 MB and the
+updated network table another 170 MB, so this function has no example. To
+try it without writing to your user data directory, point
+\link{hydrogeofetch_data_dir} at a temporary path first:
+\preformatted{
+old_dir <- hydrogeofetch_data_dir()
+hydrogeofetch_data_dir(file.path(tempdir(), "vaa"))
+
+get_vaa("slope")
+get_vaa(c("slope", "lengthkm"))
+get_vaa("reachcode", updated_network = TRUE)
+
+hydrogeofetch_data_dir(old_dir)}
 }
 \details{
 The VAA data is a aggregate table of information from the NHDPlusV2
@@ -40,18 +55,4 @@ To see the location of cached data on your machine use
 \code{\link{get_vaa_path}}.
 To view aggregate data and documentation, see
 \href{https://www.hydroshare.org/resource/6092c8a62fac45be97a09bfd0b0bf726/}{here}
-}
-\examples{
-\dontrun{
-# This will download the vaa file to the path from get_vaa_path()
-
-get_vaa("slope")
-get_vaa(c("slope", "lengthkm"))
-
-get_vaa(updated_network = TRUE)
-get_vaa("reachcode", updated_network = TRUE)
-
-#cleanup if desired
-unlink(dirname(get_vaa_path()), recursive = TRUE)
-}
 }

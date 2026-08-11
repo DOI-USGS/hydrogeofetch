@@ -26,9 +26,8 @@ This function downloads and decompresses staged seamless WBD data.
 Please see:
 https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.xml
 for metadata.
-}
-\examples{
-\dontrun{
-  download_wbd("./data/wbd/")
-}
+
+The national archive is roughly 3 GB, so this function has no example. The
+"hydrogeofetch Data Access Overview" article works through a download in its
+Watershed Boundary Dataset section.
 }

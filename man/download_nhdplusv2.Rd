@@ -27,16 +27,15 @@ The following requirements are needed: p7zip (MacOS), 7zip (windows) Please see:
 https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data
 for more information and metadata about this data.
 
-Default downloads lower-48 only. See examples for islands. No Alaska data
-are available.
-}
-\examples{
-\dontrun{
-  download_nhdplusv2("./data/nhd/")
+Default downloads lower-48 only. Pass the island archive URL to `url` to get
+Hawaii, Puerto Rico, the Virgin Islands, and the Pacific Islands instead. No
+Alaska data are available.
 
-  download_nhdplusv2(outdir = "./inst/",
-      url = paste0("https://dmap-data-commons-ow.s3.amazonaws.com/NHDPlusV21/",
-                   "Data/NationalData/NHDPlusV21_NationalData_Seamless",
-                   "_Geodatabase_HI_PR_VI_PI_03.7z"))
-}
+The lower-48 archive is roughly 8 GB and extraction needs 7zip installed, so
+this function has no example. Pass any writable directory as \code{outdir};
+the archive is downloaded there, extracted in place, and the path to the
+geodatabase returned:
+
+\preformatted{
+download_nhdplusv2(file.path(tempdir(), "nhdplusv2"))}
 }

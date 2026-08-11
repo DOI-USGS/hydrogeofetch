@@ -99,6 +99,13 @@ list with elements:
     \item{contrib_da_huc10_sqkm}{numeric or NA. Contributing DA (HUC10-level).}
     \item{contrib_da_huc08_sqkm}{numeric or NA. Contributing DA (HUC08-level).}
     \item{network_da_sqkm}{numeric. Network-derived total DA for comparison.}
+    \item{basin_da_sqkm}{numeric or NA. Area of \code{drainage_basin}. Not the
+      same quantity as \code{network_da_sqkm}: that one is the NHDPlusV2
+      \code{totdasqkm} attribute for the outlet flowline and covers the whole
+      outlet catchment, while this is a geometric area with the portion below
+      the submitted point removed. The two differ by that sliver plus the
+      usual drift between attribute and geometry. NA when
+      \code{drainage_basin} is NULL.}
     \item{nhdplushr_network_dasqkm}{numeric or NA. Drainage area from
       NHDPlusHR catchments upstream of the matched HR flowline. NA with a
       warning when the HR web service is unavailable or fails.}
@@ -112,6 +119,15 @@ list with elements:
       NULL when basin is within a single HUC08.}
     \item{extra_catchments}{sf data.frame. Catchments between outlet and HUC12 outlets.}
     \item{split_catchment}{sf data.frame. Split catchment at HUC12 outlet(s).}
+    \item{drainage_basin}{sf data.frame or NULL. NHDPlusV2 catchments for the
+      upstream network dissolved into a single boundary (EPSG:5070, with a
+      \code{dasqkm} column), with the outlet catchment replaced by the portion
+      above the submitted point. No HUC boundaries are involved. Available
+      when \code{catchments = TRUE} or \code{catchment_data} was supplied, and
+      always for headwater starts, where the upstream network is a single
+      catchment; NULL otherwise. Also NULL when a split of the outlet
+      catchment was due but the service returned none, since the basin would
+      otherwise carry area below the submitted point.}
     \item{all_network}{data.frame. Full upstream flowline attributes.}
     \item{all_catchments}{sf data.frame or NULL. NHDPlusV2 catchment polygons
       for the full upstream network. NULL when \code{catchments = FALSE}.}

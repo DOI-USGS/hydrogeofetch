@@ -34,3 +34,32 @@ test_that("get_3dhp", {
   expect_s3_class(wufl, "sf")
   expect_true(all(wufl$workunitid == "300585"))
 })
+
+test_that("a failed page does not break a multi page request", {
+
+  # a page that 504s comes back NULL and used to reach bind_rows as-is,
+  # erroring with "Argument 3 must be a data frame or a named atomic vector."
+  page <- sf::st_sf(id3dhp = "a", workunitid = "300585",
+                    geometry = sf::st_sfc(sf::st_point(c(-89.4, 43.1)),
+                                          crs = 4326))
+
+  calls <- 0
+
+  local_mocked_bindings(
+    hgf_json = function(...) list(objectIds = list(1, 2, 3)),
+    hgf_sf = function(...) {
+      calls <<- calls + 1
+      if(calls == 2) return(NULL)
+      page$id3dhp <- as.character(calls)
+      page
+    },
+    .package = "hydrogeofetch")
+
+  suppressMessages(
+    expect_warning(out <- get_3dhp(ids = "workunitid:300585",
+                                   type = "flowline", page_size = 1),
+                   "1 of 3 feature requests failed"))
+
+  expect_s3_class(out, "sf")
+  expect_equal(nrow(out), 2)
+})

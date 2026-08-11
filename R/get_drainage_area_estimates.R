@@ -92,6 +92,13 @@
 #'     \item{contrib_da_huc10_sqkm}{numeric or NA. Contributing DA (HUC10-level).}
 #'     \item{contrib_da_huc08_sqkm}{numeric or NA. Contributing DA (HUC08-level).}
 #'     \item{network_da_sqkm}{numeric. Network-derived total DA for comparison.}
+#'     \item{basin_da_sqkm}{numeric or NA. Area of \code{drainage_basin}. Not the
+#'       same quantity as \code{network_da_sqkm}: that one is the NHDPlusV2
+#'       \code{totdasqkm} attribute for the outlet flowline and covers the whole
+#'       outlet catchment, while this is a geometric area with the portion below
+#'       the submitted point removed. The two differ by that sliver plus the
+#'       usual drift between attribute and geometry. NA when
+#'       \code{drainage_basin} is NULL.}
 #'     \item{nhdplushr_network_dasqkm}{numeric or NA. Drainage area from
 #'       NHDPlusHR catchments upstream of the matched HR flowline. NA with a
 #'       warning when the HR web service is unavailable or fails.}
@@ -105,6 +112,15 @@
 #'       NULL when basin is within a single HUC08.}
 #'     \item{extra_catchments}{sf data.frame. Catchments between outlet and HUC12 outlets.}
 #'     \item{split_catchment}{sf data.frame. Split catchment at HUC12 outlet(s).}
+#'     \item{drainage_basin}{sf data.frame or NULL. NHDPlusV2 catchments for the
+#'       upstream network dissolved into a single boundary (EPSG:5070, with a
+#'       \code{dasqkm} column), with the outlet catchment replaced by the portion
+#'       above the submitted point. No HUC boundaries are involved. Available
+#'       when \code{catchments = TRUE} or \code{catchment_data} was supplied, and
+#'       always for headwater starts, where the upstream network is a single
+#'       catchment; NULL otherwise. Also NULL when a split of the outlet
+#'       catchment was due but the service returned none, since the basin would
+#'       otherwise carry area below the submitted point.}
 #'     \item{all_network}{data.frame. Full upstream flowline attributes.}
 #'     \item{all_catchments}{sf data.frame or NULL. NHDPlusV2 catchment polygons
 #'       for the full upstream network. NULL when \code{catchments = FALSE}.}
@@ -210,7 +226,41 @@ get_drainage_area_estimates <- function(start, catchments = FALSE,
     gap_catchments = catchment_data,
     outlet_info = outlet_info)
 
-  # 6. assemble DA estimates
+  # 6. optional full catchment retrieval
+  if(catchments) {
+    if(!is.null(catchment_data)) {
+      message("Subsetting local catchment data...")
+      all_catchments <- catchment_data[
+        catchment_data$featureid %in% all_net$comid, ]
+    } else {
+      message("Fetching network catchment geometries...")
+      all_catchments <- get_nhdplus(
+        comid = all_net$comid, realization = "catchment"
+      )
+    }
+  } else {
+    all_catchments <- NULL
+  }
+
+  # 7. dissolved NHDPlusV2 basin, when catchment polygons are on hand. In a
+  # headwater the gap catchments are the whole upstream network, so the basin
+  # is available without a full catchment fetch.
+  catchment_polys <- if(!is.null(all_catchments)) {
+    all_catchments
+  } else {
+    gap$extra_catchments
+  }
+
+  drainage_basin <- dissolve_nhdplusv2_basin(all_net, outlet_comids,
+    catchment_polys, gap$outlet_split_catchment, outlet_info)
+
+  if(!is.null(drainage_basin) && nrow(all_net) == 1 &&
+     length(outlet_comids) == 1) {
+    message("  Headwater catchment; drainage area from basin geometry")
+    gap$extra_and_local <- drainage_basin$dasqkm
+  }
+
+  # 8. assemble DA estimates
   da_estimates <- assemble_da_estimates(hu12_result, gap$extra_and_local)
 
   message("  HUC12 DA = ", round(da_estimates$da_huc12_sqkm, 2),
@@ -222,8 +272,10 @@ get_drainage_area_estimates <- function(start, catchments = FALSE,
     message("  HUC08 DA = ", round(da_estimates$da_huc08_sqkm, 2),
       ", contributing = ", round(da_estimates$contrib_da_huc08_sqkm, 2))
   message("  Network DA = ", round(network_da, 2))
+  if(!is.null(drainage_basin))
+    message("  Basin DA = ", round(drainage_basin$dasqkm, 2))
 
-  # 7. NHDPlusHR estimate
+  # 9. NHDPlusHR estimate
   if(nhdplushr) {
     hu12_polys <- if(!is.null(hu12_result$hu12_by_huc08)) {
       hu12_result$hu12_by_huc08
@@ -246,26 +298,15 @@ get_drainage_area_estimates <- function(start, catchments = FALSE,
       nhdplushr_boundary = NULL)
   }
 
-  # 8. optional full catchment retrieval
-  if(catchments) {
-    if(!is.null(catchment_data)) {
-      message("Subsetting local catchment data...")
-      all_catchments <- catchment_data[
-        catchment_data$featureid %in% all_net$comid, ]
-    } else {
-      message("Fetching network catchment geometries...")
-      all_catchments <- get_nhdplus(
-        comid = all_net$comid, realization = "catchment"
-      )
-    }
-  } else {
-    all_catchments <- NULL
-  }
-
   c(
     da_estimates,
     list(
       network_da_sqkm = network_da,
+      basin_da_sqkm = if(!is.null(drainage_basin)) {
+        drainage_basin$dasqkm
+      } else {
+        NA_real_
+      },
       nhdplushr_network_dasqkm = hr_result$nhdplushr_network_dasqkm,
       nhdplushr_boundary = hr_result$nhdplushr_boundary,
       start_feature = start_feature,
@@ -274,6 +315,7 @@ get_drainage_area_estimates <- function(start, catchments = FALSE,
       hu12_by_huc08 = hu12_result$hu12_by_huc08,
       extra_catchments = gap$extra_catchments,
       split_catchment = gap$split_catchment,
+      drainage_basin = drainage_basin,
       all_network = all_net,
       all_catchments = all_catchments,
       outlet_flowline_measure = if(!is.null(outlet_info)) outlet_info$flowline_measure else NULL,
@@ -1572,6 +1614,116 @@ assemble_da_estimates <- function(hu12_result, extra_and_local) {
   )
 }
 
+#' Check that a split catchment response is usable
+#'
+#' \code{\link{get_split_catchment}} returns NULL when the processing service
+#' is unavailable or rejects the request, and the service can also return a
+#' feature collection without the expected \code{catchment} /
+#' \code{splitCatchment} pair. Both cases must be caught before area math.
+#'
+#' @param x object returned by \code{get_split_catchment} or supplied via the
+#'   \code{split_catchments} argument.
+#' @return logical. TRUE when \code{x} is an sf data.frame carrying both a
+#'   \code{catchment} and a \code{splitCatchment} feature.
+#' @noRd
+valid_split_catchment <- function(x) {
+  inherits(x, "sf") && nrow(x) > 0 && "id" %in% names(x) &&
+    all(c("catchment", "splitCatchment") %in% x$id)
+}
+
+#' Dissolve NHDPlusV2 catchments into a basin boundary
+#'
+#' Unions the catchment polygons for the full upstream network into a single
+#' basin boundary. The outlet catchment is replaced by the upstream portion of
+#' its split, so the sliver below the submitted point is not included.
+#' Substituting the split polygon avoids an \code{st_difference} overlay along
+#' a boundary the two polygons already share.
+#'
+#' Requires catchment polygons covering every flowline in \code{all_net}. That
+#' coverage test is also the gate: it passes when \code{catchments = TRUE} or
+#' \code{catchment_data} was supplied, and in the headwater case where the gap
+#' catchments are the whole upstream network. It fails for a multi-catchment
+#' network under the default \code{catchments = FALSE}, where only the gap zone
+#' has been fetched.
+#'
+#' @param all_net data.frame. Full upstream network with a \code{comid} column.
+#' @param outlet_comids integer. Outlet COMID(s) whose catchment is split. A
+#'   split applies to a single outlet catchment, so a basin is only assembled
+#'   from a split when there is exactly one.
+#' @param catchment_polys sf data.frame or NULL. NHDPlusV2 catchment polygons
+#'   keyed by \code{featureid} (or \code{comid}).
+#' @param outlet_split_catchment sf data.frame or NULL. Split catchment at the
+#'   submitted point, as returned by \code{compute_gap_area}. When NULL the
+#'   full outlet catchment is kept, which is only correct if no split was due.
+#' @param outlet_info list or NULL. Output of \code{negotiate_outlet_catchment}.
+#'   Distinguishes the two ways \code{outlet_split_catchment} arrives NULL: no
+#'   split was due (\code{threshold_exceeded} FALSE, or the start carries no
+#'   measure), against a split that was due but failed at the service. Only the
+#'   first permits keeping the full outlet catchment. Default NULL, which treats
+#'   a missing split as not due.
+#' @return one-row sf data.frame in EPSG:5070 with a \code{dasqkm} column, or
+#'   NULL when catchment polygons are unavailable or incomplete, when a due
+#'   split of the outlet catchment is missing, or when a split is on hand but
+#'   several outlet COMIDs are.
+#' @noRd
+dissolve_nhdplusv2_basin <- function(all_net, outlet_comids, catchment_polys,
+  outlet_split_catchment = NULL, outlet_info = NULL) {
+
+  if(!inherits(catchment_polys, "sf") || nrow(catchment_polys) == 0)
+    return(NULL)
+
+  # a due split that did not come back leaves no way to trim the outlet
+  # catchment, so report no basin rather than one carrying below-point area
+  if(isTRUE(outlet_info$threshold_exceeded) &&
+     !valid_split_catchment(outlet_split_catchment))
+    return(NULL)
+
+  # the split covers one outlet catchment. Substituting it while dropping
+  # several would lose the catchments of the outlets that were not split.
+  if(valid_split_catchment(outlet_split_catchment) &&
+     length(outlet_comids) > 1)
+    return(NULL)
+
+  id_col <- if("featureid" %in% names(catchment_polys)) {
+    "featureid"
+  } else if("comid" %in% names(catchment_polys)) {
+    "comid"
+  } else {
+    return(NULL)
+  }
+
+  ids <- as.integer(catchment_polys[[id_col]])
+
+  if(!all(all_net$comid %in% ids)) return(NULL)
+
+  catchment_polys <- st_transform(catchment_polys[ids %in% all_net$comid, ],
+    5070)
+  ids <- as.integer(catchment_polys[[id_col]])
+
+  parts <- list(st_geometry(catchment_polys[!ids %in% outlet_comids, ]))
+
+  if(valid_split_catchment(outlet_split_catchment)) {
+    parts[[2]] <- st_geometry(st_transform(
+      outlet_split_catchment[outlet_split_catchment$id == "splitCatchment", ],
+      5070))
+  } else {
+    parts[[2]] <- st_geometry(catchment_polys[ids %in% outlet_comids, ])
+  }
+
+  geom <- do.call(c, parts)
+
+  if(length(geom) == 0) return(NULL)
+
+  # dissolved the same way as the vignette's basin polygon: the split catchment
+  # is raster-derived and only approximately coincident with the vector
+  # catchment boundaries it meets, so the seam needs a gap tolerance.
+  basin <- st_geometry(hydroloom::dissolve_polygons(st_sf(geometry = geom),
+    gap_tolerance = 250, max_hole_area = Inf, single_polygon = TRUE))
+
+  st_sf(dasqkm = as.numeric(set_units(st_area(basin), "km^2")),
+    geometry = basin)
+}
+
 #' Compute gap area between outlet and HUC12 outlets
 #'
 #' Splits the catchment at each HUC12 outlet, navigates upstream from each
@@ -1596,9 +1748,9 @@ assemble_da_estimates <- function(hu12_result, extra_and_local) {
 #'   TRUE, the outlet catchment is split at the gage point and only the
 #'   upstream portion contributes to gap area.
 #' @return list with \code{extra_net} (data.frame), \code{extra_catchments}
-#'   (sf data.frame), \code{split_catchment} (sf data.frame),
-#'   \code{extra_and_local} (numeric area in sq km),
-#'   \code{outlet_split_catchment} (sf data.frame or NULL).
+#'   (sf data.frame), \code{split_catchment} (sf data.frame or NULL when no
+#'   split catchment could be retrieved), \code{extra_and_local} (numeric area
+#'   in sq km), \code{outlet_split_catchment} (sf data.frame or NULL).
 #' @noRd
 compute_gap_area <- function(outlet_huc, all_net, nav_net = all_net,
   split_catchments = NULL, gap_catchments = NULL, outlet_info = NULL) {
@@ -1617,18 +1769,25 @@ compute_gap_area <- function(outlet_huc, all_net, nav_net = all_net,
       split_catch <- get_split_catchment(
         st_geometry(oh),
         upstream = FALSE
-      ) |> st_transform(5070)
+      )
     } else {
       split_catch <- split_catchments[[as.character(oh$comid)]]
     }
 
-    split_catch$dasqkm <- as.numeric(set_units(st_area(split_catch), "km^2"))
-    split_catches[[i]] <- split_catch
+    if(valid_split_catchment(split_catch)) {
+      split_catch <- st_transform(split_catch, 5070)
+      split_catch$dasqkm <- as.numeric(set_units(st_area(split_catch), "km^2"))
+      split_catches[[i]] <- split_catch
 
-    local_dasqkm <-
-      split_catch$dasqkm[split_catch$id == "catchment"] -
-      split_catch$dasqkm[split_catch$id == "splitCatchment"]
-    total_local_dasqkm <- total_local_dasqkm + local_dasqkm
+      local_dasqkm <-
+        split_catch$dasqkm[split_catch$id == "catchment"] -
+        split_catch$dasqkm[split_catch$id == "splitCatchment"]
+      total_local_dasqkm <- total_local_dasqkm + local_dasqkm
+    } else {
+      warning("No split catchment available for HUC12 outlet COMID ",
+        oh$comid, "; its local area is omitted from the drainage area ",
+        "estimate.", call. = FALSE)
+    }
 
     ut_comids <- navigate_hydro_network(nav_net, oh$comid, mode = "UT")
     all_hu12_outlet_ut <- union(all_hu12_outlet_ut, ut_comids)
@@ -1651,7 +1810,10 @@ compute_gap_area <- function(outlet_huc, all_net, nav_net = all_net,
     outlet_split_catchment <- tryCatch({
       sc <- get_split_catchment(
         outlet_info$gage_point, upstream = FALSE
-      ) |> st_transform(5070)
+      )
+      if(!valid_split_catchment(sc))
+        stop("processing service returned no usable split catchment")
+      sc <- st_transform(sc, 5070)
       sc$dasqkm <- as.numeric(set_units(st_area(sc), "km^2"))
       sc
     }, error = function(e) {

@@ -58,26 +58,23 @@ Names are not modified from the NHDPlusHR geodatabase.
 Set layers to "NULL" to get all layers.
 }
 \examples{
-\dontrun{
-# Note this will download a lot of data to a temp directory.
-# Change 'temp_dir' to your directory of choice.
-temp_dir <- file.path(hydrogeofetch_data_dir(), "temp_hr_cache")
+\donttest{
+# a small NHDPlusHR sample, downloaded to a temporary directory
+work_dir <- file.path(tempdir(check = TRUE), "hr_example")
+try(source(system.file("extdata/nhdplushr_data.R", package = "hydrogeofetch")))
 
-download_dir <- download_nhdplushr(temp_dir, c("0302", "0303"))
+if(file.exists(file.path(work_dir, "03_sub.gpkg"))) {
 
-get_nhdplushr(download_dir, file.path(download_dir, "nhdplus_0302-03.gpkg"))
+get_nhdplushr(work_dir, pattern = "03_sub.gpkg")
 
-get_nhdplushr(download_dir,
-              file.path(download_dir, "nhdplus_0302-03.gpkg"),
-              layers = NULL, overwrite = TRUE)
+get_nhdplushr(work_dir, pattern = "03_sub.gpkg", layers = NULL)
 
-get_nhdplushr(download_dir,
-              file.path(download_dir, "nhdplus_0302-03.gpkg"),
-              layers = "NHDFlowline", overwrite = TRUE,
-              min_size_sqkm = 10, simp = 10, proj = "+init=epsg:5070")
+get_nhdplushr(work_dir, pattern = "03_sub.gpkg",
+              layers = "NHDFlowline",
+              min_size_sqkm = 10, simp = 10, proj = 5070)
 
-# Cleanup
-unlink(temp_dir, recursive = TRUE)
+}
 
+# For real data, download subregions first -- see download_nhdplushr().
 }
 }

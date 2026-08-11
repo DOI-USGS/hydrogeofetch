@@ -155,13 +155,26 @@ from surface network contributing drainage area.
    immediate HU12 outlets are summed. Split-catchment logic is applied
    at both the HU12 outlets and (optionally) the gage point.
 
-7. **Assemble scalar estimates.** Six drainage area estimates are
+7. **Dissolve the NHDPlusV2 basin (optional).** The catchment polygons
+   for the upstream network are dissolved into a single boundary,
+   `drainage_basin`, with the outlet catchment replaced by the upstream
+   side of its split so the portion below the gage is not included. No
+   HU boundaries take part. This needs the upstream catchment polygons,
+   so it requires `catchments = TRUE` or a `catchment_data` table --
+   except for headwater starts, where the gap zone is already the whole
+   upstream network and the basin comes back either way.
+
+8. **Assemble scalar estimates.** Six drainage area estimates are
    computed: total and contributing at the HU12, HU10, and HU8
    query levels. Each equals the HU12 polygon area sum plus the gap
-   area. A seventh scalar, `network_da_sqkm`, is the NHDPlusV2
-   cumulative drainage area at the outlet -- a comparison baseline.
+   area. Two more scalars serve as comparison baselines.
+   `network_da_sqkm` is the NHDPlusV2 cumulative drainage area
+   *attribute* at the outlet, which covers the whole outlet catchment.
+   `basin_da_sqkm` is the *geometric* area of `drainage_basin`, with the
+   below-gage portion removed. The two differ by that portion plus the
+   usual drift between a published attribute and a measured geometry.
 
-8. **NHDPlus High Resolution (NHDPlusHR) estimate (optional).** When
+9. **NHDPlus High Resolution (NHDPlusHR) estimate (optional).** When
    `nhdplushr = TRUE`, the function fetches NHDPlusHR flowlines and
    catchments for the basin bounding box, indexes the start point to
    the HR network (disambiguating by drainage area), navigates
@@ -182,6 +195,12 @@ through a catchment, and the portion upstream of the pour point
 overlaps with HU12 area already counted. The split-catchment service
 divides this catchment and the upstream overlap is excluded from the
 gap area to avoid double-counting.
+
+In a headwater catchment the split carries more weight than elsewhere.
+Nothing drains to the gage from further upstream, so the upstream side
+of the split is the entire basin by construction, and the drainage area
+is taken from that one polygon rather than assembled from HU12 areas
+and a gap.
 
 The *Outlet Catchment Splitting* section later in this vignette
 illustrates both splits using Davidson Creek (USGS streamgage 08110075).
@@ -233,8 +252,10 @@ latency and is subject to rate limits or outages:
 
 - **NHDPlusV2 OGC API** (`get_nhdplus`): fetches flowline attributes,
   catchment geometries in the gap zone, and (when `catchments = TRUE`)
-  the full upstream catchment polygon set. Skipped for flowline
-  attributes when `local_navigation = TRUE`.
+  the full upstream catchment polygon set. That full set is also what
+  the dissolved `drainage_basin` is built from, so `catchments = TRUE`
+  buys both. Skipped for flowline attributes when
+  `local_navigation = TRUE`.
 
 - **WBD / HU service** (`get_huc`, `get_huc12_by_huc`): fetches
   HU12 polygons by ID or by parent HU. Skipped when `huc12_data` is
@@ -300,8 +321,11 @@ hr_basins <- c("black_earth", "french_broad", "davidson", "purgatoire",
   "james")
 
 fetch_or_load <- function(name, start) {
+  # v2 caches carry drainage_basin / basin_da_sqkm. Bumping the name
+  # retires pre-basin caches rather than reading past their missing
+  # elements.
   rds_path <- file.path(data_dir,
-    paste0("da_est_", name, ".rds"))
+    paste0("da_est_v2_", name, ".rds"))
   if(file.exists(rds_path)) {
     message("Loading cached: ", name)
     return(readRDS(rds_path))
@@ -414,6 +438,9 @@ basin_labels <- c(
 summary_df <- data.frame(
   basin = basin_labels[names(da_results)],
   network_da = vapply(da_results, \(x) x$network_da_sqkm, numeric(1)),
+  basin_da = vapply(da_results,
+    \(x) ifelse(is.na(x$basin_da_sqkm), NA_real_, x$basin_da_sqkm),
+    numeric(1)),
   da_huc12 = vapply(da_results, \(x) x$da_huc12_sqkm, numeric(1)),
   da_huc10 = vapply(da_results,
     \(x) ifelse(is.na(x$da_huc10_sqkm), NA_real_, x$da_huc10_sqkm),
@@ -443,7 +470,7 @@ if(!is.null(nwis_da)) {
 }
 
 knitr::kable(summary_df, digits = 1,
-  col.names = c("Basin", "Network DA", "HU12 DA",
+  col.names = c("Basin", "Network DA", "Basin DA", "HU12 DA",
     "HU10 DA", "HU8 DA", "NHDPlusHR DA",
     "NWIS DA", "NWIS Contributing DA"),
   caption = "Drainage area estimates (sq km) by basin and method")

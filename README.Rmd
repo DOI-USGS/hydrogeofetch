@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 # hydrogeofetch <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/master/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools) [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/nhdplusTools)](https://cran.r-project.org/package=nhdplusTools) [![CRAN](https://www.r-pkg.org/badges/version/nhdplusTools)](https://cran.r-project.org/package=nhdplusTools)
+![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
 
 ## Renamed from `nhdplusTools`
 
@@ -42,7 +42,8 @@ The typical workflow is now: use hydrogeofetch to fetch and prepare NHD data, th
 ### Recommended Citation:
 
 ```
-Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial Fabric Data Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
+  Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial
+  Fabric Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
 ```
 
 ### Installation:
@@ -158,15 +159,6 @@ used for data discovery.
 ##### NHDPlus Version
 Initial package development focused on the [National Seamless NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-data)
 database. [NHDPlus High Resolution](https://www.usgs.gov/national-hydrography/nhdplus-high-resolution) is also supported.
-
-### Related similar packages:
-https://github.com/mbtyers/riverdist  
-https://github.com/jsta/nhdR  
-https://github.com/lawinslow/hydrolinks  
-https://github.com/mikejohnson51/HydroData    
-https://github.com/ropensci/FedData    
-https://github.com/hyriver/pygeohydro
-... others -- please suggest additions?
 
 ### Build and release:
 

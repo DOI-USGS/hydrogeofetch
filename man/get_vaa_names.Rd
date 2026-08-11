@@ -16,6 +16,18 @@ character vector
 }
 \description{
 Find variables available from the NHDPlusV2 attribute data.frame
+
+Calling this function downloads the attribute table to \link{get_vaa_path}
+if it is not already cached there. The table is roughly 260 MB, so this
+function has no example. 
+
+\preformatted{
+old_dir <- hydrogeofetch_data_dir()
+hydrogeofetch_data_dir(file.path(tempdir(), "vaa"))
+
+get_vaa_names()
+
+hydrogeofetch_data_dir(old_dir)}
 }
 \details{
 The VAA data is a aggregate table of information from the NHDPlusV2
@@ -26,13 +38,4 @@ To see the location of cached data on your machine use
 \code{\link{get_vaa_path}}.
 To view aggregate data and documentation, see
 \href{https://www.hydroshare.org/resource/6092c8a62fac45be97a09bfd0b0bf726/}{here}
-}
-\examples{
-\dontrun{
-# This will download the vaa file to the path from get_vaa_path()
-get_vaa_names()
-
-#cleanup if desired
-unlink(dirname(get_vaa_path()), recursive = TRUE)
-}
 }

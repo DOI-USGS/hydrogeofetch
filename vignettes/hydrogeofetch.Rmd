@@ -28,8 +28,7 @@ knitr::opts_chunk$set(
   cache.path=(cache_path)
 )
 
-oldoption <- options(scipen = 9999,
-                     "rgdal_show_exportToProj4_warnings"="none")
+oldoption <- options(scipen = 9999)
 
 ```
 
@@ -38,7 +37,7 @@ oldoption <- options(scipen = 9999,
 Pick an outlet location and download some data.
 ```{r tldr}
 # Uncomment to install!
-# install.packages("nhdplusTools")
+# install.packages("hydrogeofetch")
 
 library(hydrogeofetch)
 library(sf)
@@ -330,7 +329,7 @@ gage <- sf::read_sf(output_file, "Gage")
 hydroloom::index_points_to_lines(flowline, sf::st_geometry(gage), precision = 10)
 ```
 
-See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and `vignette("migrating_from_nhdplusTools")` for more.
+See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and the [migrating from nhdplusTools article](https://doi-usgs.github.io/nhdplusTools/articles/migrating_from_nhdplusTools.html) for more.
 
 ```{r teardown, include=FALSE}
 options(oldoption)

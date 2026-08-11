@@ -175,6 +175,8 @@ get_nldi_feature <- function(nldi_feature) {
 #' will use a raindrop trace service to find the nearest downslope flowline
 #' location.
 #' @param location numeric WGS84 lon/lat pair (X, Y)
+#' @return sf data.frame of estimated network locations for the given point.
+#' NULL if the NLDI service is unavailable.
 #' @export
 #' @examples
 #' \donttest{

@@ -44,14 +44,16 @@
 #' plot(sf::st_geometry(SU_wb[grepl("Otsego", SU_wb$gnisidlabel),]),
 #'      col = "blue", border = "NA") }
 #'
-#' # given a workunitid, can query for features in that work unit
-#' wufl <- get_3dhp(ids = "workunitid:300585", type = "flowline")
+#' # given a workunitid, can query for all features in that work unit with
+#' # ids = "workunitid:300585" -- not run here as a work unit is tens of
+#' # thousands of features.
 #'
 #' # given universalreferenceid (reachcodes), can query for them but only
 #' # for hydrolocations. This is useful for looking up mainstem ids.
 #'
 #' if(!is.null(hydrolocation)) {
-#' get_3dhp(universalreferenceid = unique(hydrolocation$universalreferenceid),
+#' get_3dhp(universalreferenceid =
+#'            head(unique(hydrolocation$universalreferenceid), 5),
 #'          type = "hydrolocation")
 #' }
 #'}

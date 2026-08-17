@@ -1,10 +1,3 @@
-hydrogeofetch 2.0.1
-==========
-
-- `get_drainage_area_estimates()` now returns `drainage_basin`, the upstream NHDPlusV2 catchments dissolved into a single boundary with the portion below the submitted point trimmed off the outlet catchment, along with its area as `basin_da_sqkm`. No HUC boundaries are involved. Both are available when `catchments = TRUE` or `catchment_data` is supplied, and always for headwater starts. For a headwater the basin is the whole answer, so the drainage area estimates are taken from its geometry rather than from an NHDPlus `areasqkm` attribute with a geometric difference subtracted from it.
-- `get_drainage_area_estimates()` no longer reports a `drainage_basin` carrying area below the submitted point when a split of the outlet catchment was due but the processing service returned none. A failed split was previously indistinguishable from a start that needed no split, and the full outlet catchment was kept in both cases. `drainage_basin` is now NULL and `basin_da_sqkm` NA when the split is missing.
-- `get_drainage_area_estimates()` no longer drops catchments from `drainage_basin` when a start resolves to several outlet COMIDs and a split catchment is available. A split covers one outlet catchment, so substituting it while removing several lost the catchments of the outlets that were not split.
-
 hydrogeofetch 2.0.0
 ==========
 
@@ -70,6 +63,12 @@ These hydroloom functions are no longer re-exported; call `hydroloom::fn()` dire
 
 - Removed `pbapply` from Imports (no longer needed)
 - Removed `future`, `future.apply` from Suggests (no longer needed)
+
+## Function Updates
+
+- `get_drainage_area_estimates()` now returns `drainage_basin`, the upstream NHDPlusV2 catchments dissolved into a single boundary with the portion below the submitted point trimmed off the outlet catchment, along with its area as `basin_da_sqkm`. No HUC boundaries are involved. Both are available when `catchments = TRUE` or `catchment_data` is supplied, and always for headwater starts. For a headwater the basin is the whole answer, so the drainage area estimates are taken from its geometry rather than from an NHDPlus `areasqkm` attribute with a geometric difference subtracted from it.
+- `get_drainage_area_estimates()` no longer reports a `drainage_basin` carrying area below the submitted point when a split of the outlet catchment was due but the processing service returned none. A failed split was previously indistinguishable from a start that needed no split, and the full outlet catchment was kept in both cases. `drainage_basin` is now NULL and `basin_da_sqkm` NA when the split is missing.
+- `get_drainage_area_estimates()` no longer drops catchments from `drainage_basin` when a start resolves to several outlet COMIDs and a split catchment is available. A split covers one outlet catchment, so substituting it while removing several lost the catchments of the outlets that were not split.
 
 nhdplusTools 1.5.0
 ==========

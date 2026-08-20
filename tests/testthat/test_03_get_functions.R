@@ -28,6 +28,28 @@ test_that("query water oafeat...",{
                "Either")
 })
 
+# ==============================================================================
+
+test_that("bbox query coordinates are rounded outward", {
+  # a bbox that came back from a coordinate transform carries digits that
+  # differ between PROJ builds; the request has to be reproducible anyway
+  bb <- c(-115.212532125541, 48.7726462196656,
+          -114.894819558585, 48.9872432733115)
+
+  rounded <- hydrogeofetch:::round_bbox_out(bb)
+
+  expect_equal(paste(rounded, collapse = ","),
+               "-115.212533,48.772646,-114.894819,48.987244")
+
+  # rounding outward so the search area never shrinks
+  expect_true(all(rounded[1:2] <= bb[1:2]))
+  expect_true(all(rounded[3:4] >= bb[3:4]))
+
+  # a bbox already at or below the rounding precision is left alone
+  exact <- c(-115.0631, 48.86286, -115.0345, 48.88706)
+  expect_equal(hydrogeofetch:::round_bbox_out(exact), exact)
+})
+
 # Walk our way through the 7 different offerings...
 #   server   user_call           pygeoapi       ids
 # 1 wmadata       huc08               huc08      huc8
@@ -81,7 +103,9 @@ test_that("huc", {
   HUC12id2 = get_huc(id = areaHUC12$huc_12, type = "huc12_nhdplusv2") |>
     sf::st_transform(sf::st_crs(area))
 
-  expect_identical(HUC12id2$geometry, areaHUC12$geometry)
+  # expect_equal, not expect_identical -- HUC12id2 has been through a
+  # transform, so its coordinates carry PROJ-build-dependent last digits
+  expect_equal(HUC12id2$geometry, areaHUC12$geometry)
 
   hu12 <- get_huc(AOI = pt, type = "huc12_2020")
   expect_equal(hu12$huc12, "170101010806")

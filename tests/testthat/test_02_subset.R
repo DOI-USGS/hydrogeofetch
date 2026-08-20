@@ -172,9 +172,6 @@ test_that("subset download", {
 
   unlink(file.path(temp_dir, "*"))
 
-  bs <- get("bb_break_size", hydrogeofetch:::hydrogeofetch_env)
-  assign("bb_break_size", value = 0.1, hydrogeofetch:::hydrogeofetch_env)
-
   fi <- subset_nhdplus(comids = all_comids,
                        output_file = out_file,
                        nhdplus_data = "download",
@@ -182,8 +179,6 @@ test_that("subset download", {
                        status = FALSE)
 
   expect_equal(nrow(fi$NHDFlowline_Network), length(all_comids))
-
-  assign("bb_break_size", value = bs, hydrogeofetch:::hydrogeofetch_env)
 
   })
 

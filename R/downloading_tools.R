@@ -428,6 +428,24 @@ hgf_download <- function(url, path, progress = TRUE) {
 #' @noRd
 mem_get_json <- memoise::memoise(\(url) hgf_json(url, simplifyVector = FALSE))
 
+#' round a lon/lat bounding box outward
+#' @description Coordinate transforms differ in their last few digits between
+#' PROJ builds, so a bbox derived from one carries platform-specific noise into
+#' the request URL. Rounding to a fixed precision makes the request
+#' reproducible; rounding outward keeps it from ever shrinking the search area.
+#' 1e-6 degrees is roughly 0.1 m.
+#' @param bb bbox or length-4 numeric in xmin, ymin, xmax, ymax order.
+#' @param digits integer. Decimal places to round to.
+#' @return length-4 numeric in xmin, ymin, xmax, ymax order.
+#' @noRd
+round_bbox_out <- function(bb, digits = 6) {
+  s <- 10^digits
+  # round before floor/ceiling so representation error in an already-exact
+  # coordinate can't push it a whole unit outward
+  v <- round(as.numeric(bb) * s, 3)
+  c(floor(v[1:2]), ceiling(v[3:4])) / s
+}
+
 #' @importFrom sf st_make_valid st_as_sfc st_bbox st_buffer st_transform st_crs
 check_query_params <- function(AOI, ids, type, where, source, t_srs, buffer) {
   # If t_src is not provided set to AOI CRS

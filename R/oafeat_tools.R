@@ -281,7 +281,7 @@ get_oafeat <- function(base,
 
     # pull features with paging if necessary
 
-    bbox <- paste(AOI, collapse = ",")
+    bbox <- paste(round_bbox_out(AOI), collapse = ",")
 
     base_call <- paste0(base_call, "?bbox=", bbox)
 

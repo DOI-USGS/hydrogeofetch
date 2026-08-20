@@ -135,6 +135,13 @@ test_that("get feature works", {
 
 })
 
+test_that("request coordinates are rounded", {
+  # a coordinate that has been through a transform carries digits that differ
+  # between PROJ builds; the request body has to come out the same either way
+  expect_equal(hydrogeofetch:::coord_chr(-89.21579999999998), "-89.2158")
+  expect_equal(hydrogeofetch:::coord_chr(42.9561), "42.9561")
+})
+
 test_that("raindrop", {
 
   with_mock_hgf("raindrop", {

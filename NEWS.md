@@ -1,3 +1,20 @@
+hydrogeofetch 2.0.1
+==========
+
+## Bug fixes
+
+- Bounding box coordinates in OGC API Features requests are now rounded to six
+  decimal places (about 0.1 m) instead of being sent at full floating point
+  precision. Those coordinates come out of a projection round trip, and their
+  last digits differ between PROJ builds, which made the request URL -- and the
+  recorded test fixtures keyed on it -- platform dependent. Rounding is outward,
+  so the queried area never shrinks.
+- Point coordinates that reach a request the same way -- through
+  `discover_nhdplus_id()` and the processing-service calls behind
+  `get_raindrop_trace()`, `get_split_catchment()`, `get_xs_point()`, and
+  `get_xs_points()` -- are rounded to seven decimal places (about a
+  centimeter) for the same reason.
+
 hydrogeofetch 2.0.0
 ==========
 

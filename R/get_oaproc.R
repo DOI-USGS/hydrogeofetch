@@ -404,14 +404,25 @@ check_point <- function(p) {
   })
 }
 
+#' format a coordinate for a request
+#' @description These coordinates come out of `check_point()`, which transforms
+#' to EPSG:4326, and go into the request body verbatim. A transform leaves
+#' digits that differ between PROJ builds, so rounding is what keeps the same
+#' point producing the same request. 1e-7 degrees is about a centimeter, finer
+#' than any of these services resolve.
+#' @param x numeric. A longitude or latitude in decimal degrees.
+#' @return character. The rounded coordinate.
+#' @noRd
+coord_chr <- function(x) as.character(round(x, 7))
+
 make_json_input_trace <- function(p, raindrop = TRUE, direction = "down") {
 
   jsonlite::toJSON(list(inputs = list(list(id = "lat",
                                            type = "text/plain",
-                                           value = as.character(p[2])),
+                                           value = coord_chr(p[2])),
                                       list(id = "lon",
                                            type = "text/plain",
-                                           value = as.character(p[1])),
+                                           value = coord_chr(p[1])),
                                       list(id = "raindroptrace",
                                            type = "text/plain",
                                            value = ifelse(raindrop,
@@ -426,10 +437,10 @@ make_json_input_split <- function(p, upstream = TRUE) {
 
   jsonlite::toJSON(list(inputs = list(list(id = "lat",
                                            type = "text/plain",
-                                           value = as.character(p[2])),
+                                           value = coord_chr(p[2])),
                                       list(id = "lon",
                                            type = "text/plain",
-                                           value = as.character(p[1])),
+                                           value = coord_chr(p[1])),
                                       list(id = "upstream",
                                            type = "text/plain",
                                            value = ifelse(upstream,
@@ -445,10 +456,10 @@ make_json_input_xspt <- function(p, w, n) {
 
   jsonlite::toJSON(list(inputs = list(list(id = "lat",
                                            type = "text/plain",
-                                           value = as.character(p[2])),
+                                           value = coord_chr(p[2])),
                                       list(id = "lon",
                                            type = "text/plain",
-                                           value = as.character(p[1])),
+                                           value = coord_chr(p[1])),
                                       list(id = "width",
                                            type = "text/plain",
                                            value = as.character(w)),
@@ -463,10 +474,10 @@ make_json_input_xspts <- function(p1, p2, n, r) {
 
   jsonlite::toJSON(list(inputs = list(list(id = "lat",
                                            type = "text/plain",
-                                           value = as.character(c(p1[2], p2[2]))),
+                                           value = coord_chr(c(p1[2], p2[2]))),
                                       list(id = "lon",
                                            type = "text/plain",
-                                           value = as.character(c(p1[1], p2[1]))),
+                                           value = coord_chr(c(p1[1], p2[1]))),
                                       list(id = "3dep_res",
                                            type = "text/plain",
                                            value = as.character(r)),

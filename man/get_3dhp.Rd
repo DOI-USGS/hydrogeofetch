@@ -44,7 +44,7 @@ a simple features (sf) object or valid types if no type supplied
 }
 \description{
 Calls the 3DHP_all web service and returns sf data.frames for the selected
-layers. See https://hydro.nationalmap.gov/arcgis/rest/services/3DHP_all/MapServer
+layers. See https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer
 for source data documentation.
 }
 \details{
@@ -87,13 +87,17 @@ if(!is.null(SU_wb)) {
 plot(sf::st_geometry(SU_wb[grepl("Otsego", SU_wb$gnisidlabel),]),
      col = "blue", border = "NA") }
 
-# given a workunitid, can query for features in that work unit
-wufl <- get_3dhp(ids = "workunitid:300585", type = "flowline")
+# given a workunitid, can query for all features in that work unit with
+# ids = "workunitid:300585" -- not run here as a work unit is tens of
+# thousands of features.
 
 # given universalreferenceid (reachcodes), can query for them but only
 # for hydrolocations. This is useful for looking up mainstem ids.
 
-get_3dhp(universalreferenceid = unique(hydrolocation$universalreferenceid),
+if(!is.null(hydrolocation)) {
+get_3dhp(universalreferenceid =
+           head(unique(hydrolocation$universalreferenceid), 5),
          type = "hydrolocation")
+}
 }
 }

@@ -271,6 +271,212 @@ test_that("union_huc12_sets deduplicates and adds missing", {
   expect_equal(nrow(hydrogeofetch:::union_huc12_sets(empty, base)), 2)
 })
 
+test_that("valid_split_catchment rejects degraded service responses", {
+  poly <- sf::st_sfc(
+    sf::st_polygon(list(rbind(c(0, 0), c(1, 0), c(1, 1), c(0, 1), c(0, 0)))),
+    crs = 5070
+  )
+
+  good <- sf::st_sf(id = c("catchment", "splitCatchment"),
+                    geometry = c(poly, poly))
+  expect_true(hydrogeofetch:::valid_split_catchment(good))
+
+  # get_split_catchment returns NULL when the processing service fails
+  expect_false(hydrogeofetch:::valid_split_catchment(NULL))
+
+  # service returned features but not the expected pair
+  expect_false(hydrogeofetch:::valid_split_catchment(
+    sf::st_sf(id = "catchment", geometry = poly)))
+  expect_false(hydrogeofetch:::valid_split_catchment(
+    sf::st_sf(other = "x", geometry = poly)))
+  expect_false(hydrogeofetch:::valid_split_catchment(
+    sf::st_sf(geometry = sf::st_sfc(crs = 5070))))
+})
+
+test_that("compute_gap_area degrades when split catchment is unavailable", {
+  # 1 -> 2 -> 3 (outlet) on one levelpath, HUC12 outlet at comid 1.
+  # Nothing is upstream of comid 1, so the gap is comids 2 and 3.
+  all_net <- data.frame(
+    comid = c(1, 2, 3),
+    toid = c(2, 3, 0),
+    areasqkm = rep(10, 3),
+    levelpathi = rep(1, 3),
+    hydroseq = c(3, 2, 1),
+    dnhydroseq = c(2, 1, 0),
+    dnminorhyd = rep(0, 3)
+  )
+
+  pt <- sf::st_sfc(sf::st_point(c(-89.5, 43)), crs = 4326)
+  outlet_huc <- sf::st_sf(comid = 1, identifier = "070900020101",
+                          geometry = pt)
+
+  poly <- sf::st_sfc(
+    sf::st_polygon(list(rbind(c(0, 0), c(1, 0), c(1, 1), c(0, 1), c(0, 0)))),
+    crs = 5070
+  )
+  gap_catchments <- sf::st_sf(comid = c(2, 3), geometry = c(poly, poly))
+
+  # empty list -> lookup yields NULL, standing in for a failed service call
+  expect_warning(
+    result <- hydrogeofetch:::compute_gap_area(
+      outlet_huc, all_net,
+      split_catchments = list(),
+      gap_catchments = gap_catchments
+    ),
+    "No split catchment available for HUC12 outlet COMID 1"
+  )
+
+  # gap area still computed from the extra network, local area omitted
+  expect_equal(result$extra_and_local, 20)
+  expect_null(result$split_catchment)
+  expect_s3_class(result$extra_catchments, "sf")
+})
+
+test_that("dissolve_nhdplusv2_basin unions catchments and trims the outlet", {
+  # three 1000 m squares in a row: comids 1 and 2 upstream, 3 the outlet.
+  # Each is 1 sq km, so the full union is 3 sq km.
+  sq <- function(x) {
+    sf::st_polygon(list(rbind(c(x, 0), c(x + 1000, 0), c(x + 1000, 1000),
+                              c(x, 1000), c(x, 0))))
+  }
+
+  catch <- sf::st_sf(
+    featureid = c(1, 2, 3),
+    geometry = sf::st_sfc(sq(0), sq(1000), sq(2000), crs = 5070)
+  )
+
+  all_net <- data.frame(comid = c(1, 2, 3), toid = c(2, 3, 0))
+
+  # split keeps the upstream half of the outlet catchment: 0.5 sq km
+  half <- sf::st_polygon(list(rbind(c(2000, 0), c(2500, 0), c(2500, 1000),
+                                    c(2000, 1000), c(2000, 0))))
+  split <- sf::st_sf(
+    id = c("catchment", "splitCatchment"),
+    geometry = sf::st_sfc(sq(2000), half, crs = 5070)
+  )
+
+  basin <- hydrogeofetch:::dissolve_nhdplusv2_basin(all_net, 3, catch, split)
+
+  expect_s3_class(basin, "sf")
+  expect_equal(nrow(basin), 1)
+  # dissolve_polygons snaps nodes, costing about a square meter on these
+  # squares, so areas are compared with a tolerance well inside any real error
+  expect_equal(basin$dasqkm, 2.5, tolerance = 1e-5)
+  expect_equal(sf::st_crs(basin), sf::st_crs(5070))
+
+  # no split -> the full outlet catchment stays in
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(all_net, 3, catch, NULL)$dasqkm, 3,
+    tolerance = 1e-5)
+
+  # headwater: the split catchment is the whole basin by construction
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(
+      data.frame(comid = 3, toid = 0), 3, catch[3, ], split)$dasqkm, 0.5,
+    tolerance = 1e-5)
+
+  # several outlet comids and no split, as for a waterbody start
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(all_net, c(2, 3), catch,
+                                             NULL)$dasqkm, 3,
+    tolerance = 1e-5)
+
+  # comid stands in for featureid
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(
+      all_net, 3, dplyr::rename(catch, comid = "featureid"), split)$dasqkm, 2.5,
+    tolerance = 1e-5)
+})
+
+test_that("dissolve_nhdplusv2_basin refuses a due split that is missing", {
+  sq <- function(x) {
+    sf::st_polygon(list(rbind(c(x, 0), c(x + 1000, 0), c(x + 1000, 1000),
+                              c(x, 1000), c(x, 0))))
+  }
+  catch <- sf::st_sf(
+    featureid = c(1, 2, 3),
+    geometry = sf::st_sfc(sq(0), sq(1000), sq(2000), crs = 5070)
+  )
+  all_net <- data.frame(comid = c(1, 2, 3), toid = c(2, 3, 0))
+
+  # no split was due, so the whole outlet catchment belongs in the basin
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(
+      all_net, 3, catch, NULL,
+      list(threshold_exceeded = FALSE))$dasqkm, 3, tolerance = 1e-5)
+
+  # a split was due and did not come back: keeping the outlet catchment would
+  # report below-point area as basin, so there is no basin to report
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(
+    all_net, 3, catch, NULL, list(threshold_exceeded = TRUE)))
+
+  # same for a response the service degraded to a single catchment row
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(
+    all_net, 3, catch,
+    sf::st_sf(id = "catchment", geometry = sf::st_sfc(sq(2000), crs = 5070)),
+    list(threshold_exceeded = TRUE)))
+
+  # a due split that arrived is trimmed as usual
+  half <- sf::st_polygon(list(rbind(c(2000, 0), c(2500, 0), c(2500, 1000),
+                                    c(2000, 1000), c(2000, 0))))
+  split <- sf::st_sf(
+    id = c("catchment", "splitCatchment"),
+    geometry = sf::st_sfc(sq(2000), half, crs = 5070)
+  )
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(
+      all_net, 3, catch, split, list(threshold_exceeded = TRUE))$dasqkm, 2.5,
+    tolerance = 1e-5)
+
+  # a split covers one outlet catchment. Substituting it while dropping both
+  # outlets would silently lose comid 2, reporting 1.5 where 2.5 is right.
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(
+    all_net, c(2, 3), catch, split, list(threshold_exceeded = TRUE)))
+
+  # with no split there is nothing to substitute, so both outlets are kept
+  expect_equal(
+    hydrogeofetch:::dissolve_nhdplusv2_basin(
+      all_net, c(2, 3), catch, NULL,
+      list(threshold_exceeded = FALSE))$dasqkm, 3, tolerance = 1e-5)
+})
+
+test_that("dissolve_nhdplusv2_basin returns NULL without full coverage", {
+  poly <- sf::st_sfc(
+    sf::st_polygon(list(rbind(c(0, 0), c(1, 0), c(1, 1), c(0, 1), c(0, 0)))),
+    crs = 5070
+  )
+  all_net <- data.frame(comid = c(1, 2, 3), toid = c(2, 3, 0))
+
+  # gap-zone catchments only, as when catchments = FALSE
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(
+    all_net, 3, sf::st_sf(featureid = c(2, 3), geometry = c(poly, poly)), NULL))
+
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(all_net, 3, NULL, NULL))
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(
+    all_net, 3, sf::st_sf(geometry = sf::st_sfc(crs = 5070)), NULL))
+
+  # no usable id column
+  expect_null(hydrogeofetch:::dissolve_nhdplusv2_basin(
+    all_net, 3, sf::st_sf(other = 1, geometry = poly), NULL))
+})
+
+test_that("headwater basin area drives the DA estimates", {
+  # in a headwater there are no upstream HUC12s, so the estimates come
+  # entirely from the basin area substituted into extra_and_local
+  hu12_result <- list(
+    hu12_by_huc12 = sf::st_sf(geometry = sf::st_sfc(crs = 5070)),
+    hu12_by_huc10 = NULL,
+    hu12_by_huc08 = NULL
+  )
+
+  est <- hydrogeofetch:::assemble_da_estimates(hu12_result, 0.5)
+
+  expect_equal(est$da_huc12_sqkm, 0.5)
+  expect_equal(est$contrib_da_huc12_sqkm, 0.5)
+  expect_true(is.na(est$da_huc10_sqkm))
+  expect_true(is.na(est$da_huc08_sqkm))
+})
+
 test_that("get_drainage_area_estimates Black Earth Creek smoke test", {
   skip_if_no_integration()
 

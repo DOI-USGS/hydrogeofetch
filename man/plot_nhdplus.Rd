@@ -41,9 +41,9 @@ override the default set by the package.}
 
 \item{add}{boolean should this plot be added to an already built map.}
 
-\item{actually_plot}{boolean actually draw the plot? Use to get data subset only.}
+\item{actually_plot}{boolean actually draw the plot? Used to get data subset only.}
 
-\item{overwrite}{passed on the \link{subset_nhdplus}.}
+\item{overwrite}{passed on to \link{subset_nhdplus}.}
 
 \item{flowline_only}{boolean only subset and plot flowlines only, default=FALSE}
 
@@ -88,8 +88,10 @@ The following shows the defaults that can be altered.
         nwissite = list(col = "grey40", border = NA, pch = 17, cex = 1),
         huc12pp = list(col = "white", border = "black", pch = 22, cex = 1),
         wqp = list(col = "red", border = NA, pch = 20, cex = 1))}
-  \item network_wtbd  \code{list(lwd = 1, col = "lightblue", border = "black")}
-  \item off_network_wtbd  \code{list(lwd = 1, col = "darkblue", border = "black")}
+  \item network_wtbd \preformatted{
+    list(lwd = 1, col = "lightblue", border = "black")}
+  \item off_network_wtbd \preformatted{
+    list(lwd = 1, col = "darkblue", border = "black")}
 
 }
 
@@ -98,7 +100,6 @@ If adding additional layers to the plot, data must be projected to EPSG:3857 wit
 }
 \examples{
 \donttest{
-options("rgdal_show_exportToProj4_warnings"="none")
 # Beware plot_nhdplus caches data to the default location.
 # If you do not want data in "user space" change the default.
 old_dir <- hydrogeofetch::hydrogeofetch_data_dir()

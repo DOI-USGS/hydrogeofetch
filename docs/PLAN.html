@@ -71,7 +71,7 @@
 <h3 id="id_2a-package-identity-">2a. Package identity ✓<a class="anchor" aria-label="anchor" href="#id_2a-package-identity-"></a></h3>
 <ul class="task-list"><li><label><input type="checkbox" checked>DESCRIPTION: <code>Package: hydrogeofetch</code>, <code>Title: Hydrologic Geospatial Fabric Extraction Tool Chain</code>, <code>Version: 2.0.0</code>, updated <code>Description:</code> (leave <code>URL:</code> and <code>BugReports:</code> pointing at current repo until milestone 6)</label></li>
 <li><label><input type="checkbox" checked>NEWS.md: added hydrogeofetch 2.0.0 header; nhdplusTools history preserved below</label></li>
-<li><label><input type="checkbox" checked>README.Rmd: updated title, heading, narrative text. Badge URLs, <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code>, <code><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">remotes::install_github()</a></code> left pointing at nhdplusTools. README.md re-knit.</label></li>
+<li><label><input type="checkbox" checked>README.Rmd: updated title, heading, narrative text. Badge URLs, <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code>, <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">remotes::install_github()</a></code> left pointing at nhdplusTools. README.md re-knit.</label></li>
 </ul><p>Deferred to later milestones: - inst/CITATION: update after DOI is minted (milestone 4) - code.json: update after USGS software release process begins (milestone 4) - _pkgdown.yml <code>url:</code>: update after repo rename (milestone 6) - DESCRIPTION <code>URL:</code>/<code>BugReports:</code>: update after repo rename (milestone 6) - README badge URLs and install instructions: update after repo rename (milestone 6) and CRAN acceptance (milestone 5)</p>
 </div>
 <div class="section level3">
@@ -106,10 +106,10 @@
 </ul></div>
 <div class="section level3">
 <h3 id="id_2f-rebuild-and-check-">2f. Rebuild and check ✓<a class="anchor" aria-label="anchor" href="#id_2f-rebuild-and-check-"></a></h3>
-<ul class="task-list"><li><label><input type="checkbox" checked><code><a href="https://rdrr.io/pkg/devtools/man/document.html" class="external-link">devtools::document()</a></code> — NAMESPACE and man pages regenerated clean</label></li>
-<li><label><input type="checkbox" checked><code><a href="https://rdrr.io/pkg/devtools/man/build_readme.html" class="external-link">devtools::build_readme()</a></code> — README.md re-knit</label></li>
+<ul class="task-list"><li><label><input type="checkbox" checked><code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> — NAMESPACE and man pages regenerated clean</label></li>
+<li><label><input type="checkbox" checked><code><a href="https://devtools.r-lib.org/reference/build_readme.html" class="external-link">devtools::build_readme()</a></code> — README.md re-knit</label></li>
 <li><label><input type="checkbox" checked><code>devtools::check(vignettes = FALSE)</code> — 0 errors, 0 warnings, 0 notes (with <code>--no-examples</code> and <code>--no-build-vignettes</code> to avoid slow network-dependent examples)</label></li>
-<li><label><input type="checkbox"><code><a href="https://rdrr.io/pkg/pkgdown/man/build_site.html" class="external-link">pkgdown::build_site()</a></code> — deferred until repo rename (milestone 6)</label></li>
+<li><label><input type="checkbox"><code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> — deferred until repo rename (milestone 6)</label></li>
 </ul><p>Additional fixes applied during check: - Stripped UTF-8 BOM from 71 files (introduced by PowerShell bulk edits) - Changed deprecation messages from <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> to <code><a href="https://rdrr.io/r/base/message.html" class="external-link">packageStartupMessage()</a></code> so they are suppressible - Added once-per-session guard so each deprecation message fires only once - Disabled parallel testing (<code>Config/testthat/parallel: false</code>) — subprocess crashes under parallel fst/arrow usage - Skipped <code>test_get_vaa.R</code> “vaa examples” and <code>test_02_subset_extras.R</code> “big rpu test” (R session crashes, deferred to milestone 3 fst → arrow migration) - Added <code>skip_if(is.null(...))</code> to <code>test_01_get_nldi.R</code> for NLDI service unavailability - Added TODO comments for geoconnex TLS cert failures in examples</p>
 </div>
 <div class="section level3">
@@ -121,9 +121,9 @@
 <li><label><input type="checkbox" checked><code><a href="reference/hydrogeofetch_cache_settings.html">hydrogeofetch_cache_settings()</a></code> returns mode/timeout correctly</label></li>
 <li><label><input type="checkbox" checked>R CMD check: 0 errors, 0 warnings, 0 notes</label></li>
 <li><label><input type="checkbox"><code><a href="reference/hydrogeofetch_data_dir.html">?hydrogeofetch_data_dir</a></code> / <code><a href="reference/hydrogeofetch_cache_settings.html">?hydrogeofetch_cache_settings</a></code> help pages — verify manually after install</label></li>
-<li><label><input type="checkbox"><code><a href="https://rdrr.io/pkg/devtools/man/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> — deferred (slow, network-dependent)</label></li>
+<li><label><input type="checkbox"><code><a href="https://devtools.r-lib.org/reference/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> — deferred (slow, network-dependent)</label></li>
 <li><label><input type="checkbox"><code>example(get_nldi)</code> — NLDI pygeoapi returning server-side errors (not rename-related)</label></li>
-<li><label><input type="checkbox"><code><a href="https://rdrr.io/pkg/testthat/man/test_package.html" class="external-link">testthat::test_local()</a></code> in clean session — deferred; known crash issues in test_get_vaa and test_02_subset_extras tracked for milestone 3</label></li>
+<li><label><input type="checkbox"><code><a href="https://testthat.r-lib.org/reference/test_package.html" class="external-link">testthat::test_local()</a></code> in clean session — deferred; known crash issues in test_get_vaa and test_02_subset_extras tracked for milestone 3</label></li>
 </ul><p><strong>Done when:</strong> <del>all items above checked off, R CMD check clean.</del> Complete. R CMD check passes clean. Remaining unchecked items are blocked by external services or deferred to milestone 3.</p>
 <p><strong>Gate:</strong> Internal review of the renamed package. Share with a few colleagues to install and test before anything goes public.</p>
 </div>
@@ -145,14 +145,14 @@
 <li>
 <label><input type="checkbox" checked>tidyr dropped — four call sites swapped:</label>
 <ul><li>
-<code><a href="https://rdrr.io/pkg/tidyr/man/unnest.html" class="external-link">tidyr::unnest()</a></code> in <code>get_index_ids</code> → base-R <code><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep()</a></code> + <code><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist()</a></code> against <code>make_index_ids()$to_list</code>
+<code><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">tidyr::unnest()</a></code> in <code>get_index_ids</code> → base-R <code><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep()</a></code> + <code><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist()</a></code> against <code>make_index_ids()$to_list</code>
 </li>
 <li>two <code>replace_na()</code> calls (<code>topo_sort_network</code>, <code>add_plus_network_attributes</code>) → base-R <code>x[is.na(x)] &lt;- 0</code>
 </li>
 <li>
 <code>pivot_wider()</code> in <code>rescale_catchment_characteristics</code> → <code><a href="https://rdrr.io/pkg/data.table/man/dcast.data.table.html" class="external-link">data.table::dcast</a></code>
 </li>
-<li>stale <code><a href="https://rdrr.io/pkg/tidyselect/man/starts_with.html" class="external-link">tidyr::contains</a></code> import → dplyr re-export</li>
+<li>stale <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyr::contains</a></code> import → dplyr re-export</li>
 </ul></li>
 <li><label><input type="checkbox" checked>data.table added to Imports (replaces tidyr); arrow boundary in <a href="R/get_vaa.R">get_vaa.R</a> hardened to call <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> on <code>collect()</code> / <code>read_parquet()</code> output so <code>[</code> keeps data.frame semantics when arrow’s R metadata roundtrip falls back to data.table (the “Potentially unsafe or invalid elements … externalptr” warning case)</label></li>
 <li><label><input type="checkbox" checked>maptiles, mapsf moved to Suggests with <code>check_pkg()</code> guards at the basemap call in <a href="R/plot_nhdplus.R#L165">plot_nhdplus.R</a></label></li>
@@ -186,7 +186,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="id_3e-test-infrastructure-">3e. Test infrastructure ✓<a class="anchor" aria-label="anchor" href="#id_3e-test-infrastructure-"></a></h3>
-<ul class="task-list"><li><label><input type="checkbox" checked><code>Config/testthat/parallel: true</code> re-enabled at <a href="DESCRIPTION#L36">DESCRIPTION:36</a>. Full <code><a href="https://rdrr.io/pkg/devtools/man/test.html" class="external-link">devtools::test()</a></code> run completed clean — no R subprocess crashes, no test failures, only pre-existing warnings (tidyselect bare-variable deprecation in <code>arrow::read_parquet(col_select = include_names)</code> inside <code>R/get_vaa.R</code> — known, not parallel-related) and the two <code>skip_if(...)</code> skips from milestone 3a. Confirms fst removal resolved the parallel/fst+arrow segfault.</label></li>
+<ul class="task-list"><li><label><input type="checkbox" checked><code>Config/testthat/parallel: true</code> re-enabled at <a href="DESCRIPTION#L36">DESCRIPTION:36</a>. Full <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code> run completed clean — no R subprocess crashes, no test failures, only pre-existing warnings (tidyselect bare-variable deprecation in <code>arrow::read_parquet(col_select = include_names)</code> inside <code>R/get_vaa.R</code> — known, not parallel-related) and the two <code>skip_if(...)</code> skips from milestone 3a. Confirms fst removal resolved the parallel/fst+arrow segfault.</label></li>
 </ul></div>
 <div class="section level3">
 <h3 id="id_3f-vignettes-">3f. Vignettes ✓<a class="anchor" aria-label="anchor" href="#id_3f-vignettes-"></a></h3>
@@ -241,9 +241,9 @@
 <h3 id="id_4b-drop-indexing-functions-">4b. Drop indexing functions ✓<a class="anchor" aria-label="anchor" href="#id_4b-drop-indexing-functions-"></a></h3>
 <p>Remove <code>R/index_nhdplus.R</code> entirely:</p>
 <ul><li>
-<code>get_flowline_index</code> — wraps <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines</a></code> with optional auto-download and column rename</li>
+<code>get_flowline_index</code> — wraps <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines</a></code> with optional auto-download and column rename</li>
 <li>
-<code>disambiguate_flowline_indexes</code> — renames <code>id</code> ↔︎ <code>point_id</code> around <code><a href="https://rdrr.io/pkg/hydroloom/man/disambiguate_indexes.html" class="external-link">hydroloom::disambiguate_indexes</a></code>
+<code>disambiguate_flowline_indexes</code> — renames <code>id</code> ↔︎ <code>point_id</code> around <code><a href="https://doi-usgs.github.io/hydroloom/reference/disambiguate_indexes.html" class="external-link">hydroloom::disambiguate_indexes</a></code>
 </li>
 <li>
 <code>get_waterbody_index</code> — literally just <code>index_points_to_waterbodies(...)</code>
@@ -252,7 +252,7 @@
 </div>
 <div class="section level3">
 <h3 id="id_4c-drop-navigation-shorthands-">4c. Drop navigation shorthands ✓<a class="anchor" aria-label="anchor" href="#id_4c-drop-navigation-shorthands-"></a></h3>
-<p>Remove <code>get_UT</code>, <code>get_UM</code>, <code>get_DM</code>, <code>get_DD</code> from <code>R/get_network.R</code>. <code>get_UT</code> and <code>get_DD</code> are true one-liners over <code><a href="https://rdrr.io/pkg/hydroloom/man/navigate_hydro_network.html" class="external-link">hydroloom::navigate_hydro_network</a></code>. <code>get_UM</code> and <code>get_DM</code> are <em>not</em> — they call <code>align_nhdplus_names</code>, filter the network, add <code>sort</code>/<code>include</code> arguments, and return the <code>COMID</code> column rather than the raw navigation result. Users who only want the COMID set call hydroloom directly with the mode string; the <code>sort</code>/<code>include</code> behavior has to be reproduced by hand (and is preserved in the shim — see 4i).</p>
+<p>Remove <code>get_UT</code>, <code>get_UM</code>, <code>get_DM</code>, <code>get_DD</code> from <code>R/get_network.R</code>. <code>get_UT</code> and <code>get_DD</code> are true one-liners over <code><a href="https://doi-usgs.github.io/hydroloom/reference/navigate_hydro_network.html" class="external-link">hydroloom::navigate_hydro_network</a></code>. <code>get_UM</code> and <code>get_DM</code> are <em>not</em> — they call <code>align_nhdplus_names</code>, filter the network, add <code>sort</code>/<code>include</code> arguments, and return the <code>COMID</code> column rather than the raw navigation result. Users who only want the COMID set call hydroloom directly with the mode string; the <code>sort</code>/<code>include</code> behavior has to be reproduced by hand (and is preserved in the shim — see 4i).</p>
 <p>Removing all four empties <code>R/get_network.R</code> (it also holds <code>navigate_network</code>, removed in 4d), so delete the file.</p>
 <p>Internal callers to fix: - <code>plot_nhdplus.R</code> (2 sites: lines 418, 475) — replace <code>get_UT(align_nhdplus_names(flowline), x)</code> with <code>navigate_hydro_network(align_nhdplus_names(flowline), x, "UT")</code>. The <code>navigate_hydro_network</code> import survives the <code>get_network.R</code> deletion because <code>get_drainage_area_estimates.R</code> also declares it.</p>
 </div>
@@ -286,24 +286,24 @@
 <h3 id="id_4f-drop-all-already-deprecated-wrappers-">4f. Drop all already-deprecated wrappers ✓<a class="anchor" aria-label="anchor" href="#id_4f-drop-all-already-deprecated-wrappers-"></a></h3>
 <p>Remove these functions that already emit deprecation warnings and just forward to hydroloom:</p>
 <ul><li>
-<code>get_levelpaths</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_levelpaths.html" class="external-link">hydroloom::add_levelpaths</a></code>
+<code>get_levelpaths</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_levelpaths.html" class="external-link">hydroloom::add_levelpaths</a></code>
 </li>
 <li>
-<code>get_pfaf</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_pfafstetter.html" class="external-link">hydroloom::add_pfafstetter</a></code>
+<code>get_pfaf</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_pfafstetter.html" class="external-link">hydroloom::add_pfafstetter</a></code>
 </li>
 <li>
 <code>get_terminal</code> → <code>sort_network</code> (via <code>get_sorted</code>)</li>
 <li>
-<code>calculate_total_drainage_area</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/accumulate_downstream.html" class="external-link">hydroloom::accumulate_downstream</a></code>
+<code>calculate_total_drainage_area</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/accumulate_downstream.html" class="external-link">hydroloom::accumulate_downstream</a></code>
 </li>
 <li>
-<code>calculate_arbolate_sum</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/accumulate_downstream.html" class="external-link">hydroloom::accumulate_downstream</a></code>
+<code>calculate_arbolate_sum</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/accumulate_downstream.html" class="external-link">hydroloom::accumulate_downstream</a></code>
 </li>
 <li>
-<code>get_path_members</code> / <code>get_path_lengths</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/navigate_connected_paths.html" class="external-link">hydroloom::navigate_connected_paths</a></code>
+<code>get_path_members</code> / <code>get_path_lengths</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/navigate_connected_paths.html" class="external-link">hydroloom::navigate_connected_paths</a></code>
 </li>
 <li>
-<code>make_node_topology</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/make_node_topology.html" class="external-link">hydroloom::make_node_topology</a></code>
+<code>make_node_topology</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/make_node_topology.html" class="external-link">hydroloom::make_node_topology</a></code>
 </li>
 <li>
 <code>add_plus_network_attributes</code> → multiple hydroloom fns</li>
@@ -335,11 +335,11 @@
 <div class="section level3">
 <h3 id="id_4j-verification-">4j. Verification ✓<a class="anchor" aria-label="anchor" href="#id_4j-verification-"></a></h3>
 <ol style="list-style-type: decimal"><li>
-<code><a href="https://rdrr.io/pkg/devtools/man/document.html" class="external-link">devtools::document()</a></code> — NAMESPACE regenerates without the removed exports</li>
+<code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> — NAMESPACE regenerates without the removed exports</li>
 <li>
-<code><a href="https://rdrr.io/pkg/devtools/man/check.html" class="external-link">devtools::check()</a></code> — 0 errors, 0 warnings</li>
+<code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> — 0 errors, 0 warnings</li>
 <li>
-<code><a href="https://rdrr.io/pkg/devtools/man/test.html" class="external-link">devtools::test()</a></code> — remove or relocate tests for dropped functions:
+<code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code> — remove or relocate tests for dropped functions:
 <ul><li>
 <strong>Delete</strong> (dedicated to removed functions): <code>test_get_network.R</code>, <code>test_index.R</code>, <code>test_navigate.R</code>, <code>test_calc_network.R</code>, <code>test_get_path.R</code>, <code>test_get_path_lengths.R</code>, <code>test_rebuild_topology.R</code>, <code>test_run_plus_attributes.R</code>, <code>test_wb_index.R</code>, <code>test_get_codes.R</code>, <code>test_get_geometry.R</code> (re-exports).</li>
 <li>
@@ -350,7 +350,7 @@
 <li>No <code>:::</code> calls remain</li>
 <li>
 <code>R CMD check</code>’s “checking R code for possible problems” pass shows no “no visible global function definition” notes — the canary for a dropped import (4a)</li>
-<li>Prune <code>_pkgdown.yml</code> reference sections: ~28 entries point at the removed functions and will be dangling man topics. <code><a href="https://rdrr.io/pkg/pkgdown/man/build_site.html" class="external-link">pkgdown::build_site()</a></code> (deferred to milestone 6) errors on missing topics, so either prune now or carry an explicit note into milestone 6’s gate.</li>
+<li>Prune <code>_pkgdown.yml</code> reference sections: ~28 entries point at the removed functions and will be dangling man topics. <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> (deferred to milestone 6) errors on missing topics, so either prune now or carry an explicit note into milestone 6’s gate.</li>
 </ol></div>
 <div class="section level3">
 <h3 id="id_4k-sequencing-">4k. Sequencing ✓<a class="anchor" aria-label="anchor" href="#id_4k-sequencing-"></a></h3>
@@ -377,7 +377,7 @@
 <li>
 <strong>The three migration patterns</strong> — before/after code blocks:
 <ul><li>Functions that moved to hydroloom with a changed signature (e.g. <code>get_UT(net, 101)</code> → <code>hydroloom::navigate_hydro_network(net, 101, "UT")</code>). For <code>get_UM</code>/<code>get_DM</code>, note the extra behavior: the old wrappers ran <code>align_nhdplus_names</code>, filtered, and returned the sorted/included <code>COMID</code> vector, so a bare <code>navigate_hydro_network(..., "UM")</code> is not equivalent — show how to reproduce <code>sort</code>/<code>include</code> if a user relied on them.</li>
-<li>Pure re-exports that just need the package qualifier (e.g. <code>st_compatibalize</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/st_compatibalize.html" class="external-link">hydroloom::st_compatibalize</a></code>)</li>
+<li>Pure re-exports that just need the package qualifier (e.g. <code>st_compatibalize</code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/st_compatibalize.html" class="external-link">hydroloom::st_compatibalize</a></code>)</li>
 <li>Thin wrappers that had column-name magic — show the hydroloom call plus <code><a href="reference/align_nhdplus_names.html">align_nhdplus_names()</a></code> if needed</li>
 </ul></li>
 <li>
@@ -390,13 +390,13 @@
 <h3 id="id_4m-scale-back-existing-vignettes-">4m. Scale back existing vignettes ✓<a class="anchor" aria-label="anchor" href="#id_4m-scale-back-existing-vignettes-"></a></h3>
 <p>Four existing article vignettes document functionality that moved to hydroloom and will fail to build once the functions are gone. Scale them back: remove the moved-function material, and where a retained example still needs that behavior, call the hydroloom function directly rather than a re-export.</p>
 <ul><li>
-<code>vignettes/articles/indexing.Rmd</code> — the entire vignette is built on <code>get_flowline_index</code>, <code>get_waterbody_index</code>, <code>disambiguate_flowline_indexes</code>, <code>get_path_lengths</code>, and <code>get_partial_length</code>. This is now hydroloom’s territory. Cut it down to a short pointer that indexing lives in hydroloom (link to hydroloom’s indexing vignette), keeping only any hydrogeofetch-specific framing (e.g. fetching the flowlines to index with <code><a href="reference/get_nhdplus.html">get_nhdplus()</a></code>, then handing off to <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code>). Do not maintain a parallel indexing tutorial here.</li>
+<code>vignettes/articles/indexing.Rmd</code> — the entire vignette is built on <code>get_flowline_index</code>, <code>get_waterbody_index</code>, <code>disambiguate_flowline_indexes</code>, <code>get_path_lengths</code>, and <code>get_partial_length</code>. This is now hydroloom’s territory. Cut it down to a short pointer that indexing lives in hydroloom (link to hydroloom’s indexing vignette), keeping only any hydrogeofetch-specific framing (e.g. fetching the flowlines to index with <code><a href="reference/get_nhdplus.html">get_nhdplus()</a></code>, then handing off to <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code>). Do not maintain a parallel indexing tutorial here.</li>
 <li>
-<code>vignettes/hydrogeofetch.Rmd</code> (main intro) — the navigation walk-through uses <code>navigate_network</code>, <code>get_UM</code>/<code>get_UT</code>/<code>get_DM</code>/<code>get_DD</code>, and <code>get_flowline_index</code>. Replace the navigation section with the fetch-then-hand-off pattern: use hydrogeofetch to get/prepare the network, then <code><a href="https://rdrr.io/pkg/hydroloom/man/navigate_hydro_network.html" class="external-link">hydroloom::navigate_hydro_network()</a></code> for navigation and <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code> for indexing. Drop the <code>navigate_network()</code> mention.</li>
+<code>vignettes/hydrogeofetch.Rmd</code> (main intro) — the navigation walk-through uses <code>navigate_network</code>, <code>get_UM</code>/<code>get_UT</code>/<code>get_DM</code>/<code>get_DD</code>, and <code>get_flowline_index</code>. Replace the navigation section with the fetch-then-hand-off pattern: use hydrogeofetch to get/prepare the network, then <code><a href="https://doi-usgs.github.io/hydroloom/reference/navigate_hydro_network.html" class="external-link">hydroloom::navigate_hydro_network()</a></code> for navigation and <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code> for indexing. Drop the <code>navigate_network()</code> mention.</li>
 <li>
 <code>vignettes/articles/get_data_overview.Rmd</code> — uses <code>navigate_network</code>, <code>get_DM</code>, <code>get_flowline_index</code>, <code>disambiguate_flowline_indexes</code>. Replace the navigation/indexing snippets with direct hydroloom calls; keep the data-overview/fetching content that is the point of the vignette.</li>
 <li>
-<code>vignettes/articles/nhdplushr.Rmd</code> — uses <code>get_flowline_index</code> and <code>get_UT</code>. Swap to <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code> and <code>hydroloom::navigate_hydro_network(..., "UT")</code>.</li>
+<code>vignettes/articles/nhdplushr.Rmd</code> — uses <code>get_flowline_index</code> and <code>get_UT</code>. Swap to <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code> and <code>hydroloom::navigate_hydro_network(..., "UT")</code>.</li>
 </ul><p>Where these examples currently lean on re-exported helpers (<code>get_node</code>, <code>get_hydro_location</code>, <code>rescale_measures</code>, <code>rename_geometry</code>, etc.), call <code>hydroloom::fn()</code> directly so the vignettes don’t depend on imports that are no longer user-facing.</p>
 <p><strong>Done when:</strong> <del>hydrogeofetch exports only data-fetching, NHD-specific preparation, and visualization functions. No thin hydroloom wrappers remain. R CMD check clean.</del> Complete. Verified directly against the repo: all target files and functions removed, zero <code>:::</code> calls remain, NAMESPACE carries no <code>hydroloom::</code> re-exports (only the plain <code>importFrom</code>), and <code>_pkgdown.yml</code> has zero dangling references to removed functions.</p>
 <p><strong>Gate:</strong> <del>Update vignettes and README to show users how to combine hydrogeofetch (for fetching) with hydroloom (for network analysis/indexing). Confirm reverse-dep packages don’t import the removed functions from hydrogeofetch directly.</del> Complete. README.Rmd and <code>vignettes/hydrogeofetch.Rmd</code>/<code>migrating_from_nhdplusTools.Rmd</code> document the fetch-then-hand-off pattern. Reverse-dependency sweep (2026-06-22, cloned each repo and grepped its source): <code>amadeus</code> uses only <code>get_huc</code>, <code>elfgen</code> uses only <code>get_nhdplus</code>, <code>StreamCatTools</code> uses <code>get_waterbodies</code>/<code>navigate_nldi</code>/<code>get_nldi_basin</code>/<code>get_nhdplus</code>/<code>discover_nhdplus_id</code> — none call a function removed in this milestone.</p>
@@ -412,7 +412,7 @@
 <div class="section level2">
 <h2 id="id_6-hydrogeofetch-on-cran">6. hydrogeofetch on CRAN<a class="anchor" aria-label="anchor" href="#id_6-hydrogeofetch-on-cran"></a></h2>
 <p>Submit hydrogeofetch v1.0 to CRAN. The repo is still named nhdplusTools at this point — that’s fine, CRAN only cares about the package tarball.</p>
-<p><strong>Pre-submission checklist:</strong> - <code>R CMD check --as-cran</code> clean (0 errors, 0 warnings, ideally 0 notes) - <code><a href="https://rdrr.io/pkg/devtools/man/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> succeeds — vignettes render without network failures - All <code>\donttest</code> examples fail gracefully under degraded service conditions (CRAN runs <code>\donttest</code> examples) — strict response-type checking in every web-service caller, not <code>\dontrun</code> conversions - Help pages for renamed functions (<code><a href="reference/hydrogeofetch_data_dir.html">?hydrogeofetch_data_dir</a></code>, <code><a href="reference/hydrogeofetch_cache_settings.html">?hydrogeofetch_cache_settings</a></code>) render correctly</p>
+<p><strong>Pre-submission checklist:</strong> - <code>R CMD check --as-cran</code> clean (0 errors, 0 warnings, ideally 0 notes) - <code><a href="https://devtools.r-lib.org/reference/build_vignettes.html" class="external-link">devtools::build_vignettes()</a></code> succeeds — vignettes render without network failures - All <code>\donttest</code> examples fail gracefully under degraded service conditions (CRAN runs <code>\donttest</code> examples) — strict response-type checking in every web-service caller, not <code>\dontrun</code> conversions - Help pages for renamed functions (<code><a href="reference/hydrogeofetch_data_dir.html">?hydrogeofetch_data_dir</a></code>, <code><a href="reference/hydrogeofetch_cache_settings.html">?hydrogeofetch_cache_settings</a></code>) render correctly</p>
 <p><strong>Release workflow:</strong> Push an <code>rc/2.0.0</code> branch to code.usgs.gov. The GitLab CI pipeline runs a lightweight structural check, builds the source tarball, uploads it to the GitLab package registry, and runs <code>R CMD check --as-cran</code> on that tarball. Download the verified tarball from the registry and submit it to CRAN. See <code>.gitlab-ci.yml</code> and the README “Build and release” section for details.</p>
 <p><strong>Done when:</strong> Package accepted and available on CRAN.</p>
 <p><strong>Gate:</strong> Update README.Rmd <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> line to <code>install.packages("hydrogeofetch")</code>. Announce hydrogeofetch v1.0. Notify reverse-dependency maintainers (amadeus, elfgen, StreamCatTools) that the deprecation shim is coming and they should plan to switch their imports.</p>
@@ -421,7 +421,7 @@
 <h2 id="id_7-rename-the-github-repo">7. Rename the GitHub repo<a class="anchor" aria-label="anchor" href="#id_7-rename-the-github-repo"></a></h2>
 <p>Rename doi-usgs/nhdplusTools to doi-usgs/hydrogeofetch. GitHub maintains redirects from the old URL. Requires org admin access — this milestone can move earlier if access becomes available.</p>
 <p><strong>Done when:</strong> The repo is accessible at doi-usgs/hydrogeofetch and old nhdplusTools URLs redirect.</p>
-<p><strong>Gate:</strong> Verify redirects work for clone URLs, issue links, and pkgdown. Then update the items deferred from milestone 2: - DESCRIPTION <code>URL:</code> and <code>BugReports:</code> → new repo URL - _pkgdown.yml <code>url:</code> → new GitHub Pages URL - README.Rmd badge URLs and <code><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">remotes::install_github()</a></code> → new repo name - CI config and any other hardcoded URLs that GitHub won’t redirect (e.g., raw.githubusercontent.com paths) - Re-knit README.md, deploy pkgdown site</p>
+<p><strong>Gate:</strong> Verify redirects work for clone URLs, issue links, and pkgdown. Then update the items deferred from milestone 2: - DESCRIPTION <code>URL:</code> and <code>BugReports:</code> → new repo URL - _pkgdown.yml <code>url:</code> → new GitHub Pages URL - README.Rmd badge URLs and <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">remotes::install_github()</a></code> → new repo name - CI config and any other hardcoded URLs that GitHub won’t redirect (e.g., raw.githubusercontent.com paths) - Re-knit README.md, deploy pkgdown site</p>
 </div>
 <div class="section level2">
 <h2 id="id_8-nhdplustools-deprecation-shim">8. nhdplusTools deprecation shim<a class="anchor" aria-label="anchor" href="#id_8-nhdplustools-deprecation-shim"></a></h2>

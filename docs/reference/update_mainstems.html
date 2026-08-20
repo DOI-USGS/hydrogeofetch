@@ -63,7 +63,7 @@ check_mainstems for a lightweight superseded/current check.'><meta property="og:
     <p>Given point features with a known geoconnex mainstem
 identifier, checks whether the mainstem has been superseded and, if so,
 re-indexes the point to the replacement mainstem using
-<a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">index_points_to_lines</a>. Points whose mainstem has no
+<a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a>. Points whose mainstem has no
 replacement are left unchanged and flagged "unresolved". See
 <a href="check_mainstems.html">check_mainstems</a> for a lightweight superseded/current check.</p>
     </div>
@@ -89,8 +89,8 @@ full mainstem uris (any namespace); see <a href="check_mainstems.html">check_mai
 
 <dt id="arg-search-radius">search_radius<a class="anchor" aria-label="anchor" href="#arg-search-radius"></a></dt>
 <dd><p>units distance for the nearest neighbor search
-passed to <a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">index_points_to_lines</a>. If <code>NULL</code>, the
-default in <a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">index_points_to_lines</a> is used.</p></dd>
+passed to <a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a>. If <code>NULL</code>, the
+default in <a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a> is used.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -103,10 +103,13 @@ default in <a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">pt</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sf.html" class="external-link">st_sf</a></span><span class="op">(</span>mainstemid <span class="op">=</span> <span class="fl">2086165</span>,</span></span>
-<span class="r-in"><span>                geometry <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">75.567</span>, <span class="fl">43.176</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">pt</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">st_sf</a></span><span class="op">(</span>mainstemid <span class="op">=</span> <span class="fl">2086165</span>,</span></span>
+<span class="r-in"><span>                geometry <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">75.567</span>, <span class="fl">43.176</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                      crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">update_mainstems</span><span class="op">(</span><span class="va">pt</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://reference.geoconnex.us/collections/mainstems/items?superseded=True&amp;limit=500&amp;offset=0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://geoconnex.us/ref/mainstems/2479116?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://geoconnex.us/ref/mainstems/2479066?f=json</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some mainstem ids could not be resolved to a replacement. See mainstem_update_status column.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 2 fields</span>

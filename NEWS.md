@@ -38,10 +38,37 @@ These hydroloom functions are no longer re-exported; call `hydroloom::fn()` dire
 
 - `st_compatibalize()`, `rename_geometry()`, `get_node()`, `fix_flowdir()`, `rescale_measures()`, `get_hydro_location()`, `get_partial_length()`
 
+## Caching changes
+
+- The `memoise` response cache now defaults to `memory` rather than `filesystem`. Cached web service responses live only as long as the R session unless you opt back in with `hydrogeofetch_cache_settings(mode = "filesystem")` or `HYDROGEOFETCH_MEMOISE_CACHE=filesystem`. The filesystem cache had no expiry and grew without bound in the user data directory.
+- New `hydrogeofetch_cache_clear()` removes data hydrogeofetch has cached in `hydrogeofetch_data_dir()`, either all of it or by category (`responses`, `tiles`, `vaa`, `mainstems`).
+
+## Bug fixes
+
+- `get_3dhp()` queries by `universalreferenceid` are now chunked, avoiding the service gateway timeouts (HTTP 504) that previously caused large reachcode lookups to return `NULL`. #475
+- `get_catchment_characteristics()` no longer surfaces the benign arrow "discarded from R metadata" warnings from the parquet metadata roundtrip. #475
+- Five `stop()` calls passed `.call = FALSE` instead of `call. = FALSE`, which appended `FALSE` to the error message the user saw. In `get_nhdplus()` and the query parameter checks.
+- Web requests now carry a 30 second connect timeout and a 300 second request timeout, so an unresponsive service can no longer hang a call indefinitely. Bulk downloads keep the connect timeout but are not capped on total duration.
+- `check7z()` no longer appends to `PATH` with `Sys.setenv()`; it returns the path to the 7z executable instead, leaving the user's environment alone.
+
+## Other changes
+
+- `prepare_nhdplus()` is no longer exported; it remains available internally. #475
+- Documentation and example fixes throughout, following package review (#475): corrected `get_nldi_basin()` and `get_split_catchment()` example plotting, clearer messaging when the experimental `get_xs_point()` cross-section service is unavailable, broadened README scope language, and vignette setup and typo cleanups.
+- Examples that cache data now redirect `hydrogeofetch_data_dir()` to a temporary directory and restore it, so running them does not write to user space.
+- Added missing `@return` documentation to `get_catchment_characteristics()`, `get_characteristics_metadata()`, and `get_nldi_index()`.
+- Trimmed the `get_3dhp()` example, which downloaded a full work unit and several hundred reachcodes and took over three minutes.
+
 ## Dependency changes
 
 - Removed `pbapply` from Imports (no longer needed)
 - Removed `future`, `future.apply` from Suggests (no longer needed)
+
+## Function Updates
+
+- `get_drainage_area_estimates()` now returns `drainage_basin`, the upstream NHDPlusV2 catchments dissolved into a single boundary with the portion below the submitted point trimmed off the outlet catchment, along with its area as `basin_da_sqkm`. No HUC boundaries are involved. Both are available when `catchments = TRUE` or `catchment_data` is supplied, and always for headwater starts. For a headwater the basin is the whole answer, so the drainage area estimates are taken from its geometry rather than from an NHDPlus `areasqkm` attribute with a geometric difference subtracted from it.
+- `get_drainage_area_estimates()` no longer reports a `drainage_basin` carrying area below the submitted point when a split of the outlet catchment was due but the processing service returned none. A failed split was previously indistinguishable from a start that needed no split, and the full outlet catchment was kept in both cases. `drainage_basin` is now NULL and `basin_da_sqkm` NA when the split is missing.
+- `get_drainage_area_estimates()` no longer drops catchments from `drainage_basin` when a start resolves to several outlet COMIDs and a split catchment is available. A split covers one outlet catchment, so substituting it while removing several lost the catchments of the outlets that were not split.
 
 nhdplusTools 1.5.0
 ==========

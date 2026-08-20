@@ -111,10 +111,10 @@ navigate_nldi <- function(nldi_feature, mode = "upstreamMain",
 #' plot(st_geometry(st_buffer(st_transform(site, 5070),
 #'                           units::set_units(3000, "m"))), border = NA)
 #'
-#' plot(st_geometry(site), add = TRUE)
-#' plot(st_geometry(basin2), add = TRUE)
+#' plot(st_geometry(st_transform(site, 5070)), add = TRUE)
+#' plot(st_geometry(st_transform(basin2, 5070)), add = TRUE)
 #'
-#' plot(st_geometry(basin), border = "red", add = TRUE)
+#' plot(st_geometry(st_transform(basin, 5070)), border = "red", add = TRUE)
 #'
 #' }
 #' }
@@ -170,11 +170,13 @@ get_nldi_feature <- function(nldi_feature) {
 }
 
 #' Get NLDI Index
-#' @description uses the Network Linked Data Index to retrieve and estimated
+#' @description uses the Network Linked Data Index to retrieve an estimated
 #' network location for the given point. If not within a grid cell of a flowline,
 #' will use a raindrop trace service to find the nearest downslope flowline
 #' location.
 #' @param location numeric WGS84 lon/lat pair (X, Y)
+#' @return sf data.frame of estimated network locations for the given point.
+#' NULL if the NLDI service is unavailable.
 #' @export
 #' @examples
 #' \donttest{

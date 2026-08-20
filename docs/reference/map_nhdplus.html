@@ -108,7 +108,7 @@ EPSG:4326.</p>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
-<dd><p>passed on the <a href="subset_nhdplus.html">subset_nhdplus</a>.</p></dd>
+<dd><p>passed on to <a href="subset_nhdplus.html">subset_nhdplus</a>.</p></dd>
 
 
 <dt id="arg-cache-data">cache_data<a class="anchor" aria-label="anchor" href="#arg-cache-data"></a></dt>
@@ -146,10 +146,17 @@ is used to convert the outlet formats as described below.</p><ol><li><p>if outle
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">map_nhdplus</span><span class="op">(</span><span class="st">"05428500"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-05428500/basin?simplify=true&amp;splitCatchment=false</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-89.604654655,43.035066012,-89.203780859,43.366068182&amp;filter=streamorde%20&gt;%202&amp;limit=500&amp;offset=0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">map_nhdplus</span><span class="op">(</span><span class="st">"05428500"</span>, streamorder <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-05428500/basin?simplify=true&amp;splitCatchment=false</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-89.604654655,43.035066012,-89.203780859,43.366068182&amp;filter=streamorde%20&gt;%201&amp;limit=500&amp;offset=0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">map_nhdplus</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">13293970</span>, <span class="fl">13293750</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/comid/13293970/basin?simplify=true&amp;splitCatchment=false</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/comid/13293750/basin?simplify=true&amp;splitCatchment=false</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-89.604654655,42.950403765,-89.203780859,43.366068182&amp;filter=streamorde%20&gt;%203&amp;limit=500&amp;offset=0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/sample_data.R"</span>, package <span class="op">=</span> <span class="st">"hydrogeofetch"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -157,6 +164,7 @@ is used to convert the outlet formats as described below.</p><ol><li><p>if outle
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#return leaflet object</span></span></span>
 <span class="r-in"><span><span class="fu">map_nhdplus</span><span class="op">(</span><span class="st">"05428500"</span>, return_map <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-05428500/basin?simplify=true&amp;splitCatchment=false</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

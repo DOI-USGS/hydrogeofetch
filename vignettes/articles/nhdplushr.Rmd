@@ -102,10 +102,10 @@ list.files(hr_data_dir)
 ## Basic functionality
 
 The second part of hydrogeofetch support for NHDPlusHR is a bit more involved. The entry point is a function called `get_nhdplushr()`. At it's core, it will take a collection of NHDPlusHR subsets, open them up one by one and build a single output table for later use. It also 
-1. joins flowline attributes to the flowline geometry, 
-1. can return one or more selected layers, 
-1. can save the result to a standalone geopackage for later use, and 
-1. can make some attributes of a subset look like they are part of a standalone network rather than having references to downstream data that aren't in the subset. 
+1. joins flowline attributes to the flowline geometry,
+2. can return one or more selected layers,
+3. can save the result to a standalone geopackage for later use, and
+4. can make some attributes of a subset look like they are part of a standalone network rather than having references to downstream data that aren't in the subset.
 
 Using the data we downloaded in the TL;DR; intro, the code below demonstrates a few behaviors of `get_nhdplushr()`
 
@@ -140,10 +140,10 @@ st_layers(demo_gpkg)
 
 Since NHDPlusHR data can be very large, `get_nhdplushr()` offers the ability to subset the data using a few filter options. Most of the filters are described in the manual page of the `get_hr_data()` utility function. 
 1. `min_size_sqkm` will remove flowlines under a certain size threshold.
-1. `sim` will simplify all geometry to a given tolerance using `sf::st_simplify()`.
-1. `proj` will project the output into the desired projection.
-1. `keep_cols` is used to specify which attributes are desired in the output.
-1. `rename` controls whether output is automatically renamed to be compatible with `hydrogeofetch` functions.
+2. `simp` will simplify all geometry to a given tolerance using `sf::st_simplify()`.
+3. `proj` will project the output into the desired projection.
+4. `keep_cols` is used to specify which attributes are desired in the output.
+5. `rename` controls whether output is automatically renamed to be compatible with `hydrogeofetch` functions.
 
 _Note: These options only operate on the flowline network._
 

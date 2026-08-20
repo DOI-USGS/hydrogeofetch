@@ -4,10 +4,7 @@
 # hydrogeofetch <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 ![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg)
-[![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/master/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/nhdplusTools)](https://cran.r-project.org/package=nhdplusTools)
-[![CRAN](https://www.r-pkg.org/badges/version/nhdplusTools)](https://cran.r-project.org/package=nhdplusTools)
+[![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
 
 ## Renamed from `nhdplusTools`
 
@@ -55,7 +52,8 @@ mapping of old to new function names.
 
 ### Recommended Citation:
 
-    Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial Fabric Data Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
+      Blodgett, D. 2026, hydrogeofetch: Hydrologic Geospatial
+      Fabric Extraction Tool Chain, https://doi.org/10.5066/P13UWPUR
 
 ### Installation:
 
@@ -74,7 +72,7 @@ remotes::install_github("DOI-USGS/nhdplusTools")
 
 For data discovery and access in a U.S. context, start with the
 [**Getting Started
-page**](https://doi-usgs.github.io/nhdplusTools/articles/nhdplusTools.html).
+page**](https://doi-usgs.github.io/nhdplusTools/articles/hydrogeofetch.html).
 
 Detailed documentation of all the package functions can be found at the
 [**Reference
@@ -101,7 +99,7 @@ General, globally applicable functionality has been moved to
 dataset and the
 [HY_Features](http://opengeospatial.github.io/HY_Features/) data model.
 The package aims to provide a set of tools that can be used to build
-workflows using NHDPlus data.
+workflows using hydrographic data.
 
 **This vision is intended as a guide to contributors – conveying what
 kinds of contributions are of interest to the package’s long term
@@ -130,10 +128,12 @@ provides the data access needed to set up indexing workflows.
 
 ### Data Model
 
-Given that `hydrogeofetch` is focused on working with NHDPlus data, the
-NHDPlus data model will largely govern the data model the package is
-designed to work with. That said, much of the package functionality also
-uses concepts from the HY_Features standard.
+`hydrogeofetch` works with a range of U.S. hydrographic data, with
+NHDPlus as its primary dataset, so the NHDPlus data model largely
+governs the data model the package is designed to work with. That said,
+much of the package functionality also uses concepts from the
+HY_Features standard, and support for additional datasets, such as 3DHP,
+continues to grow.
 
 *Note:* The HY_Features standard is based on the notion that a
 “catchment” is a holistic feature that can be “realized” (some might say
@@ -199,16 +199,6 @@ NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-data) database.
 [NHDPlus High
 Resolution](https://www.usgs.gov/national-hydrography/nhdplus-high-resolution)
 is also supported.
-
-### Related similar packages:
-
-<https://github.com/mbtyers/riverdist>  
-<https://github.com/jsta/nhdR>  
-<https://github.com/lawinslow/hydrolinks>  
-<https://github.com/mikejohnson51/HydroData>  
-<https://github.com/ropensci/FedData>  
-<https://github.com/hyriver/pygeohydro> … others – please suggest
-additions?
 
 ### Build and release:
 

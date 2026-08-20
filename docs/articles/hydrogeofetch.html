@@ -97,9 +97,8 @@
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://doi-usgs.github.io/nhdplusTools/">hydrogeofetch</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.14.1, GDAL 3.12.1, PROJ 9.7.1; sf_use_s2() is TRUE</span></span>
 <span></span>
-<span><span class="va">start_point</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">89.362239</span>, <span class="fl">43.090266</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4269</span><span class="op">)</span></span>
+<span><span class="va">start_point</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">89.362239</span>, <span class="fl">43.090266</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4269</span><span class="op">)</span></span>
 <span><span class="va">start_comid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discover_nhdplus_id.html">discover_nhdplus_id</a></span><span class="op">(</span><span class="va">start_point</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">flowline</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/navigate_nldi.html">navigate_nldi</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>featureSource <span class="op">=</span> <span class="st">"comid"</span>, </span>
@@ -120,16 +119,16 @@
 <span></span>
 <span><span class="co">## Or using a file:</span></span>
 <span></span>
-<span><span class="va">flowline</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">subset_file</span>, <span class="st">"NHDFlowline_Network"</span><span class="op">)</span></span>
-<span><span class="va">catchment</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">subset_file</span>, <span class="st">"CatchmentSP"</span><span class="op">)</span></span>
-<span><span class="va">waterbody</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">subset_file</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span></span>
+<span><span class="va">flowline</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">subset_file</span>, <span class="st">"NHDFlowline_Network"</span><span class="op">)</span></span>
+<span><span class="va">catchment</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">subset_file</span>, <span class="st">"CatchmentSP"</span><span class="op">)</span></span>
+<span><span class="va">waterbody</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">subset_file</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">start_point</span>, cex <span class="op">=</span> <span class="fl">1.5</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">catchment</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">catchment</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/tldr-1.png" class="r-plt" alt="" width="576"></p>
-<p>Or fetch NWIS an site as the starting point and generate a plot. Data
+<p>Or fetch an NWIS site as the starting point and generate a plot. Data
 is returned and/or stored in a local file for later use.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ?plot_nhdplus for more</span></span>
@@ -149,7 +148,14 @@ subsets, greater than a few thousand square kilometers, you can use
 aware of. Once you have it downloaded and extracted, you can tell the
 hydrogeofetch package where it is with the <code><a href="../reference/nhdplus_path.html">nhdplus_path()</a></code>
 function.</p>
+<p>This vignette stages its data in a working directory. Set
+<code>work_dir</code> to wherever you want downloaded and sample data to
+live.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">work_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="../reference/hydrogeofetch_data_dir.html">hydrogeofetch_data_dir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"nhdpt_v_cache"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">work_dir</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nhdplus_path.html">nhdplus_path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"natseamless.gpkg"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="fu"><a href="../reference/nhdplus_path.html">nhdplus_path</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -159,7 +165,7 @@ consider using <code><a href="../reference/get_vaa.html">get_vaa()</a></code>. I
 specific NHDPlus attributes with very little overhead. It also supports
 access to an updated set of network attributes that incorporate numerous
 network updates from national hydrologic modeling projects.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vaa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_vaa.html">get_vaa</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vaa</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "comid"      "streamleve" "streamorde" "streamcalc" "fromnode"  </span></span>
@@ -184,11 +190,11 @@ NHDPlus HiRes data with existing <code>hydrogeofetch</code>
 functionality. It’s important to note that <code>hydrogeofetch</code>
 was primarily implemented using NHDPlusV2 and any use of HiRes should be
 subject to scrutiny.</p>
-<p>For the demo below, a small sample of HiRes data that has been loaded
-into <code>hydrogeofetch</code> is used. The first line shows how you
-can download additional data (just change <code>download_files</code> to
-<code>TRUE</code>).</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>For the demo below, a small sample of HiRes data is staged into
+<code>work_dir</code> (the working directory set above) and read from
+there. The first line shows how you can download additional data (just
+change <code>download_files</code> to <code>TRUE</code>).</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/download_nhdplushr.html">download_nhdplushr</a></span><span class="op">(</span>nhd_dir <span class="op">=</span> <span class="st">"download_dir"</span>, </span>
 <span>                   hu_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0101"</span><span class="op">)</span>, <span class="co"># can mix hu02 and hu04 codes.</span></span>
 <span>                   download_files <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># TRUE will download files.</span></span>
@@ -197,7 +203,7 @@ can download additional data (just change <code>download_files</code> to
 <span><span class="va">out_gpkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"nhd_hr.gpkg"</span><span class="op">)</span></span>
 <span><span class="va">hr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nhdplushr.html">get_nhdplushr</a></span><span class="op">(</span><span class="va">work_dir</span>, </span>
 <span>                         out_gpkg <span class="op">=</span> <span class="va">out_gpkg</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">layers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">out_gpkg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">layers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">out_gpkg</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Driver: GPKG </span></span>
 <span><span class="co">#&gt; Available layers:</span></span>
 <span><span class="co">#&gt;         layer_name geometry_type features fields             crs_name</span></span>
@@ -215,7 +221,7 @@ can download additional data (just change <code>download_files</code> to
 <span><span class="va">hr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nhdplushr.html">get_nhdplushr</a></span><span class="op">(</span><span class="va">work_dir</span>, </span>
 <span>                         out_gpkg <span class="op">=</span> <span class="va">out_gpkg</span>, </span>
 <span>                         layers <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">layers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">out_gpkg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">layers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">out_gpkg</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Driver: GPKG </span></span>
 <span><span class="co">#&gt; Available layers:</span></span>
 <span><span class="co">#&gt;         layer_name geometry_type features fields             crs_name</span></span>
@@ -246,14 +252,14 @@ and</li>
 location. We can start with <code><a href="../reference/discover_nhdplus_id.html">discover_nhdplus_id()</a></code> First,
 let’s look at a given point location. Then see where it is relative to
 our flowlines.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">89.36</span></span>
 <span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fl">43.09</span></span>
 <span></span>
-<span><span class="va">start_point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span><span class="va">start_point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                          crs <span class="op">=</span> <span class="fl">4269</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">start_point</span>, cex <span class="op">=</span> <span class="fl">1.5</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/point-1.png" class="r-plt" alt="" width="576"></p>
 <p>OK, so we have a point location near a river and we want to figure
@@ -265,7 +271,7 @@ COMID.</p>
 derived downslope trace to the nearest flowline and some additional
 info. See <code><a href="../reference/get_raindrop_trace.html">get_raindrop_trace()</a></code> for more on this
 functionality.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">start_comid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discover_nhdplus_id.html">discover_nhdplus_id</a></span><span class="op">(</span><span class="va">start_point</span>, raindrop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">start_comid</span></span>
 <span><span class="co">#&gt; Simple feature collection with 2 features and 7 fields</span></span>
@@ -280,12 +286,12 @@ functionality.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> rain… <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   <span style="color: #949494;">&lt;dbl [0]&gt;</span>         </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;LINESTRING [°]&gt;</span></span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">start_comid</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">start_comid</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">start_point</span>, cex <span class="op">=</span> <span class="fl">1.5</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/discover_nhdplus_id-1.png" class="r-plt" alt="" width="576"></p>
 <p><strong>If you have the whole National Seamless database and want to
-work at regional to national scales, skip down the the Local Data
+work at regional to national scales, skip down to the Local Data
 Subsetting section.</strong></p>
 <div class="section level3">
 <h3 id="web-service-data-subsetting">Web Service Data Subsetting<a class="anchor" aria-label="anchor" href="#web-service-data-subsetting"></a>
@@ -293,7 +299,7 @@ Subsetting section.</strong></p>
 <p><code>hydrogeofetch</code> supports discovery and data subsetting
 using web services made available through the <a href="https://waterdata.usgs.gov/blog/nldi-intro/" class="external-link">Network Linked Data
 Index</a> (NLDI) and the <a href="https://api.water.usgs.gov/fabric/pygeoapi" class="external-link">Water Mission Area
-pygeoapir.</a> The code below shows how to use the NLDI functions to
+pygeoapi</a>. The code below shows how to use the NLDI functions to
 build a dataset upstream of our <code>start_comid</code> that we found
 above.</p>
 <p>The NLDI can be queried with any set of watershed outlet locations
@@ -301,7 +307,7 @@ that it has in its index. We call these “featureSources”. We can query
 the NLDI for an identifier of a given feature from any of its
 “featureSources” and find out what our navigation options are as shown
 below.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dataRetrieval</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataRetrieval/man/get_nldi_sources.html" class="external-link">get_nldi_sources</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">source</span></span>
 <span><span class="co">#&gt;  [1] "comid"             "huc12pp"           "WQP"              </span></span>
 <span><span class="co">#&gt;  [4] "nwissite"          "wade"              "ref_gage"         </span></span>
@@ -329,20 +335,20 @@ featureID is available for the chosen “featureSource”. Now that we know
 the NLDI has our comid, we can use the “upstreamTributaries” navigation
 option to get all the flowlines upstream or all the features from any of
 the “featureSources” as shown below.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flowline_nldi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/navigate_nldi.html">navigate_nldi</a></span><span class="op">(</span><span class="va">nldi_feature</span>, </span>
 <span>                               mode <span class="op">=</span> <span class="st">"upstreamTributaries"</span>, </span>
 <span>                               distance_km <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">origin</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">UT</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">origin</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">UT</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/navigate_nldi-1.png" class="r-plt" alt="" width="576"></p>
 <p>The NLDI only provides geometry and a comid for each of the
 flowlines. The <code><a href="../reference/subset_nhdplus.html">subset_nhdplus()</a></code> function has a “download”
 option that allows us to download four layers and all attributes as
 shown below.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">output_file_download</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"subset_download.gpkg"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">output_file_download</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/subset_nhdplus.html">subset_nhdplus</a></span><span class="op">(</span>comids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">UT</span><span class="op">$</span><span class="va">nhdplus_comid</span><span class="op">)</span>,</span>
@@ -350,19 +356,19 @@ shown below.</p>
 <span>                                      nhdplus_data <span class="op">=</span> <span class="st">"download"</span>, return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                      overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file_download</span><span class="op">)</span></span>
+<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file_download</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Driver: GPKG </span></span>
 <span><span class="co">#&gt; Available layers:</span></span>
 <span><span class="co">#&gt;            layer_name geometry_type features fields crs_name</span></span>
 <span><span class="co">#&gt; 1 NHDFlowline_Network   Line String      168    138    NAD83</span></span>
 <span></span>
-<span><span class="va">flowline_download</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"subset_download.gpkg"</span><span class="op">)</span>, </span>
+<span><span class="va">flowline_download</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"subset_download.gpkg"</span><span class="op">)</span>, </span>
 <span>                                 <span class="st">"NHDFlowline_Network"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flowline_download</span>, </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flowline_download</span>, </span>
 <span>                                   <span class="va">streamorde</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>     lwd <span class="op">=</span> <span class="fl">7</span>, col <span class="op">=</span> <span class="st">"darkgrey"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">UT</span><span class="op">)</span>, </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nldi</span><span class="op">$</span><span class="va">UT</span><span class="op">)</span>, </span>
 <span>     lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/subset_nhdplus_download-1.png" class="r-plt" alt="" width="576"></p>
 <p>This plot illustrates the kind of thing that’s possible (filtering to
@@ -372,7 +378,7 @@ the NLDI. Say we knew the USGS gage ID that we want NHDPlus data
 upstream of. We can use the NLDI to navigate from the gage the same as
 we did for our comid. We can also get back all the nwis sites the NLDI
 knows about upstream of the one we chose!</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nldi_feature</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>featureSource <span class="op">=</span> <span class="st">"nwissite"</span>, </span>
 <span>                     featureID <span class="op">=</span> <span class="st">"USGS-05428500"</span><span class="op">)</span></span>
 <span></span>
@@ -387,13 +393,13 @@ knows about upstream of the one we chose!</p>
 <span>                                  nhdplus_data <span class="op">=</span> <span class="st">"download"</span>,</span>
 <span>                                  return_data <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file_download</span><span class="op">)</span></span>
+<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file_download</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Driver: GPKG </span></span>
 <span><span class="co">#&gt; Available layers:</span></span>
 <span><span class="co">#&gt;            layer_name geometry_type features fields crs_name</span></span>
 <span><span class="co">#&gt; 1 NHDFlowline_Network   Line String      168    138    NAD83</span></span>
 <span></span>
-<span><span class="va">flowline_nwis</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file_nwis</span>, </span>
+<span><span class="va">flowline_nwis</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file_nwis</span>, </span>
 <span>                                 <span class="st">"NHDFlowline_Network"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">upstream_nwis</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/navigate_nldi.html">navigate_nldi</a></span><span class="op">(</span><span class="va">nldi_feature</span>,</span>
@@ -401,9 +407,9 @@ knows about upstream of the one we chose!</p>
 <span>                               data_source <span class="op">=</span> <span class="st">"nwissite"</span>, </span>
 <span>                               distance_km <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nwis</span><span class="op">)</span>, </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline_nwis</span><span class="op">)</span>, </span>
 <span>     lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">upstream_nwis</span><span class="op">$</span><span class="va">UT_nwissite</span><span class="op">)</span>, </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">upstream_nwis</span><span class="op">$</span><span class="va">UT_nwissite</span><span class="op">)</span>, </span>
 <span>     cex <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/nldi_nwissite-1.png" class="r-plt" alt="" width="576"></p>
 </div>
@@ -418,8 +424,8 @@ with hybrid, web-service and local, workflows.</p>
 <code><a href="../reference/discover_nhdplus_id.html">discover_nhdplus_id()</a></code> above, we can use hydroloom’s
 <code>navigate_hydro_network()</code> to retrieve a collection of COMIDs
 along the upstream-with-tributaries network path.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">UT_comids</span> <span class="op">&lt;-</span> <span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/hydroloom/man/navigate_hydro_network.html" class="external-link">navigate_hydro_network</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">start_comid</span><span class="op">$</span><span class="va">comid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">"UT"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">UT_comids</span> <span class="op">&lt;-</span> <span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/navigate_hydro_network.html" class="external-link">navigate_hydro_network</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">start_comid</span><span class="op">$</span><span class="va">comid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">"UT"</span><span class="op">)</span></span>
 <span><span class="va">UT_comids</span></span>
 <span><span class="co">#&gt;   [1]  13293380  13293384  13293388  13293392  13293398  13293424  13293430</span></span>
 <span><span class="co">#&gt;   [8]  13293454  13293504  13293506  13293576  13293750  13294110  13294128</span></span>
@@ -450,10 +456,10 @@ that we have this list of COMIDs, we could go off and do all sorts of
 things with the various flowline attributes. For now, let’s just use the
 COMID list to filter our <code>fline</code> <code>sf</code>
 <code>data.frame</code> and plot it with our other layers.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">start_point</span>, cex <span class="op">=</span> <span class="fl">1.5</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">comid</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">UT_comids</span><span class="op">)</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">comid</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">UT_comids</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>     add<span class="op">=</span><span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/plot_fline_subset-1.png" class="r-plt" alt="" width="576"></p>
 <p>Say you want to save the network subset for later use in R or in some
@@ -463,7 +469,7 @@ out large subsets of it like shown below (this queries for data from the
 local geodatabase without loading the whole thing into memory). If you
 don’t have the whole national seamless, look at the second example in
 this section.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">output_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"subset.gpkg"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">output_file</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/subset_nhdplus.html">subset_nhdplus</a></span><span class="op">(</span>comids <span class="op">=</span> <span class="va">UT_comids</span>,</span>
@@ -471,7 +477,7 @@ this section.</p>
 <span>                             nhdplus_data <span class="op">=</span> <span class="fu"><a href="../reference/nhdplus_path.html">nhdplus_path</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>                             return_data <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file</span><span class="op">)</span></span>
+<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Driver: GPKG </span></span>
 <span><span class="co">#&gt; Available layers:</span></span>
 <span><span class="co">#&gt;               layer_name geometry_type features fields             crs_name</span></span>
@@ -485,16 +491,16 @@ this section.</p>
 the network subset of catchments and flowlines as well as a spatial
 subset of other layers as shown in the status output above. To complete
 the demonstration, here are a couple more layers plotted up.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">catchment</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"CatchmentSP"</span><span class="op">)</span></span>
-<span><span class="va">waterbody</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">catchment</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"CatchmentSP"</span><span class="op">)</span></span>
+<span><span class="va">waterbody</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">start_point</span>, cex <span class="op">=</span> <span class="fl">1.5</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"red"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">comid</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">UT_comids</span><span class="op">)</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">comid</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">UT_comids</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>     add<span class="op">=</span><span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">catchment</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">catchment</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/plot_result-1.png" class="r-plt" alt="" width="576"></p>
 <p><a id="indexing"></a></p>
 </div>
@@ -505,17 +511,17 @@ the demonstration, here are a couple more layers plotted up.</p>
 <p>Indexing functions have moved to the <a href="https://doi-usgs.github.io/hydroloom/" class="external-link">hydroloom</a> package. Use
 hydrogeofetch to fetch flowline data and hydroloom to index points to
 those flowlines.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">index_points_to_lines</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">start_point</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">start_point</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   point_id    comid      reachcode reachcode_measure       offset</span></span>
 <span><span class="co">#&gt; 1        1 13293750 07090002007373           41.8003 0.0009619034</span></span></code></pre></div>
 <p><code>index_points_to_lines()</code> works with a list of points too.
 For demonstration purposes, we can use the gages in our subset from
 above.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gage</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"Gage"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gage</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"Gage"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">index_points_to_lines</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">gage</span><span class="op">)</span>, precision <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">gage</span><span class="op">)</span>, precision <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    point_id    comid      reachcode reachcode_measure         offset</span></span>
 <span><span class="co">#&gt; 1         2 13294276 07090002008387           14.8355 0.000020891030</span></span>
 <span><span class="co">#&gt; 2         3 13294264 07090002007650           56.4439 0.000031104771</span></span>

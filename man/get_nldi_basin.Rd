@@ -55,10 +55,10 @@ length(st_coordinates(basin2))
 plot(st_geometry(st_buffer(st_transform(site, 5070),
                           units::set_units(3000, "m"))), border = NA)
 
-plot(st_geometry(site), add = TRUE)
-plot(st_geometry(basin2), add = TRUE)
+plot(st_geometry(st_transform(site, 5070)), add = TRUE)
+plot(st_geometry(st_transform(basin2, 5070)), add = TRUE)
 
-plot(st_geometry(basin), border = "red", add = TRUE)
+plot(st_geometry(st_transform(basin, 5070)), border = "red", add = TRUE)
 
 }
 }

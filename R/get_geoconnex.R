@@ -22,7 +22,9 @@ discover_geoconnex_reference <- function() {
 #'
 #' @param AOI  bbox, sf polygon or point, or a URL that will return an sf object when passed to
 #' \link[sf]{read_sf}
-#' @param type character the feature type chosen from \link{discover_geoconnex_reference}
+#' @param type character the feature type to query. Must match one of the `id`
+#' entries returned by \link{discover_geoconnex_reference} (the `type` column of
+#' that output is not a valid value here).
 #' @inheritParams query_usgs_oafeat
 #' @param status boolean print status or not
 #' @return sf data.frame containing requested reference features

@@ -16,7 +16,9 @@ get_geoconnex_reference(
 \item{AOI}{bbox, sf polygon or point, or a URL that will return an sf object when passed to
 \link[sf]{read_sf}}
 
-\item{type}{character the feature type chosen from \link{discover_geoconnex_reference}}
+\item{type}{character the feature type to query. Must match one of the `id`
+entries returned by \link{discover_geoconnex_reference} (the `type` column of
+that output is not a valid value here).}
 
 \item{t_srs}{character (PROJ string or EPSG code) or numeric (EPSG code).
 A user specified - target -Spatial Reference System (SRS/CRS) for returned objects.

@@ -12,7 +12,7 @@ get_elev_along_path(points, num_pts, res = 1, status = TRUE)
 \item{num_pts}{numeric number of points to retrieve along the cross section.}
 
 \item{res}{integer resolution of 3D Elevation Program data to request.
-Must be on of: 1, 3, 5, 10, 30, 60.}
+Must be one of: 1, 3, 5, 10, 30, 60.}
 
 \item{status}{logical}
 }

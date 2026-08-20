@@ -95,6 +95,9 @@ assign("nhdplus_attributes", nhdplus_attributes, envir = hydrogeofetch_env)
 assign("arcrest_root", "https://hydro.nationalmap.gov/arcgis/rest/services/",
        envir = hydrogeofetch_env)
 
+assign("arcrest_3dhp_root", "https://3dhp.nationalmap.gov/arcgis/rest/services/",
+       envir = hydrogeofetch_env)
+
 assign("gocnx_ref_base_url", "https://reference.geoconnex.us/",
        envir = hydrogeofetch_env)
 
@@ -269,9 +272,14 @@ get_hydroadd_url <- function() {
 #' @examples
 #' hydrogeofetch_data_dir()
 #'
-#' hydrogeofetch_data_dir("demo")
+#' # set it somewhere else, then put it back
+#' old_dir <- hydrogeofetch_data_dir()
 #'
-#' hydrogeofetch_data_dir(tools::R_user_dir("hydrogeofetch"))
+#' hydrogeofetch_data_dir(file.path(tempdir(check = TRUE), "demo"))
+#'
+#' hydrogeofetch_data_dir()
+#'
+#' hydrogeofetch_data_dir(old_dir)
 #'
 hydrogeofetch_data_dir <- function(dir = NULL) {
 
@@ -341,7 +349,11 @@ nhdplus_path <- function(path = NULL, warn = FALSE) {
 #' used unless overridden with this function. The old `NHDPLUSTOOLS_*`
 #' names are still recognized as a fallback.
 #'
-#' @param mode character 'memory' or 'filesystem'
+#' The default mode is 'memory', so cached responses live only as long as the
+#' R session. Set 'filesystem' to persist them in \link{hydrogeofetch_data_dir},
+#' and see \link{hydrogeofetch_cache_clear} to remove them again.
+#'
+#' @param mode character 'memory' (default) or 'filesystem'
 #' @param timeout numeric number of seconds until caches invalidate
 #' @return list containing settings at time of calling. If inputs are
 #' NULL, current settings. If settings are altered, previous setting values.
@@ -349,7 +361,7 @@ nhdplus_path <- function(path = NULL, warn = FALSE) {
 #'
 hydrogeofetch_cache_settings <- function(mode = NULL, timeout = NULL) {
   current_mode <- tryCatch(get("nhdpt_mem_cache", envir = hydrogeofetch_env),
-                           error = \(e) "filesystem") # default to filesystem
+                           error = \(e) "memory") # default to memory
   current_timeout <- tryCatch(get("nhdpt_cache_timeout", envir = hydrogeofetch_env),
                               error = \(e) hydrogeofetch_memoise_timeout())
 
@@ -364,9 +376,95 @@ hydrogeofetch_cache_settings <- function(mode = NULL, timeout = NULL) {
   return(invisible(list(mode = current_mode, timeout = current_timeout)))
 }
 
-#' @importFrom memoise memoise cache_memory cache_filesystem
-#' @importFrom digest digest
-hydrogeofetch_memoise_cache <- function() {
+#' @title Clear cached hydrogeofetch data
+#' @description Removes files that hydrogeofetch has written to
+#' \link{hydrogeofetch_data_dir}. Use this to reclaim space or to force
+#' downloaded data to be refreshed.
+#'
+#' Downloaded datasets are kept until removed with this function -- nothing
+#' expires them automatically -- so it is worth calling periodically if you use
+#' \link{get_vaa} or \link{add_mainstems} on many different areas.
+#'
+#' @param what character which cached data to remove. One or more of
+#' 'responses' (the `memoise` filesystem cache of web service responses),
+#' 'tiles' (basemap tiles cached by \link{plot_nhdplus}), 'vaa' (value added
+#' attribute parquet files), 'mainstems' (mainstem lookup tables), or 'all'
+#' (the default) for everything in the data directory.
+#' @param ask logical if TRUE, the default in an interactive session, asks for
+#' confirmation before deleting.
+#' @return character vector of paths removed, invisibly.
+#' @export
+#' @examples
+#' # pointed at an empty temporary directory here so the example does not
+#' # remove anything you have actually cached
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(), "hgf_cache_demo"))
+#'
+#' hydrogeofetch_cache_clear(ask = FALSE)
+#'
+#' hydrogeofetch_data_dir(old_dir)
+#'
+hydrogeofetch_cache_clear <- function(what = "all", ask = interactive()) {
+
+  what <- match.arg(what, c("all", "responses", "tiles", "vaa", "mainstems"),
+                    several.ok = TRUE)
+
+  dir <- hydrogeofetch_data_dir()
+
+  if(!dir.exists(dir)) return(invisible(character(0)))
+
+  targets <- if("all" %in% what) {
+    list.files(dir, full.names = TRUE, all.files = TRUE, no.. = TRUE)
+  } else {
+    unlist(lapply(what, function(x) {
+      switch(x,
+             tiles = list.files(dir, pattern = "^tile_cache_dir$",
+                                full.names = TRUE),
+             vaa = list.files(dir, full.names = TRUE,
+                              pattern = paste0("^(nhdplusVAA\\.parquet|",
+                                               "enhd_nhdplusatts\\.parquet|",
+                                               "streamcat_metadata\\.rds)$")),
+             mainstems = list.files(dir, pattern = "_lookup\\.parquet$",
+                                    full.names = TRUE),
+             # memoise writes files named for the hash of their key, so they
+             # are the hex-only names with no extension
+             responses = {
+               f <- list.files(dir, full.names = TRUE)
+               f[grepl("^[0-9a-f]{16,}$", basename(f))]
+             })
+    }))
+  }
+
+  targets <- unique(targets)
+
+  if(length(targets) == 0) {
+    message("Nothing cached in ", dir)
+    return(invisible(character(0)))
+  }
+
+  size <- sum(file.size(targets), na.rm = TRUE)
+
+  if(ask) {
+    message("Remove ", length(targets), " item(s) (",
+            round(size / 1e6, 1), " MB) from ", dir, "?")
+    if(!identical(tolower(readline("Type 'yes' to confirm: ")), "yes")) {
+      message("Nothing removed.")
+      return(invisible(character(0)))
+    }
+  }
+
+  unlink(targets, recursive = TRUE, force = TRUE)
+
+  message("Removed ", length(targets), " item(s) (",
+          round(size / 1e6, 1), " MB) from ", dir)
+
+  invisible(targets)
+}
+
+#' @description resolves the cache mode from the session setting, then the
+#' environment variable, then the default.
+#' @noRd
+hydrogeofetch_memoise_mode <- function() {
   ses_memo_cache <- try(get("nhdpt_mem_cache", envir = hydrogeofetch_env), silent = TRUE)
 
   if(!inherits(ses_memo_cache, "try-error")) {
@@ -387,12 +485,51 @@ hydrogeofetch_memoise_cache <- function() {
     }
   }
 
-  if(sys_memo_cache == "memory") {
-    memoise::cache_memory()
-  } else {
+  # memory is the default: a filesystem cache persists in the user data dir,
+  # so it is only used when explicitly asked for.
+  if(sys_memo_cache == "filesystem") "filesystem" else "memory"
+}
+
+#' @description returns the cache backing the current mode, building it on
+#' first use. The filesystem cache is only created once it is asked for, so
+#' nothing is written to the user data dir under the default memory mode.
+#' @noRd
+hydrogeofetch_memoise_backend <- function() {
+  mode <- hydrogeofetch_memoise_mode()
+  key <- paste0("memo_cache_", mode)
+
+  existing <- try(get(key, envir = hydrogeofetch_env), silent = TRUE)
+  if(!inherits(existing, "try-error")) return(existing)
+
+  cache <- if(mode == "filesystem") {
     dir.create(hydrogeofetch_data_dir(), showWarnings = FALSE, recursive = TRUE)
     memoise::cache_filesystem(hydrogeofetch_data_dir())
+  } else {
+    memoise::cache_memory()
   }
+
+  assign(key, cache, envir = hydrogeofetch_env)
+
+  cache
+}
+
+#' @description a memoise cache that forwards every operation to whichever
+#' backend the current mode selects. The query functions are memoised once at
+#' load and their namespace bindings are then locked, so the indirection is
+#' what lets \link{hydrogeofetch_cache_settings} change modes mid-session.
+#' @importFrom memoise memoise cache_memory cache_filesystem
+#' @importFrom digest digest
+#' @noRd
+hydrogeofetch_memoise_cache <- function() {
+  list(
+    digest   = function(...) hydrogeofetch_memoise_backend()$digest(...),
+    reset    = function(...) hydrogeofetch_memoise_backend()$reset(...),
+    set      = function(...) hydrogeofetch_memoise_backend()$set(...),
+    get      = function(...) hydrogeofetch_memoise_backend()$get(...),
+    has_key  = function(...) hydrogeofetch_memoise_backend()$has_key(...),
+    keys     = function(...) hydrogeofetch_memoise_backend()$keys(...),
+    drop_key = function(...) hydrogeofetch_memoise_backend()$drop_key(...)
+  )
 }
 
 hydrogeofetch_memoise_timeout <- function() {

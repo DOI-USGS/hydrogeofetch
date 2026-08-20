@@ -60,69 +60,82 @@
 <h3 id="new-features-2-0-0">New features<a class="anchor" aria-label="anchor" href="#new-features-2-0-0"></a></h3>
 <ul><li>New <code><a href="../reference/get_3dhp_index.html">get_3dhp_index()</a></code> addresses (snaps) point features to the 3DHP network using the HydroAdd3D web service, returning the snapped location and elevation, the matched mainstem (as a geoconnex uri), the measure along the mainstem, and associated GNIS attributes.</li>
 <li>New <code><a href="../reference/add_mainstems.html">add_mainstems()</a></code> joins geoconnex mainstem identifiers onto a table containing NHDPlusV2 (comid/featureid) or NHDPlusHR (nhdplusid) identifiers, using a cached lookup table from the <a href="https://github.com/internetofwater/ref_rivers" class="external-link">ref_rivers</a> release. <a href="https://github.com/doi-usgs/nhdplusTools/issues/469" class="external-link">#469</a></li>
-<li>New <code><a href="../reference/check_mainstems.html">check_mainstems()</a></code> checks whether mainstem identifiers have been superseded by a newer reference release; new <code><a href="../reference/update_mainstems.html">update_mainstems()</a></code> re-indexes points with a known mainstem id onto its replacement using <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code>. <a href="https://github.com/doi-usgs/nhdplusTools/issues/470" class="external-link">#470</a></li>
+<li>New <code><a href="../reference/check_mainstems.html">check_mainstems()</a></code> checks whether mainstem identifiers have been superseded by a newer reference release; new <code><a href="../reference/update_mainstems.html">update_mainstems()</a></code> re-indexes points with a known mainstem id onto its replacement using <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code>. <a href="https://github.com/doi-usgs/nhdplusTools/issues/470" class="external-link">#470</a></li>
 </ul></div>
 <div class="section level3">
 <h3 id="removed-functions-moved-to-hydroloom-2-0-0">Removed functions (moved to hydroloom)<a class="anchor" aria-label="anchor" href="#removed-functions-moved-to-hydroloom-2-0-0"></a></h3>
 <p>Network analysis and spatial indexing functions that duplicated <a href="https://doi-usgs.github.io/hydroloom/" class="external-link">hydroloom</a> have been removed. Users should call hydroloom directly. See the <a href="https://doi-usgs.github.io/hydroloom/reference/" class="external-link">hydroloom reference</a> for full documentation, especially the <a href="https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing" class="external-link">indexing</a> and <a href="https://doi-usgs.github.io/hydroloom/reference/index.html#network-navigation-and-accumulation" class="external-link">navigation</a> sections.</p>
 <ul><li>
-<code>get_flowline_index()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_flowline_index.html">get_flowline_index()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">hydroloom::index_points_to_lines()</a></code>
 </li>
 <li>
-<code>get_waterbody_index()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/index_points_to_waterbodies.html" class="external-link">hydroloom::index_points_to_waterbodies()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_waterbody_index.html">get_waterbody_index()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_waterbodies.html" class="external-link">hydroloom::index_points_to_waterbodies()</a></code>
 </li>
 <li>
-<code>disambiguate_flowline_indexes()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/disambiguate_indexes.html" class="external-link">hydroloom::disambiguate_indexes()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/disambiguate_flowline_indexes.html">disambiguate_flowline_indexes()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/disambiguate_indexes.html" class="external-link">hydroloom::disambiguate_indexes()</a></code>
 </li>
 <li>
-<code>get_UT()</code>, <code>get_DD()</code> → <code>hydroloom::navigate_hydro_network(x, start, "UT")</code> / <code>"DD"</code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_UT.html">get_UT()</a></code>, <code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_DD.html">get_DD()</a></code> → <code>hydroloom::navigate_hydro_network(x, start, "UT")</code> / <code>"DD"</code>
 </li>
 <li>
-<code>get_UM()</code>, <code>get_DM()</code> → <code>hydroloom::navigate_hydro_network(x, start, "UM")</code> / <code>"DM"</code> (note: the old wrappers also ran <code>align_nhdplus_names</code>, filtered, and supported <code>sort</code>/<code>include</code> arguments)</li>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_UM.html">get_UM()</a></code>, <code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_DM.html">get_DM()</a></code> → <code>hydroloom::navigate_hydro_network(x, start, "UM")</code> / <code>"DM"</code> (note: the old wrappers also ran <code>align_nhdplus_names</code>, filtered, and supported <code>sort</code>/<code>include</code> arguments)</li>
 <li>
-<code>navigate_network()</code> — workflow glue; use <code><a href="../reference/navigate_nldi.html">navigate_nldi()</a></code> + <code><a href="../reference/subset_nhdplus.html">subset_nhdplus()</a></code> or hydroloom navigation directly</li>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/navigate_network.html">navigate_network()</a></code> — workflow glue; use <code><a href="../reference/navigate_nldi.html">navigate_nldi()</a></code> + <code><a href="../reference/subset_nhdplus.html">subset_nhdplus()</a></code> or hydroloom navigation directly</li>
 <li>
-<code>get_sorted()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/sort_network.html" class="external-link">hydroloom::sort_network()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_sorted.html">get_sorted()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/sort_network.html" class="external-link">hydroloom::sort_network()</a></code>
 </li>
 <li>
-<code>get_pathlength()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_pathlength.html" class="external-link">hydroloom::add_pathlength()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_pathlength.html">get_pathlength()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_pathlength.html" class="external-link">hydroloom::add_pathlength()</a></code>
 </li>
 <li>
-<code>get_streamorder()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_streamorder.html" class="external-link">hydroloom::add_streamorder()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_streamorder.html">get_streamorder()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_streamorder.html" class="external-link">hydroloom::add_streamorder()</a></code>
 </li>
 <li>
-<code>get_streamlevel()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_streamlevel.html" class="external-link">hydroloom::add_streamlevel()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_streamlevel.html">get_streamlevel()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_streamlevel.html" class="external-link">hydroloom::add_streamlevel()</a></code>
 </li>
 <li>
-<code>get_levelpaths()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_levelpaths.html" class="external-link">hydroloom::add_levelpaths()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_levelpaths.html">get_levelpaths()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_levelpaths.html" class="external-link">hydroloom::add_levelpaths()</a></code>
 </li>
 <li>
-<code>get_pfaf()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/add_pfafstetter.html" class="external-link">hydroloom::add_pfafstetter()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_pfaf.html">get_pfaf()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_pfafstetter.html" class="external-link">hydroloom::add_pfafstetter()</a></code>
 </li>
 <li>
-<code>get_terminal()</code> → <code>hydroloom::sort_network(x, split = TRUE)</code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_terminal.html">get_terminal()</a></code> → <code>hydroloom::sort_network(x, split = TRUE)</code>
 </li>
 <li>
-<code>calculate_total_drainage_area()</code> → <code>hydroloom::accumulate_downstream(x, "area")</code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/calculate_total_drainage_area.html">calculate_total_drainage_area()</a></code> → <code>hydroloom::accumulate_downstream(x, "area")</code>
 </li>
 <li>
-<code>calculate_arbolate_sum()</code> → <code>hydroloom::accumulate_downstream(x, "length")</code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/calculate_arbolate_sum.html">calculate_arbolate_sum()</a></code> → <code>hydroloom::accumulate_downstream(x, "length")</code>
 </li>
 <li>
-<code>get_path_members()</code>, <code>get_path_lengths()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/navigate_connected_paths.html" class="external-link">hydroloom::navigate_connected_paths()</a></code>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_path_members.html">get_path_members()</a></code>, <code><a href="https://doi-usgs.github.io/nhdplusTools/reference/get_path_lengths.html">get_path_lengths()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/navigate_connected_paths.html" class="external-link">hydroloom::navigate_connected_paths()</a></code>
 </li>
 <li>
-<code>make_node_topology()</code> → <code><a href="https://rdrr.io/pkg/hydroloom/man/make_node_topology.html" class="external-link">hydroloom::make_node_topology()</a></code>
+<code><a href="https://doi-usgs.github.io/hydroloom/reference/make_node_topology.html" class="external-link">make_node_topology()</a></code> → <code><a href="https://doi-usgs.github.io/hydroloom/reference/make_node_topology.html" class="external-link">hydroloom::make_node_topology()</a></code>
 </li>
 <li>
-<code>add_plus_network_attributes()</code> → use hydroloom’s <code>add_levelpaths()</code>, <code>add_pathlength()</code>, <code>accumulate_downstream()</code> etc. directly</li>
+<code><a href="https://doi-usgs.github.io/nhdplusTools/reference/add_plus_network_attributes.html">add_plus_network_attributes()</a></code> → use hydroloom’s <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_levelpaths.html" class="external-link">add_levelpaths()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/add_pathlength.html" class="external-link">add_pathlength()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/accumulate_downstream.html" class="external-link">accumulate_downstream()</a></code> etc. directly</li>
 </ul></div>
 <div class="section level3">
 <h3 id="removed-re-exports-2-0-0">Removed re-exports<a class="anchor" aria-label="anchor" href="#removed-re-exports-2-0-0"></a></h3>
 <p>These hydroloom functions are no longer re-exported; call <code>hydroloom::fn()</code> directly:</p>
 <ul><li>
-<code>st_compatibalize()</code>, <code>rename_geometry()</code>, <code>get_node()</code>, <code>fix_flowdir()</code>, <code>rescale_measures()</code>, <code>get_hydro_location()</code>, <code>get_partial_length()</code>
+<code><a href="https://doi-usgs.github.io/hydroloom/reference/st_compatibalize.html" class="external-link">st_compatibalize()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/rename_geometry.html" class="external-link">rename_geometry()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/get_node.html" class="external-link">get_node()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/fix_flowdir.html" class="external-link">fix_flowdir()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/rescale_measures.html" class="external-link">rescale_measures()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/get_hydro_location.html" class="external-link">get_hydro_location()</a></code>, <code><a href="https://doi-usgs.github.io/hydroloom/reference/get_partial_length.html" class="external-link">get_partial_length()</a></code>
 </li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-2-0-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-0-0"></a></h3>
+<ul><li>
+<code><a href="../reference/get_3dhp.html">get_3dhp()</a></code> queries by <code>universalreferenceid</code> are now chunked, avoiding the service gateway timeouts (HTTP 504) that previously caused large reachcode lookups to return <code>NULL</code>. <a href="https://github.com/doi-usgs/nhdplusTools/issues/475" class="external-link">#475</a></li>
+<li>
+<code><a href="../reference/get_catchment_characteristics.html">get_catchment_characteristics()</a></code> no longer surfaces the benign arrow “discarded from R metadata” warnings from the parquet metadata roundtrip. <a href="https://github.com/doi-usgs/nhdplusTools/issues/475" class="external-link">#475</a></li>
+</ul></div>
+<div class="section level3">
+<h3 id="other-changes-2-0-0">Other changes<a class="anchor" aria-label="anchor" href="#other-changes-2-0-0"></a></h3>
+<ul><li>
+<code><a href="../reference/prepare_nhdplus.html">prepare_nhdplus()</a></code> is no longer exported; it remains available internally. <a href="https://github.com/doi-usgs/nhdplusTools/issues/475" class="external-link">#475</a></li>
+<li>Documentation and example fixes throughout, following package review (<a href="https://github.com/doi-usgs/nhdplusTools/issues/475" class="external-link">#475</a>): corrected <code><a href="../reference/get_nldi_basin.html">get_nldi_basin()</a></code> and <code><a href="../reference/get_split_catchment.html">get_split_catchment()</a></code> example plotting, clearer messaging when the experimental <code><a href="../reference/get_xs_point.html">get_xs_point()</a></code> cross-section service is unavailable, broadened README scope language, and vignette setup and typo cleanups.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="dependency-changes-2-0-0">Dependency changes<a class="anchor" aria-label="anchor" href="#dependency-changes-2-0-0"></a></h3>

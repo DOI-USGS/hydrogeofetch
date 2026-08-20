@@ -4,7 +4,6 @@ test_that("local data", {
   testthat::skip_on_ci()
   # For test performance
   Sys.setenv(MAKE_BASIN="FALSE")
-  options("rgdal_show_exportToProj4_warnings"="none")
 
   skip_if_no_integration()
 

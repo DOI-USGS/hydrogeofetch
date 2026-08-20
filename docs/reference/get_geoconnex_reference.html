@@ -74,11 +74,13 @@
 
 <dl><dt id="arg-aoi">AOI<a class="anchor" aria-label="anchor" href="#arg-aoi"></a></dt>
 <dd><p>bbox, sf polygon or point, or a URL that will return an sf object when passed to
-<a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></p></dd>
+<a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>character the feature type chosen from <a href="discover_geoconnex_reference.html">discover_geoconnex_reference</a></p></dd>
+<dd><p>character the feature type to query. Must match one of the `id`
+entries returned by <a href="discover_geoconnex_reference.html">discover_geoconnex_reference</a> (the `type` column of
+that output is not a valid value here).</p></dd>
 
 
 <dt id="arg-t-srs">t_srs<a class="anchor" aria-label="anchor" href="#arg-t-srs"></a></dt>
@@ -104,7 +106,7 @@ extended search. Default = 0.5</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="fu"><a href="discover_geoconnex_reference.html">discover_geoconnex_reference</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="fu"><a href="discover_geoconnex_reference.html">discover_geoconnex_reference</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id            title                                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  </span>
@@ -129,11 +131,12 @@ extended search. Default = 0.5</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> ua10          Urban Areas                                            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> places        Places                                                 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">89.56684</span>, ymin <span class="op">=</span> <span class="fl">42.99816</span>,</span></span>
+<span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">89.56684</span>, ymin <span class="op">=</span> <span class="fl">42.99816</span>,</span></span>
 <span class="r-in"><span>                                   xmax <span class="op">=</span> <span class="op">-</span><span class="fl">89.24681</span>, ymax <span class="op">=</span> <span class="fl">43.17192</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                 crs <span class="op">=</span> <span class="st">"+proj=longlat +datum=WGS84 +no_defs"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_geoconnex_reference</span><span class="op">(</span><span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"hu04"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://reference.geoconnex.us/collections/hu04/items?bbox=-89.56684,42.99816,-89.24681,43.17192&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 8 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -147,6 +150,8 @@ extended search. Default = 0.5</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_geoconnex_reference</span><span class="op">(</span><span class="st">"https://geoconnex.us/ref/mainstems/315626"</span>, type <span class="op">=</span> <span class="st">"hu04"</span>, <span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://geoconnex.us/ref/mainstems/315626</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://reference.geoconnex.us/collections/hu04/items?bbox=-105.073989080677,34.8558312125635,-95.0543522295633,37.0185172092067&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 14 features and 8 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -171,10 +176,11 @@ extended search. Default = 0.5</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 1306    129 https://geoconn… Uppe… <span style="color: #949494;">""</span>       <span style="color: #BB0000;">NA</span>      1306  2017-09-20 <span style="color: #949494;">20:59:52</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">89.56684</span>, <span class="fl">42.99816</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">89.56684</span>, <span class="fl">42.99816</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  crs <span class="op">=</span> <span class="st">"+proj=longlat +datum=WGS84 +no_defs"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_geoconnex_reference</span><span class="op">(</span><span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"hu04"</span>, buffer <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://reference.geoconnex.us/collections/hu04/items?bbox=-90.8000371880942,42.1036700692926,-88.3339961248665,43.8938860248863&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 7 features and 8 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>

@@ -106,15 +106,15 @@
 <div class="section level2">
 <h2 id="ci-and-release">CI and release<a class="anchor" aria-label="anchor" href="#ci-and-release"></a></h2>
 <p>GitHub (doi-usgs/nhdplusTools) is the development platform. code.usgs.gov (code.usgs.gov/water/nhdplusTools) is the release platform. The GitLab CI pipeline (<code>.gitlab-ci.yml</code>) only runs on <code>rc/*</code> branches and produces a verified source tarball in the GitLab package registry. GitHub Actions runs R CMD check on push/PR to main for development.</p>
-<p>Local builds are not part of the release workflow. Use <code><a href="https://rdrr.io/pkg/devtools/man/test.html" class="external-link">devtools::test()</a></code>, <code><a href="https://rdrr.io/pkg/devtools/man/check.html" class="external-link">devtools::check()</a></code>, and <code><a href="https://rdrr.io/pkg/devtools/man/document.html" class="external-link">devtools::document()</a></code> for local development.</p>
+<p>Local builds are not part of the release workflow. Use <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code>, <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>, and <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> for local development.</p>
 </div>
 <div class="section level2">
 <h2 id="commands">Commands<a class="anchor" aria-label="anchor" href="#commands"></a></h2>
-<ul><li><code><a href="https://rdrr.io/pkg/devtools/man/test.html" class="external-link">devtools::test()</a></code></li>
+<ul><li><code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code></li>
 <li>
-<code><a href="https://rdrr.io/pkg/devtools/man/check.html" class="external-link">devtools::check()</a></code> — R CMD check</li>
+<code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> — R CMD check</li>
 <li>
-<code><a href="https://rdrr.io/pkg/devtools/man/document.html" class="external-link">devtools::document()</a></code> — rebuild roxygen docs</li>
+<code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> — rebuild roxygen docs</li>
 </ul></div>
 <div class="section level2">
 <h2 id="web-service-calls">Web service calls<a class="anchor" aria-label="anchor" href="#web-service-calls"></a></h2>

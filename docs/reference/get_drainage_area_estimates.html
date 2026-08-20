@@ -125,7 +125,7 @@ by subsetting this table. Default NULL (use web services).</p></dd>
 <dd><p>sf data.frame, character path, or NULL. HUC12 pour
 points to use instead of the NLDI <code>huc12pp</code> service. Accepts either
 a preloaded sf data.frame or a path to a GPKG, which is read with
-<code><a href="https://rdrr.io/pkg/sf/man/st_read.html" class="external-link">read_sf</a></code>. Columns <code>COMID</code> and <code>FinalWBD_HUC12</code>
+<code><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></code>. Columns <code>COMID</code> and <code>FinalWBD_HUC12</code>
 are renamed to <code>comid</code> and <code>identifier</code>; any other columns are
 preserved. When provided, the outlets are filtered to the upstream
 network COMID set and no NLDI <code>huc12pp</code> queries are issued. Pair
@@ -274,26 +274,119 @@ at the gage point and only the upstream portion is included. Default 100.</p></d
 <span class="r-in"><span><span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>featureSource <span class="op">=</span> <span class="st">"nwissite"</span>, featureID <span class="op">=</span> <span class="st">"USGS-05406500"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">get_drainage_area_estimates</span><span class="op">(</span><span class="va">start</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resolving start feature via NLDI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/catchmentsp/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdarea/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdflowline_network/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdflowline_nonnetwork/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdwaterbody/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/gagesii/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/gagesii-basins/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplusv2-huc02/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplusv2-huc04/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplusv2-huc06/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplusv2-huc08/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplusv2-huc10/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplusv2-huc12/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplushr-huc02/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplushr-huc04/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplushr-huc06/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplushr-huc08/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplushr-huc10/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/nhdplushr-huc12/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd02_20201026/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd04_20201026/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd06_20201026/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd08_20201026/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd10_20201026/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd12_20201026/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd02_20250107/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd04_20250107/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd06_20250107/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd08_20250107/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd10_20250107/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov:443/fabric/pygeoapi/collections/wbd12_20250107/queryables?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?comid=13633025&amp;skipGeometry=true&amp;limit=500&amp;offset=0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Outlet catchment flowline measure: 8.19</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Distance to outlet: 110 m (threshold 100 m =&gt; split needed)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?comid=13633025&amp;limit=500&amp;offset=0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Finding HUC12 pour points upstream via NLDI...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Fetching flowline attributes for 70 upstream COMIDs...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?skipGeometry=true&amp;limit=500&amp;offset=0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> {"op":"in","args":[{"property":"comid"},[13632941,13632943,13632973,13632981,13632993,13632997,13632999,13633001,13633015,13633023,13633025,13633029,13633041,13633045,13633047,13633049,13633051,13633055,13633057,13633059,13633063,13633073,13633077,13633079,13633085,13633087,13633091,13633093,13633109,13633111,13633135,13633137,13633143,13633155,13633173,13633177,13633185,13633199,13633213,13633215,13633217,13633231,13633233,13633245,13633249,13633259,13633269,13633271,13633273,13633275,13633277,13633279,13633281,13633287,13633295,13633301,13633307,13633309,13633331,13633339,13633343,13633345,13633389,13633397,13633399,13633407,13633821,13634163,13634201,13634219]]}</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   70 flowlines, totdasqkm = 114.34</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Found 1 HUC12 outlets</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Finding immediately-upstream HUC12 outlets...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   1 immediately-upstream HUC12 outlets (of 1 total)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Inferred type 'huc12_nhdplusv2' from ID length and version suffix</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdplusv2-huc12/items?huc_12=070700050501&amp;limit=500&amp;offset=0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   HUC12 query: 1 HUC12s, total = 65.66 sq km, contributing = 65.66 sq km</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Splitting catchments at 1 HUC12 outlet(s)...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://api.water.usgs.gov/nldi/pygeoapi/processes/nldi-splitcatchment/execution</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   "inputs": [</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "lat",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "43.111472861"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     },</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "lon",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "-89.646862139"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     },</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "upstream",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "false"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     },</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "simplified",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "false"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   ]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Navigating network upstream of HUC12 outlets...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   31 extra catchments between outlet and HUC12 outlets</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Splitting outlet catchment at gage point...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://api.water.usgs.gov/nldi/pygeoapi/processes/nldi-splitcatchment/execution</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   "inputs": [</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "lat",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "43.1338164341414"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     },</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "lon",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "-89.7323152197315"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     },</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "upstream",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "false"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     },</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     {</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "id": "simplified",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "type": "text/plain",</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>       "value": "false"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   ]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Outlet split: full=1.07 km2, upstream=1.05 km2, removed=0.01 km2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Fetching extra catchment geometries...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?limit=500&amp;offset=0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> {"op":"in","args":[{"property":"featureid"},[13632997,13633023,13633025,13633045,13633047,13633055,13633057,13633059,13633063,13633073,13633077,13633079,13633085,13633087,13633091,13633093,13633109,13633111,13633135,13633155,13633185,13633199,13633213,13633217,13633269,13633301,13633309,13633339,13633345,13633389,13633407]]}</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   HUC12 DA = 118.03, contributing = 118.03</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Network DA = 114.34</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computing NHDPlusHR drainage area estimate...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Fetching NHDPlusHR network for full AOI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Fetched 294 HR flowlines</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> defaulting to comid rather than permanent_identifier</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   HR outlet NHDPlusID = 22001100015000 (TotDASqKM = 107.07950025)</span>
@@ -301,6 +394,8 @@ at the gage point and only the upstream portion is included. Default 100.</p></d
 <span class="r-msg co"><span class="r-pr">#&gt;</span> defaulting to comid rather than permanent_identifier</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Found 139 HR flowlines upstream</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Fetching NHDPlusHR catchments...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/10/query</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/10/query</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   NHDPlusHR DA = 107.08</span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">da_huc10_sqkm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>

@@ -148,8 +148,10 @@ EPSG:5070 Albers Equal Area projection</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span> <span class="va">point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">119.845</span>, <span class="fl">34.4146</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="va">point</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">119.845</span>, <span class="fl">34.4146</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span><span class="va">point</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?bbox=-119.845,34.4146,-119.845,34.4146&amp;properties=featureid&amp;skipGeometry=true</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?comid=948060316&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 138 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -167,6 +169,8 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnlevel &lt;dbl&gt;, uplevelpat &lt;dbl&gt;, uphydroseq &lt;dbl&gt;, dnlevelpat &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnminorhyd &lt;dbl&gt;, dndraincou &lt;dbl&gt;, dnhydroseq &lt;dbl&gt;, frommeas &lt;dbl&gt;, …</span></span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span><span class="va">point</span>, realization <span class="op">=</span> <span class="st">"catchment"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?bbox=-119.845,34.4146,-119.845,34.4146&amp;properties=featureid&amp;skipGeometry=true</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?featureid=948060316&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 7 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -178,6 +182,7 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  2<span style="text-decoration: underline;">609</span>886  1<span style="text-decoration: underline;">482</span>979 948<span style="text-decoration: underline;">060</span>316 NHDFlowline     2.58        0.133   0.000<span style="text-decoration: underline;">253</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;POLYGON [°]&gt;</span></span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span><span class="va">point</span>, realization <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?bbox=-119.845,34.4146,-119.845,34.4146&amp;properties=featureid&amp;skipGeometry=true</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $catchment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 7 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
@@ -227,6 +232,7 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnminorhyd &lt;dbl&gt;, dndraincou &lt;dbl&gt;, dnhydroseq &lt;dbl&gt;, frommeas &lt;dbl&gt;, …</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span>comid <span class="op">=</span> <span class="fl">101</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?comid=101&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1 feature and 138 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -244,6 +250,10 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnlevel &lt;dbl&gt;, uplevelpat &lt;dbl&gt;, uphydroseq &lt;dbl&gt;, dnlevelpat &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnminorhyd &lt;dbl&gt;, dndraincou &lt;dbl&gt;, dnhydroseq &lt;dbl&gt;, frommeas &lt;dbl&gt;, …</span></span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span>nwis  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">11120000</span>, <span class="fl">11120500</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-11120000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-11120500</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?limit=500&amp;offset=0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> {"op":"in","args":[{"property":"comid"},[17595429,17596109]]}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 138 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -261,9 +271,10 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   arbolatesu &lt;dbl&gt;, divergence &lt;dbl&gt;, startflag &lt;dbl&gt;, terminalfl &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnlevel &lt;dbl&gt;, uplevelpat &lt;dbl&gt;, uphydroseq &lt;dbl&gt;, dnlevelpat &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnminorhyd &lt;dbl&gt;, dndraincou &lt;dbl&gt;, dnhydroseq &lt;dbl&gt;, frommeas &lt;dbl&gt;, …</span></span>
-<span class="r-in"><span> <span class="va">area</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">119.8851</span>, xmax <span class="op">=</span><span class="op">-</span><span class="fl">119.8361</span>,</span></span>
+<span class="r-in"><span> <span class="va">area</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">119.8851</span>, xmax <span class="op">=</span><span class="op">-</span><span class="fl">119.8361</span>,</span></span>
 <span class="r-in"><span> ymax <span class="op">=</span> <span class="fl">34.42439</span>, ymin <span class="op">=</span> <span class="fl">34.40473</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span><span class="va">area</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-119.8851,34.40473,-119.8361,34.42439&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 19 features and 138 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -299,6 +310,7 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnlevel &lt;dbl&gt;, uplevelpat &lt;dbl&gt;, uphydroseq &lt;dbl&gt;, dnlevelpat &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   dnminorhyd &lt;dbl&gt;, dndraincou &lt;dbl&gt;, dnhydroseq &lt;dbl&gt;, frommeas &lt;dbl&gt;, …</span></span>
 <span class="r-in"><span> <span class="fu">get_nhdplus</span><span class="op">(</span><span class="va">area</span>, realization <span class="op">=</span> <span class="st">"flowline"</span>, streamorder <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-119.8851,34.40473,-119.8361,34.42439&amp;filter=streamorde%20&gt;%202&amp;limit=500&amp;offset=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 8 features and 138 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>

@@ -32,7 +32,7 @@ map_nhdplus(
 
 \item{plot_config}{list containing plot configuration, see details.}
 
-\item{overwrite}{passed on the \link{subset_nhdplus}.}
+\item{overwrite}{passed on to \link{subset_nhdplus}.}
 
 \item{cache_data}{character path to rds file where all plot data can be cached.
 If file doesn't exist, it will be created. If set to FALSE, all caching will

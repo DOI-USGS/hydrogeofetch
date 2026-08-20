@@ -134,28 +134,182 @@ EPSG:5070 Albers Equal Area projection</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">89.56684</span>, ymin <span class="op">=</span> <span class="fl">42.99816</span>,</span></span>
+<span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">89.56684</span>, ymin <span class="op">=</span> <span class="fl">42.99816</span>,</span></span>
 <span class="r-in"><span>                                   xmax <span class="op">=</span> <span class="op">-</span><span class="fl">89.24681</span>, ymax <span class="op">=</span> <span class="fl">43.17192</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                 crs <span class="op">=</span> <span class="st">"+proj=longlat +datum=WGS84 +no_defs"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get flowlines and hydrolocations</span></span></span>
 <span class="r-in"><span><span class="va">flowlines</span> <span class="op">&lt;-</span> <span class="fu">get_nhdphr</span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"networknhdflowline"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/?f=json</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
 <span class="r-in"><span><span class="va">point</span> <span class="op">&lt;-</span> <span class="fu">get_nhdphr</span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"nhdpoint"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/2/query</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/2/query</span>
 <span class="r-in"><span><span class="va">waterbody</span> <span class="op">&lt;-</span> <span class="fu">get_nhdphr</span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"nhdwaterbody"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/9/query</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/9/query</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">flowlines</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">point</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"lightblue"</span>, border <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowlines</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">point</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"grey"</span>, pch <span class="op">=</span> <span class="st">"+"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"lightblue"</span>, border <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowlines</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">point</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"grey"</span>, pch <span class="op">=</span> <span class="st">"+"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">}</span></span></span>
 <span class="r-plt img"><img src="get_nhdphr-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># given universalreferenceid (reachcodes), can query for them but only</span></span></span>
 <span class="r-in"><span><span class="co"># for hydrolocations. This is useful for looking up mainstem ids.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_nhdphr</span><span class="op">(</span>reachcode <span class="op">=</span> <span class="st">"13020101021927"</span>, type <span class="op">=</span> <span class="st">"networknhdflowline"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Failed to get JSON from https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query: HTTP 504 Gateway Timeout.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No networknhdflowline features found in area of interest.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 10 features and 82 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -105.9805 ymin: 36.17496 xmax: -105.9253 ymax: 36.21542</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    permanent_identifier        fdate resolution  gnis_id  gnis_name   lengthkm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1             120928749 1.502237e+12          2 01385432 Rio Grande 0.12637349</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2             120928746 1.502237e+12          2 01385432 Rio Grande 1.77445619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             120928753 1.502237e+12          2 01385432 Rio Grande 0.10023801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             120928745 1.502237e+12          2 01385432 Rio Grande 0.64380256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             120928744 1.502237e+12          2 01385432 Rio Grande 1.96787731</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             120928752 1.502237e+12          2 01385432 Rio Grande 0.09364129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7             120928748 1.502237e+12          2 01385432 Rio Grande 0.35127735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8             120928754 1.502237e+12          2 01385432 Rio Grande 0.86485354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9             120928751 1.502237e+12          2 01385432 Rio Grande 0.07149613</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10            120928747 1.502237e+12          2 01385432 Rio Grande 2.12124057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         reachcode flowdir wbarea_permanent_identifier ftype fcode mainpath</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 13020101021927       1                   120932465   558 55800        0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    innetwork visibilityfilter   nhdplusid vpuid streamleve streamorde</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         1          5000000 3.50006e+13  1302          4          8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    streamcalc    fromnode      tonode    hydroseq  levelpathi pathlength</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2706.329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2704.203</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2699.370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2703.560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2701.592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2706.527</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2705.978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2698.505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2706.455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          8 3.50006e+13 3.50006e+13 3.50006e+13 3.50001e+13   2699.470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     terminalpa arbolatesu divergence startflag terminalfl  uplevelpat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  3.50001e+13   33149.18          1         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  3.50001e+13   33152.93          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3.50001e+13   33165.89          1         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  3.50001e+13   33158.34          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  3.50001e+13   33161.50          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  3.50001e+13   33145.15          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  3.50001e+13   33150.69          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  3.50001e+13   33166.75          1         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  3.50001e+13   33149.05          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 3.50001e+13   33165.79          0         0          0 3.50001e+13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     uphydroseq dnlevel  dnlevelpat  dnhydroseq  dnminorhyd dndraincou frommeas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1 96.38273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1 70.06044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  3.50006e+13       4 3.50001e+13 3.50006e+13 3.50006e+13          2 10.61793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1 62.06700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1 37.84511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1 98.83942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1 92.04084</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  3.50006e+13       4 3.50001e+13 3.50006e+13 0.00000e+00          1  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  3.50006e+13       4 3.50001e+13 3.50006e+13 3.50006e+13          2 97.95167</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 3.50006e+13       4 3.50001e+13 3.50006e+13 3.50006e+13          2 11.85308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       tomeas rtndiv thinner vpuin vpuout   areasqkm totdasqkm divdasqkm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   97.95167      0    &lt;NA&gt;     0      0 0.01670001  15674.28  14789.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   92.04084      1    &lt;NA&gt;     0      0 2.64680001  15678.19  14793.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   11.85308      0    &lt;NA&gt;     0      0 0.08019999  15694.47  14809.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   70.06044      0    &lt;NA&gt;     0      0 1.28390001  15682.44  14797.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   62.06700      0    &lt;NA&gt;     0      0 3.88990000  15687.72  14803.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  100.00000      0    &lt;NA&gt;     0      0 0.03410001  15671.63  14787.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   96.38273      0    &lt;NA&gt;     0      0 0.08129999  15675.28  14790.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   10.61793      0    &lt;NA&gt;     0      0 0.06200002  15694.54  14809.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   98.83942      0    &lt;NA&gt;     0      0 0.01359998  15674.26  14789.63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  37.84511      0    &lt;NA&gt;     0      0 4.35159998  15694.39  14809.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    maxelevraw minelevraw maxelevsmo minelevsmo      slope slopelenkm elevfixed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       -9998     177474     177652     177474 0.01408523 0.12637349      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       -9998     177019     177269     177051 0.00122855 1.77445619      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       -9998     175774     175780     175780 0.00001000 0.10023801      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       -9998     176572     177051     176672 0.00588690 0.64380256      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       -9998     176567     176672     176590 0.00041669 1.96787731      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       -9998     177678     177678     177678 0.00001000 0.09364129      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       -9998     177262     177474     177269 0.00583584 0.35127735      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       -9998     175728     175780     175780 0.00001000 0.86485354      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       -9998     177652     177678     177652 0.00363656 0.07149613      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      -9998     175714     176590     175780 0.00381852 2.12124057      &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    hwtype hwnodesqkm statusflag     qama     vama qincrama     qbma     vbma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    &lt;NA&gt;       &lt;NA&gt;          A 3714.387 3.536884 0.000243 3714.387 3.536884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    &lt;NA&gt;       &lt;NA&gt;          A 3714.445 2.499065 0.039421 3714.445 2.499065</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    &lt;NA&gt;       &lt;NA&gt;          A 3714.690 1.328012 0.001217 3714.690 1.328012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    &lt;NA&gt;       &lt;NA&gt;          A 3714.507 3.118966 0.018690 3714.507 3.118966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    &lt;NA&gt;       &lt;NA&gt;          A 3714.584 2.153226 0.056736 3714.584 2.153226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    &lt;NA&gt;       &lt;NA&gt;          A 3714.347 1.327770 0.000496 3714.347 1.327770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    &lt;NA&gt;       &lt;NA&gt;          A 3714.402 3.114867 0.001184 3714.402 3.114867</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    &lt;NA&gt;       &lt;NA&gt;          A 3714.691 1.328012 0.000931 3714.691 1.328012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    &lt;NA&gt;       &lt;NA&gt;          A 3714.387 2.911523 0.000198 3714.387 2.911523</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   &lt;NA&gt;       &lt;NA&gt;          A 3714.689 2.932359 0.068250 3714.689 2.932359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    qincrbma     qcma     vcma   qincrcma     qdma     vdma   qincrdma     qema</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.000243 3714.387 3.536884 0.00024300 3714.387 3.536884 0.00024300 1711.386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.039421 3714.445 2.499065 0.04207118 3714.445 2.499065 0.04207118 1711.444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.001217 3714.690 1.328012 0.00121700 3714.690 1.328012 0.00121700 1711.690</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.018690 3714.507 3.118966 0.04763696 3714.507 3.118966 0.04763696 1711.506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.056736 3714.584 2.153226 0.07050796 3714.584 2.153226 0.07050796 1711.583</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.000496 3714.347 1.327770 0.42352419 3714.347 1.327770 0.42352419 1711.347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  0.001184 3714.402 3.114867 0.01036309 3714.402 3.114867 0.01036309 1711.401</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.000931 3714.691 1.328012 0.00093100 3714.691 1.328012 0.00093100 1711.691</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.000198 3714.387 2.911523 0.02664062 3714.387 2.911523 0.02664062 1711.386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 0.068250 3714.689 2.932359 0.09319502 3714.689 2.932359 0.09319502 1711.688</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        vema   qincrema     qfma   qincrfma arqnavma petma qlossma qgadjma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  3.340468 0.00024300 1711.386 0.00024300        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  2.365791 0.04207118 1711.444 0.04207118        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1.265987 0.00121700 1711.690 0.00121700        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2.947984 0.04763696 1711.506 0.04763696        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  2.040998 0.07050796 1711.583 0.07050796        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1.265752 0.42352419 1711.347 0.42352419        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  2.944127 0.01036309 1711.401 0.01036309        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.265988 0.00093100 1711.691 0.00093100        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  2.753153 0.02664062 1711.386 0.02664062        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 2.772740 0.09319502 1711.688 0.09319502        0     0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    qgnavma gageadjma avgqadjma gageidma gageqma Shape_Length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        0         1         0        0       0    157.84395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        0         1         0        0       0   2212.36438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        0         1         0        0       0    124.42048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        0         1         0        0       0    804.11669</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        0         1         0        0       0   2441.27200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        0         1         0        0       0    116.80600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        0         1         0        0       0    437.25416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        0         1         0        0       0   1070.42970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        0         1         0        0       0     89.30904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       0         1         0        0       0   2621.91428</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  LINESTRING (-105.9271 36.21...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  LINESTRING (-105.9317 36.21...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  LINESTRING (-105.9782 36.18...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  LINESTRING (-105.9499 36.20...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  LINESTRING (-105.957 36.209...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  LINESTRING (-105.9253 36.21...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  LINESTRING (-105.9285 36.21...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  LINESTRING (-105.9774 36.18...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  LINESTRING (-105.9263 36.21...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 LINESTRING (-105.972 36.197...</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

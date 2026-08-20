@@ -24,18 +24,23 @@ get_vaa_path <- function(updated_network = FALSE) {
 
 #' @title Available NHDPlusV2 Attributes
 #' @description Find variables available from the NHDPlusV2 attribute data.frame
+#'
+#' Calling this function downloads the attribute table to \link{get_vaa_path}
+#' if it is not already cached there. The table is roughly 260 MB, so this
+#' function has no example. 
+#' 
+#' \preformatted{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(), "vaa"))
+#'
+#' get_vaa_names()
+#'
+#' hydrogeofetch_data_dir(old_dir)}
+#' 
 #' @inherit download_vaa details
 #' @inheritParams get_vaa
 #' @return character vector
 #' @export
-#' @examples
-#' \dontrun{
-#' # This will download the vaa file to the path from get_vaa_path()
-#' get_vaa_names()
-#'
-#' #cleanup if desired
-#' unlink(dirname(get_vaa_path()), recursive = TRUE)
-#' }
 get_vaa_names <- function(updated_network = FALSE) {
   path <- get_vaa_path(updated_network = updated_network)
 
@@ -46,6 +51,21 @@ get_vaa_names <- function(updated_network = FALSE) {
 
 #' @title NHDPlusV2 Attribute Subset
 #' @description Return requested NHDPlusV2 Attributes.
+#'
+#' Calling this function downloads the attribute table to \link{get_vaa_path}
+#' if it is not already cached there. The base table is roughly 260 MB and the
+#' updated network table another 170 MB, so this function has no example. To
+#' try it without writing to your user data directory, point
+#' \link{hydrogeofetch_data_dir} at a temporary path first:
+#' \preformatted{
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(), "vaa"))
+#'
+#' get_vaa("slope")
+#' get_vaa(c("slope", "lengthkm"))
+#' get_vaa("reachcode", updated_network = TRUE)
+#'
+#' hydrogeofetch_data_dir(old_dir)}
 #' @inherit download_vaa details
 #' @param atts character The variable names you would like, always includes comid
 #' @param path character path where the file should be saved. Default is a
@@ -58,19 +78,6 @@ get_vaa_names <- function(updated_network = FALSE) {
 #' \doi{10.5066/P976XCVT}.
 #' @return data.frame containing requested VAA data
 #' @export
-#' @examples
-#' \dontrun{
-#' # This will download the vaa file to the path from get_vaa_path()
-#'
-#' get_vaa("slope")
-#' get_vaa(c("slope", "lengthkm"))
-#'
-#' get_vaa(updated_network = TRUE)
-#' get_vaa("reachcode", updated_network = TRUE)
-#'
-#' #cleanup if desired
-#' unlink(dirname(get_vaa_path()), recursive = TRUE)
-#' }
 
 get_vaa <- function(atts = NULL,
                     path = get_vaa_path(),
@@ -210,11 +217,21 @@ download_vaa <- function(path = get_vaa_path(updated_network), force = FALSE, up
 #' If no search term is provided the entire table is returned.
 #' @param source character \code{"usgs"} (default) or \code{"streamcat"}.
 #' @param cache logical should cached metadata be used?
+#' @return data.frame of characteristic metadata with columns ID, description,
+#' units, datasetLabel, datasetURL, themeLabel, themeURL, watershedType, sbid,
+#' end, s3_url, and http_url. NULL if the metadata service is unavailable.
 #' @importFrom utils read.delim
 #' @export
 #' @examples
 #' \donttest{
+#' # the metadata table is cached in hydrogeofetch_data_dir(); point it at a
+#' # temporary directory so this example does not write to user space.
+#' old_dir <- hydrogeofetch_data_dir()
+#' hydrogeofetch_data_dir(file.path(tempdir(check = TRUE), "meta_demo"))
+#'
 #' get_characteristics_metadata()
+#'
+#' hydrogeofetch_data_dir(old_dir)
 #' }
 get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) {
 
@@ -325,6 +342,9 @@ get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) 
 #' (for metrics like BankfullDepth, IWI, etc.). Ignored when
 #' \code{source = "usgs"} where the area of interest is encoded in the
 #' variable name prefix (e.g. CAT_, TOT_, ACC_).
+#' @return data.frame with columns characteristic_id, comid,
+#' characteristic_value, and percent_nodata. NULL if no requested variables
+#' were found or the data store is unavailable.
 #' @importFrom dplyr bind_rows filter select everything collect all_of
 #' @importFrom arrow s3_bucket open_dataset
 #' @export
@@ -369,7 +389,9 @@ get_catchment_characteristics <- function(varname, ids,
   # See: https://github.com/DOI-USGS/nhdplusTools/issues/449
   url_groups <- split(var_meta$ID, var_meta$s3_url)
 
-  out <- tryCatch({
+  # The arrow S3 metadata roundtrip emits a benign "discarded from R metadata"
+  # (externalptr) warning; muffle only that one so other warnings still surface.
+  out <- withCallingHandlers(tryCatch({
     unlist(lapply(names(url_groups), function(url) {
       vars_in_group <- url_groups[[url]]
 
@@ -414,6 +436,9 @@ get_catchment_characteristics <- function(varname, ids,
     }), recursive = FALSE)
   }, error = function(e) {
     e
+  }), warning = function(w) {
+    if(grepl("discarded from R metadata", conditionMessage(w)))
+      invokeRestart("muffleWarning")
   })
 
   df <- sapply(out, is.data.frame)

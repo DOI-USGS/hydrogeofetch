@@ -22,7 +22,7 @@ Uses a catchment splitting web service to retrieve
 the portion of a catchment upstream of the point provided.
 }
 \details{
-This service works within the coterminous US NHDPlusV2 domain. If the point
+This service works within the conterminous US NHDPlusV2 domain. If the point
 provided falls on an NHDPlusV2 flowline as retrieved from \link{get_raindrop_trace}
 the catchment will be split across the flow line. IF the point is not
 along the flowline a small sub catchment will typically result. As a result,
@@ -51,7 +51,9 @@ bbox <- sf::st_bbox(catchment) + c(-0.005, -0.005, 0.005, 0.005)
 
 hydrogeofetch::plot_nhdplus(bbox = bbox, cache_data = FALSE)
 
-plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+if(length(sf::st_geometry(catchment)) > 1) {
+  plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+}
 plot(sf::st_transform(sf::st_geometry(catchment)[1], 3857), add = TRUE, col = "red")
 plot(sf::st_transform(sf::st_sfc(point, crs = 4326), 3857), add = TRUE, col = "white")
 }
@@ -65,7 +67,9 @@ bbox <- sf::st_bbox(catchment) + c(-0.005, -0.005, 0.005, 0.005)
 hydrogeofetch::plot_nhdplus(bbox = bbox, cache_data = FALSE)
 
 plot(sf::st_transform(sf::st_geometry(catchment)[1], 3857), add = TRUE, col = "red")
-plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+if(length(sf::st_geometry(catchment)) > 1) {
+  plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+}
 plot(sf::st_transform(sf::st_sfc(point, crs = 4326), 3857), add = TRUE, col = "white")
 }
 
@@ -79,7 +83,9 @@ bbox <- sf::st_bbox(catchment) + c(-0.005, -0.005, 0.005, 0.005)
 hydrogeofetch::plot_nhdplus(bbox = bbox, cache_data = FALSE)
 
 plot(sf::st_transform(sf::st_geometry(catchment)[1], 3857), add = TRUE, col = "red")
-plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+if(length(sf::st_geometry(catchment)) > 1) {
+  plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+}
 plot(sf::st_transform(sf::st_sfc(pour_point, crs = 4326), 3857), add = TRUE, col = "white")
 }
 

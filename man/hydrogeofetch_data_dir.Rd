@@ -19,8 +19,13 @@ as returned by `tools::R_user_dir` for this package.
 \examples{
 hydrogeofetch_data_dir()
 
-hydrogeofetch_data_dir("demo")
+# set it somewhere else, then put it back
+old_dir <- hydrogeofetch_data_dir()
 
-hydrogeofetch_data_dir(tools::R_user_dir("hydrogeofetch"))
+hydrogeofetch_data_dir(file.path(tempdir(check = TRUE), "demo"))
+
+hydrogeofetch_data_dir()
+
+hydrogeofetch_data_dir(old_dir)
 
 }

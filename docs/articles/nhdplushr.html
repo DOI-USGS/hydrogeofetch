@@ -193,8 +193,8 @@ involved. The entry point is a function called
 <code><a href="../reference/get_nhdplushr.html">get_nhdplushr()</a></code>. At it’s core, it will take a collection of
 NHDPlusHR subsets, open them up one by one and build a single output
 table for later use. It also 1. joins flowline attributes to the
-flowline geometry, 1. can return one or more selected layers, 1. can
-save the result to a standalone geopackage for later use, and 1. can
+flowline geometry, 2. can return one or more selected layers, 3. can
+save the result to a standalone geopackage for later use, and 4. can
 make some attributes of a subset look like they are part of a standalone
 network rather than having references to downstream data that aren’t in
 the subset.</p>
@@ -257,11 +257,11 @@ offers the ability to subset the data using a few filter options. Most
 of the filters are described in the manual page of the
 <code><a href="../reference/get_hr_data.html">get_hr_data()</a></code> utility function. 1.
 <code>min_size_sqkm</code> will remove flowlines under a certain size
-threshold. 1. <code>sim</code> will simplify all geometry to a given
-tolerance using <code><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">sf::st_simplify()</a></code>. 1. <code>proj</code>
-will project the output into the desired projection. 1.
+threshold. 2. <code>simp</code> will simplify all geometry to a given
+tolerance using <code><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">sf::st_simplify()</a></code>. 3. <code>proj</code>
+will project the output into the desired projection. 4.
 <code>keep_cols</code> is used to specify which attributes are desired
-in the output. 1. <code>rename</code> controls whether output is
+in the output. 5. <code>rename</code> controls whether output is
 automatically renamed to be compatible with <code>hydrogeofetch</code>
 functions.</p>
 <p><em>Note: These options only operate on the flowline

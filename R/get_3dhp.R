@@ -1,7 +1,7 @@
 #' Get 3DHP Data
 #' @description
 #' Calls the 3DHP_all web service and returns sf data.frames for the selected
-#' layers. See https://hydro.nationalmap.gov/arcgis/rest/services/3DHP_all/MapServer
+#' layers. See https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer
 #' for source data documentation.
 #'
 #' @inherit query_usgs_arcrest details return params
@@ -44,14 +44,18 @@
 #' plot(sf::st_geometry(SU_wb[grepl("Otsego", SU_wb$gnisidlabel),]),
 #'      col = "blue", border = "NA") }
 #'
-#' # given a workunitid, can query for features in that work unit
-#' wufl <- get_3dhp(ids = "workunitid:300585", type = "flowline")
+#' # given a workunitid, can query for all features in that work unit with
+#' # ids = "workunitid:300585" -- not run here as a work unit is tens of
+#' # thousands of features.
 #'
 #' # given universalreferenceid (reachcodes), can query for them but only
 #' # for hydrolocations. This is useful for looking up mainstem ids.
 #'
-#' get_3dhp(universalreferenceid = unique(hydrolocation$universalreferenceid),
+#' if(!is.null(hydrolocation)) {
+#' get_3dhp(universalreferenceid =
+#'            head(unique(hydrolocation$universalreferenceid), 5),
 #'          type = "hydrolocation")
+#' }
 #'}
 get_3dhp <- function(AOI = NULL, ids = NULL, type = NULL,
                      universalreferenceid = NULL,
@@ -64,9 +68,27 @@ get_3dhp <- function(AOI = NULL, ids = NULL, type = NULL,
 
   where <- NULL
   if(!is.null(universalreferenceid)) {
-    where <- paste(paste0("universalreferenceid IN ('",
-                          paste(universalreferenceid, collapse = "', '"), "')"))
     if(!is.null(ids)) stop("can not specify both universalreferenceid and other ids")
+
+    # Large "universalreferenceid IN (...)" queries exceed the service gateway
+    # timeout (HTTP 504), so split them into smaller requests and combine. A
+    # failed chunk degrades to NULL and is dropped rather than failing the
+    # whole call.
+    id_chunks <- split(universalreferenceid,
+                       ceiling(seq_along(universalreferenceid) / 100))
+
+    out <- lapply(id_chunks, function(chunk) {
+      chunk_where <- paste0("universalreferenceid IN ('",
+                           paste(chunk, collapse = "', '"), "')")
+      query_usgs_arcrest(AOI, ids, type, "3DHP_all", chunk_where, t_srs, buffer,
+                         page_size)
+    })
+
+    out <- out[!vapply(out, is.null, logical(1))]
+
+    if(length(out) == 0) return(NULL)
+
+    return(sf::st_sf(data.table::rbindlist(out)))
   }
 
   if(!is.null(ids) && grepl("^https://", ids[1])) {

@@ -14,6 +14,11 @@ If no search term is provided the entire table is returned.}
 
 \item{cache}{logical should cached metadata be used?}
 }
+\value{
+data.frame of characteristic metadata with columns ID, description,
+units, datasetLabel, datasetURL, themeLabel, themeURL, watershedType, sbid,
+end, s3_url, and http_url. NULL if the metadata service is unavailable.
+}
 \description{
 Download and cache table of catchment characteristics.
 
@@ -32,6 +37,13 @@ LakeCat metrics, https://usepa.github.io/StreamCatTools
 }
 \examples{
 \donttest{
+# the metadata table is cached in hydrogeofetch_data_dir(); point it at a
+# temporary directory so this example does not write to user space.
+old_dir <- hydrogeofetch_data_dir()
+hydrogeofetch_data_dir(file.path(tempdir(check = TRUE), "meta_demo"))
+
 get_characteristics_metadata()
+
+hydrogeofetch_data_dir(old_dir)
 }
 }

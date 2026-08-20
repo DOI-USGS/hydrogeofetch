@@ -16,7 +16,7 @@ A user specified - target -Spatial Reference System (SRS/CRS) for returned objec
 Will default to the CRS of the input AOI if provided, and to 4326 for ID requests.}
 
 \item{buffer}{numeric. The amount (in meters) to buffer a POINT AOI by
-for an extended search. Default = 20,000. Returned results are arrange
+for an extended search. Default = 20,000. Returned results are arranged
 by distance from POINT AOI}
 }
 \value{

@@ -44,18 +44,9 @@ or not.}
 \item{align_names}{logical}
 }
 \value{
-data.frame ready to be used with the refactor_flowlines function.
+data.frame with prepared NHDPlus network attributes.
 }
 \description{
 Function to prep NHDPlus data for use by hydrogeofetch functions
 }
-\examples{
-
-source(system.file("extdata", "sample_flines.R", package = "hydrogeofetch"))
-
-prepare_nhdplus(sample_flines,
-                min_network_size = 10,
-                min_path_length = 1,
-                warn = FALSE)
-
-}
+\keyword{internal}

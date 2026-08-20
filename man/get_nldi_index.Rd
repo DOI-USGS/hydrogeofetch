@@ -9,8 +9,12 @@ get_nldi_index(location)
 \arguments{
 \item{location}{numeric WGS84 lon/lat pair (X, Y)}
 }
+\value{
+sf data.frame of estimated network locations for the given point.
+NULL if the NLDI service is unavailable.
+}
 \description{
-uses the Network Linked Data Index to retrieve and estimated
+uses the Network Linked Data Index to retrieve an estimated
 network location for the given point. If not within a grid cell of a flowline,
 will use a raindrop trace service to find the nearest downslope flowline
 location.

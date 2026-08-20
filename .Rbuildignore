@@ -26,6 +26,8 @@ cran-comments.md
 temp.R
 revdep
 CLAUDE.md
+CONTEXT.md
+AGENTS.md
 dev
 .claude
 inst/build

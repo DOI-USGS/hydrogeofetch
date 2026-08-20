@@ -123,12 +123,12 @@
 <p>For the latest development:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"DOI-USGS/nhdplusTools"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"DOI-USGS/nhdplusTools"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="resources">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h3>
-<p>For data discovery and access in a U.S. context, start with the <a href="https://doi-usgs.github.io/nhdplusTools/articles/nhdplusTools.html"><strong>Getting Started page</strong></a>.</p>
+<p>For data discovery and access in a U.S. context, start with the <a href="https://doi-usgs.github.io/nhdplusTools/articles/hydrogeofetch.html"><strong>Getting Started page</strong></a>.</p>
 <p>Detailed documentation of all the package functions can be found at the <a href="https://doi-usgs.github.io/nhdplusTools/reference/"><strong>Reference page</strong></a>.</p>
 </div>
 <div class="section level3">
@@ -140,9 +140,9 @@
 <div class="section level2">
 <h2 id="package-vision">Package Vision<a class="anchor" aria-label="anchor" href="#package-vision"></a>
 </h2>
-<p>The <code>hydrogeofetch</code> package provides tools to discover, download, subset, and prepare U.S. NHDPlus data. Network analysis (navigation, indexing, attribute generation) belongs in <a href="https://doi-usgs.github.io/hydroloom/" class="external-link"><code>hydroloom</code></a>.</p>
+<p>The <code>hydrogeofetch</code> package provides tools to discover, download, subset, and prepare U.S. hydrographic data. NHDPlus is its primary dataset, and it increasingly supports others, such as 3DHP and mainstems. Network analysis (navigation, indexing, attribute generation) belongs in <a href="https://doi-usgs.github.io/hydroloom/" class="external-link"><code>hydroloom</code></a>.</p>
 <p>General, globally applicable functionality has been moved to <a href="https://doi-usgs.github.io/hydroloom/" class="external-link"><code>hydroloom</code></a>.</p>
-<p><code>hydrogeofetch</code> implements a data model consistent with both the <a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus" class="external-link">NHDPlus</a> dataset and the <a href="http://opengeospatial.github.io/HY_Features/" class="external-link">HY_Features</a> data model. The package aims to provide a set of tools that can be used to build workflows using NHDPlus data.</p>
+<p><code>hydrogeofetch</code> implements a data model consistent with both the <a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus" class="external-link">NHDPlus</a> dataset and the <a href="http://opengeospatial.github.io/HY_Features/" class="external-link">HY_Features</a> data model. The package aims to provide a set of tools that can be used to build workflows using hydrographic data.</p>
 <p><strong>This vision is intended as a guide to contributors – conveying what kinds of contributions are of interest to the package’s long term vision. It is a reflection of the current thinking and is open to discussion and modification.</strong></p>
 <div class="section level3">
 <h3 id="functional-vision">Functional Vision<a class="anchor" aria-label="anchor" href="#functional-vision"></a>
@@ -162,7 +162,7 @@
 <div class="section level3">
 <h3 id="data-model">Data Model<a class="anchor" aria-label="anchor" href="#data-model"></a>
 </h3>
-<p>Given that <code>hydrogeofetch</code> is focused on working with NHDPlus data, the NHDPlus data model will largely govern the data model the package is designed to work with. That said, much of the package functionality also uses concepts from the HY_Features standard.</p>
+<p><code>hydrogeofetch</code> works with a range of U.S. hydrographic data, with NHDPlus as its primary dataset, so the NHDPlus data model largely governs the data model the package is designed to work with. That said, much of the package functionality also uses concepts from the HY_Features standard, and support for additional datasets, such as 3DHP, continues to grow.</p>
 <p><em>Note:</em> The HY_Features standard is based on the notion that a “catchment” is a holistic feature that can be “realized” (some might say modeled) in a number of ways. In other words, a catchment can <em>only</em> be characterized fully through a collection of different conceptual representations. In NHDPlus, the “catchment” feature is the polygon feature that describes the drainage divide around the hydrologic unit that contributes surface flow to a given NHD flowline. While this may seem like a significant difference, in reality, the NHDPlus COMID identifier lends itself very well to the HY_Features catchment concept. The COMID is used as an identifier for the catchment polygon, the flowline that connects the catchment inlet and outlet, and value added attributes that describe characteristics of the catchment’s interior. In this way, the COMID identifier is actually an identifier for a collection of data that together fully describe an NHDPlus catchment. <a href="https://docs.ogc.org/is/14-111r6/14-111r6.html#annexD_1" class="external-link">See the NHDPlus mapping to HY_Features in the HY_Features specification.</a></p>
 <p>Below is a description of the scope of data used by the <code>hydrogeofetch</code> package. While other data and attributes may come into scope, it should only be done as a naive pass-through, as in data subsetting, or with considerable deliberation.</p>
 <div class="section level5">
@@ -206,7 +206,7 @@
 </h3>
 <p>Development happens on GitHub (doi-usgs/nhdplusTools). Official builds and release candidates are produced on code.usgs.gov (code.usgs.gov/water/nhdplusTools) using GitLab CI.</p>
 <p><strong>Vignettes</strong> use the <code>BUILD_VIGNETTES</code> environment variable to control code evaluation. Set <code>BUILD_VIGNETTES=TRUE</code> in a local <code>.Renviron</code> to build vignettes with live code. Without it, vignettes render with static output only. An additional <code>BUILD_VIGNETTES_CRAN=TRUE</code> variable controls image size in the drainage area vignette.</p>
-<p><strong>Local development</strong> does not require building the source package. Use <code><a href="https://rdrr.io/pkg/devtools/man/test.html" class="external-link">devtools::test()</a></code>, <code><a href="https://rdrr.io/pkg/devtools/man/check.html" class="external-link">devtools::check()</a></code>, and <code><a href="https://rdrr.io/pkg/devtools/man/document.html" class="external-link">devtools::document()</a></code> directly.</p>
+<p><strong>Local development</strong> does not require building the source package. Use <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code>, <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>, and <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> directly.</p>
 <p><strong>Release candidates</strong> are built on code.usgs.gov. Push a branch named <code>rc/&lt;version&gt;</code> (e.g. <code>rc/2.0.0</code>) to trigger the GitLab CI pipeline, which runs three stages:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -258,7 +258,7 @@
 </li>
 <li>Make sure you use roxygen and run Check before contributing. More on this front as the package matures.</li>
 </ol>
-<p>Other notes: - consider running <code>lintr</code> prior to contributing. - consider running <code>goodpractice::gp()</code> on the package before contributing. - consider running <code><a href="https://rdrr.io/pkg/devtools/man/spell_check.html" class="external-link">devtools::spell_check()</a></code> if you wrote documentation. - this package uses pkgdown. Running <code><a href="https://rdrr.io/pkg/pkgdown/man/build_site.html" class="external-link">pkgdown::build_site()</a></code> will refresh it.</p>
+<p>Other notes: - consider running <code>lintr</code> prior to contributing. - consider running <code>goodpractice::gp()</code> on the package before contributing. - consider running <code><a href="https://devtools.r-lib.org/reference/spell_check.html" class="external-link">devtools::spell_check()</a></code> if you wrote documentation. - this package uses pkgdown. Running <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> will refresh it.</p>
 </div>
 </div>
 </div>

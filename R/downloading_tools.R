@@ -154,23 +154,23 @@ download_nhd_internal <- function(bucket, file_list_snip, prefix, nhd_dir, hu_li
 #' https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data
 #' for more information and metadata about this data.
 #'
-#' Default downloads lower-48 only. See examples for islands. No Alaska data
-#' are available.
+#' Default downloads lower-48 only. Pass the island archive URL to `url` to get
+#' Hawaii, Puerto Rico, the Virgin Islands, and the Pacific Islands instead. No
+#' Alaska data are available.
+#'
+#' The lower-48 archive is roughly 8 GB and extraction needs 7zip installed, so
+#' this function has no example. Pass any writable directory as \code{outdir};
+#' the archive is downloaded there, extracted in place, and the path to the
+#' geodatabase returned:
+#' 
+#' \preformatted{
+#' download_nhdplusv2(file.path(tempdir(), "nhdplusv2"))}
 #'
 #' @param outdir The folder path where data should be downloaded and extracted
 #' @param url the location of the online resource
 #' @param progress boolean display download progress?
 #' @return character path to the local geodatabase
 #' @export
-#' @examples
-#' \dontrun{
-#'   download_nhdplusv2("./data/nhd/")
-#'
-#'   download_nhdplusv2(outdir = "./inst/",
-#'       url = paste0("https://dmap-data-commons-ow.s3.amazonaws.com/NHDPlusV21/",
-#'                    "Data/NationalData/NHDPlusV21_NationalData_Seamless",
-#'                    "_Geodatabase_HI_PR_VI_PI_03.7z"))
-#' }
 
 download_nhdplusv2 <- function(outdir,
                                url = paste0("https://dmap-data-commons-ow.s3.amazonaws.com/NHDPlusV21/",
@@ -197,7 +197,8 @@ download_nhdplusv2 <- function(outdir,
 
     message("Extracting data ...")
 
-    system(paste0("7z -o", path.expand(outdir), " x ", file), intern = TRUE)
+    system(paste0(shQuote(try_7z), " -o", path.expand(outdir), " x ", file),
+           intern = TRUE)
 
   }
 
@@ -218,14 +219,15 @@ download_nhdplusv2 <- function(outdir,
 #' Please see:
 #' https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.xml
 #' for metadata.
+#'
+#' The national archive is roughly 3 GB, so this function has no example. The
+#' "hydrogeofetch Data Access Overview" article works through a download in its
+#' Watershed Boundary Dataset section.
+#' 
 #' @inheritParams download_nhdplusv2
 #' @return character path to the local geodatabase
 #' @export
 #' @importFrom zip unzip
-#' @examples
-#' \dontrun{
-#'   download_wbd("./data/wbd/")
-#' }
 
 download_wbd <- function(outdir,
                          url = paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/",
@@ -278,13 +280,15 @@ gunzip_keep <- function(file) {
 #' @title Download the seamless Reach File (RF1) Database
 #' @description This function downloads and decompresses staged RF1 data.
 #' See: https://water.usgs.gov/GIS/metadata/usgswrd/XML/erf1_2.xml for metadata.
+#'
+#' The archive is roughly 46 MB and the server is slow, so this function has no
+#' example. Pass any writable directory as \code{outdir}; the gzipped e00 is
+#' downloaded there, decompressed in place, and the path to the e00 returned:
+#' \preformatted{
+#' download_rf1(file.path(tempdir(), "rf1"))}
 #' @inheritParams download_nhdplusv2
 #' @return character path to the local e00 file
 #' @export
-#' @examples
-#' \dontrun{
-#'   download_wbd("./data/rf1/")
-#' }
 
 download_rf1 <- function(outdir,
                          url = "https://water.usgs.gov/GIS/dsdl/erf1_2.e00.gz",
@@ -316,17 +320,18 @@ download_rf1 <- function(outdir,
 
 #' @title Utility to see in 7z is local
 #' @description Checks if 7z is on system. If not, provides an informative error
+#' @return character path to the 7z executable to call
 #' @noRd
 check7z <- function() {
 
   tryCatch({
     system("7z", intern = TRUE)
+    "7z"
   }, error = function(e) {
     # 7z not on PATH; check default Windows install location
     win_path <- "C:/Program Files/7-Zip/7z.exe"
     if(.Platform$OS.type == "windows" && file.exists(win_path)) {
-      Sys.setenv(PATH = paste(Sys.getenv("PATH"), dirname(win_path), sep = ";"))
-      return(invisible(TRUE))
+      return(win_path)
     }
     stop(simpleError(
       "Please Install 7zip (Windows) or p7zip (MacOS/Unix). Choose accordingly:
@@ -342,14 +347,27 @@ check7z <- function() {
 # httr2 helpers — all HTTP in the package flows through these  #
 #################################################################
 
+#' @description builds a request with a bounded lifetime so a hung service
+#' cannot stall a call indefinitely. `timeout` caps the whole request and is
+#' used for the API calls; bulk downloads pass NULL so a slow-but-progressing
+#' transfer is not cut off, and rely on the connect timeout alone.
 #' @importFrom httr2 request req_perform
 #' @noRd
-build_hgf_req <- function(url, body = NULL, content_type = NULL, encode = NULL) {
+build_hgf_req <- function(url, body = NULL, content_type = NULL, encode = NULL,
+                          timeout = 300) {
   req <- httr2::request(url) |>
     httr2::req_user_agent(
       paste0("hydrogeofetch/", utils::packageVersion("hydrogeofetch"))
     ) |>
     httr2::req_retry(max_tries = 3)
+
+  # req_timeout() covers connection setup too, and zeroes connecttimeout, so
+  # the two are set as alternatives rather than together.
+  req <- if(is.null(timeout)) {
+    httr2::req_options(req, connecttimeout = 30)
+  } else {
+    httr2::req_timeout(req, timeout)
+  }
 
   if(nhdplus_debug()) {
     message(if(is.null(body)) "GET " else "POST ", url)
@@ -396,7 +414,7 @@ hgf_sf <- function(url, body = NULL, content_type = NULL, encode = NULL) {
 #' @noRd
 hgf_download <- function(url, path, progress = TRUE) {
   tryCatch({
-    req <- build_hgf_req(url)
+    req <- build_hgf_req(url, timeout = NULL)
     if(progress && interactive()) req <- httr2::req_progress(req)
     httr2::req_perform(req, path = path)
     invisible(path)
@@ -419,10 +437,10 @@ check_query_params <- function(AOI, ids, type, where, source, t_srs, buffer) {
 
   if(!is.null(AOI) & !is.null(ids)) {
     # Check if AOI and IDs are both given
-    stop("Either IDs or a spatial AOI can be passed.", .call = FALSE)
+    stop("Either IDs or a spatial AOI can be passed.", call. = FALSE)
   } else if(is.null(AOI) & is.null(ids) & !(!is.null(where) && grepl("IN", where))) {
     # Check if AOI and IDs are both NULL
-    stop("IDs or a spatial AOI must be passed.", .call = FALSE)
+    stop("IDs or a spatial AOI must be passed.", call. = FALSE)
   } else if(!(type %in% source$user_call)) {
     # Check that "type" is valid
     stop(paste("Type not available must be one of:",

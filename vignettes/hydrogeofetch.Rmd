@@ -28,8 +28,7 @@ knitr::opts_chunk$set(
   cache.path=(cache_path)
 )
 
-oldoption <- options(scipen = 9999,
-                     "rgdal_show_exportToProj4_warnings"="none")
+oldoption <- options(scipen = 9999)
 
 ```
 
@@ -38,7 +37,7 @@ oldoption <- options(scipen = 9999,
 Pick an outlet location and download some data.
 ```{r tldr}
 # Uncomment to install!
-# install.packages("nhdplusTools")
+# install.packages("hydrogeofetch")
 
 library(hydrogeofetch)
 library(sf)
@@ -74,7 +73,7 @@ plot(sf::st_geometry(catchment), add = TRUE)
 plot(sf::st_geometry(waterbody), col = rgb(0, 0, 1, alpha = 0.5), add = TRUE)
 ```
 
-Or fetch NWIS an site as the starting point and generate a plot. Data is returned and/or stored in a local file for later use.
+Or fetch an NWIS site as the starting point and generate a plot. Data is returned and/or stored in a local file for later use.
 ```{r tldr2}
 # ?plot_nhdplus for more
 plot_data <- plot_nhdplus(
@@ -89,11 +88,15 @@ The first thing you are going to need to do is go get some data to work with. `h
 
 If you are working with the whole National Seamless database, `hydrogeofetch` has some convenience functions you should be aware of. Once you have it downloaded and extracted, you can tell the hydrogeofetch package where it is with the `nhdplus_path()` function.
 
-```{r nhdplus_path_setup, echo=FALSE, include=FALSE}
+This vignette stages its data in a working directory. Set `work_dir` to
+wherever you want downloaded and sample data to live.
+
+```{r work_dir, echo=TRUE}
 work_dir <- file.path(hydrogeofetch_data_dir(), "nhdpt_v_cache")
 
 dir.create(work_dir, showWarnings = FALSE, recursive = TRUE)
-
+```
+```{r nhdplus_path_setup, echo=FALSE, include=FALSE}
 source(system.file("extdata/sample_data.R", package = "hydrogeofetch"))
 
 file.copy(sample_data,
@@ -117,7 +120,7 @@ nrow(vaa)
 
 NHDPlus HiRes is an in-development dataset that introduces much more dense flowlines and catchments. In the long run, `hydrogeofetch` will have complete support for NHDPlus HiRes. So far, `hydrogeofetch` will help download and interface NHDPlus HiRes data with existing `hydrogeofetch` functionality. It's important to note that `hydrogeofetch` was primarily implemented using NHDPlusV2 and any use of HiRes should be subject to scrutiny.
 
-For the demo below, a small sample of HiRes data that has been loaded into `hydrogeofetch` is used. The first line shows how you can download additional data (just change `download_files` to `TRUE`).
+For the demo below, a small sample of HiRes data is staged into `work_dir` (the working directory set above) and read from there. The first line shows how you can download additional data (just change `download_files` to `TRUE`).
 
 ```{r nhdplushr_secret, echo=FALSE, include=FALSE} 
 source(system.file("extdata/nhdplushr_data.R", package = "hydrogeofetch"))
@@ -176,11 +179,11 @@ plot(sf::st_geometry(flowline), add = TRUE, col = "blue", lwd = 2)
 plot(start_point, cex = 1.5, lwd = 2, col = "red", add = TRUE)
 ```
 
-**If you have the whole National Seamless database and want to work at regional to national scales, skip down the the Local Data Subsetting section.**
+**If you have the whole National Seamless database and want to work at regional to national scales, skip down to the Local Data Subsetting section.**
 
 ### Web Service Data Subsetting
 
-`hydrogeofetch` supports discovery and data subsetting using web services made available through the [Network Linked Data Index](https://waterdata.usgs.gov/blog/nldi-intro/) (NLDI) and the [Water Mission Area pygeoapir.](https://api.water.usgs.gov/fabric/pygeoapi) The code below shows how to use the NLDI functions to build a dataset upstream of our `start_comid` that we found above.
+`hydrogeofetch` supports discovery and data subsetting using web services made available through the [Network Linked Data Index](https://waterdata.usgs.gov/blog/nldi-intro/) (NLDI) and the [Water Mission Area pygeoapi](https://api.water.usgs.gov/fabric/pygeoapi). The code below shows how to use the NLDI functions to build a dataset upstream of our `start_comid` that we found above.
 
 The NLDI can be queried with any set of watershed outlet locations that it has in its index. We call these "featureSources". We can query the NLDI for an identifier of a given feature from any of its "featureSources" and find out what our navigation options are as shown below.
 ```{r discover_nldi}
@@ -326,7 +329,7 @@ gage <- sf::read_sf(output_file, "Gage")
 hydroloom::index_points_to_lines(flowline, sf::st_geometry(gage), precision = 10)
 ```
 
-See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and `vignette("migrating_from_nhdplusTools")` for more.
+See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and the [migrating from nhdplusTools article](https://doi-usgs.github.io/nhdplusTools/articles/migrating_from_nhdplusTools.html) for more.
 
 ```{r teardown, include=FALSE}
 options(oldoption)

@@ -55,7 +55,7 @@ get_raindrop_trace <- function(point, direction = "down") {
 #' @return sf data.frame containing the local catchment, the split portion
 #' and optionally the total drainage basin.
 #' @details
-#' This service works within the coterminous US NHDPlusV2 domain. If the point
+#' This service works within the conterminous US NHDPlusV2 domain. If the point
 #' provided falls on an NHDPlusV2 flowline as retrieved from \link{get_raindrop_trace}
 #' the catchment will be split across the flow line. IF the point is not
 #' along the flowline a small sub catchment will typically result. As a result,
@@ -85,7 +85,9 @@ get_raindrop_trace <- function(point, direction = "down") {
 #'
 #' hydrogeofetch::plot_nhdplus(bbox = bbox, cache_data = FALSE)
 #'
-#' plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+#' if(length(sf::st_geometry(catchment)) > 1) {
+#'   plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+#' }
 #' plot(sf::st_transform(sf::st_geometry(catchment)[1], 3857), add = TRUE, col = "red")
 #' plot(sf::st_transform(sf::st_sfc(point, crs = 4326), 3857), add = TRUE, col = "white")
 #' }
@@ -99,7 +101,9 @@ get_raindrop_trace <- function(point, direction = "down") {
 #' hydrogeofetch::plot_nhdplus(bbox = bbox, cache_data = FALSE)
 #'
 #' plot(sf::st_transform(sf::st_geometry(catchment)[1], 3857), add = TRUE, col = "red")
-#' plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+#' if(length(sf::st_geometry(catchment)) > 1) {
+#'   plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+#' }
 #' plot(sf::st_transform(sf::st_sfc(point, crs = 4326), 3857), add = TRUE, col = "white")
 #' }
 #'
@@ -113,7 +117,9 @@ get_raindrop_trace <- function(point, direction = "down") {
 #' hydrogeofetch::plot_nhdplus(bbox = bbox, cache_data = FALSE)
 #'
 #' plot(sf::st_transform(sf::st_geometry(catchment)[1], 3857), add = TRUE, col = "red")
-#' plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+#' if(length(sf::st_geometry(catchment)) > 1) {
+#'   plot(sf::st_transform(sf::st_geometry(catchment)[2], 3857), add = TRUE, col = "black")
+#' }
 #' plot(sf::st_transform(sf::st_sfc(pour_point, crs = 4326), 3857), add = TRUE, col = "white")
 #' }
 #'
@@ -138,6 +144,8 @@ get_split_catchment <- function(point, upstream = TRUE) {
 
   try({
     if(!is.null(out)) {
+      out <- sf::st_make_valid(out)
+
       sf::st_geometry(out) <- sf::st_sfc(lapply(sf::st_geometry(out), remove_shards),
                                          crs = sf::st_crs(out))
 
@@ -170,10 +178,10 @@ remove_shards <- function(g, thresh = 0.01) {
 #' Get Cross Section From Point (experimental)
 #' @description Uses a cross section retrieval web services to retrieve a
 #' cross section given a point and specified width. Orientation is determined
-#' based on direction of a the flowline found near point. This function uses
+#' based on direction of the flowline found near point. This function uses
 #' a 10m National Elevation Dataset request on the back end.
 #' @param point sfc POINT including crs as created by:
-#' \code{sf::st_sfc(sf::st_point(.. ,..), crs)}crs.
+#' \code{sf::st_sfc(sf::st_point(.. ,..), crs)}
 #' @param width Cross section width in meters.
 #' @param num_pts numeric number of points to retrieve along the cross section.
 #' @return sf data.frame containing points retrieved.
@@ -217,7 +225,7 @@ get_xs_point <- function(point, width, num_pts) {
 #' @param point2 sfc POINT including crs.
 #' @param num_pts numeric number of points to retrieve along the cross section.
 #' @param res integer resolution of 3D Elevation Program data to request.
-#' Must be on of: 1, 3, 5, 10, 30, 60.
+#' Must be one of: 1, 3, 5, 10, 30, 60.
 #' @return sf data.frame containing points retrieved.
 #' @export
 #' @examples
@@ -258,7 +266,7 @@ get_xs_points <- function(point1, point2, num_pts, res = 1) {
 
 check_res <- function(res) {
   if(!res %in% c(1, 3, 5, 10, 30, 60)) {
-    stop("res input must be on of 1, 3, 5, 10, 30, 60")
+    stop("res input must be one of 1, 3, 5, 10, 30, 60")
   }
   return(invisible(TRUE))
 }
@@ -269,7 +277,7 @@ check_res <- function(res) {
 #' @param points sf data.frame containing a point column.
 #' @param num_pts numeric number of points to retrieve along the cross section.
 #' @param res integer resolution of 3D Elevation Program data to request.
-#' Must be on of: 1, 3, 5, 10, 30, 60.
+#' Must be one of: 1, 3, 5, 10, 30, 60.
 #' @param status logical
 #' @return sf data.frame containing points retrieved. Names include
 #' "id", "distance_m", "elevation_m", "spatial_ref", "geometry",
@@ -371,6 +379,9 @@ get_xs <- function(url, fun, ...) {
   sf <- hgf_sf(url, body = fun(...), content_type = "application/json")
 
   if(is.null(sf)) {
+    message("No cross section returned. This is an experimental service that ",
+            "may be temporarily unavailable or unable to return a result for ",
+            "the requested location; try again later or a different point.")
     return(NULL)
   }
 
@@ -422,7 +433,10 @@ make_json_input_split <- function(p, upstream = TRUE) {
                                       list(id = "upstream",
                                            type = "text/plain",
                                            value = ifelse(upstream,
-                                                          "true", "false")))),
+                                                          "true", "false")),
+                                      list(id = "simplified",
+                                           type = "text/plain",
+                                           value = "false"))),
                    pretty = TRUE, auto_unbox = TRUE)
 
 }

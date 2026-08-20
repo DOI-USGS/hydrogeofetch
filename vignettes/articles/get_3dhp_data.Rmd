@@ -34,7 +34,7 @@ oldoption <- options(scipen = 9999)
 
 ```
 
-This vignette shows how to work with a [new service based on data from the 3D Hydrography Program (3DHP)](https://hydro.nationalmap.gov/arcgis/rest/services/3DHP_all/MapServer) released in 2024. 3DHP data uses "mainstem" identifiers as the primary river ID. We'll work with one for the Baraboo River in Wisconsin.
+This vignette shows how to work with a [new service based on data from the 3D Hydrography Program (3DHP)](https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer) released in 2024. 3DHP data uses "mainstem" identifiers as the primary river ID. We'll work with one for the Baraboo River in Wisconsin.
 
 We can find one to start with at a url like:
 

@@ -6,14 +6,14 @@
 #' @param streamorder integer only streams of order greater than or equal will be returned
 #' @param nhdplus_data geopackage containing source nhdplus data (omit to download)
 #' @param gpkg path and file with .gpkg ending. If omitted, no file is written.
-#' @param overwrite passed on the \link{subset_nhdplus}.
+#' @param overwrite passed on to \link{subset_nhdplus}.
 #' @param plot_config list containing plot configuration, see details.
 #' @param basemap character indicating which basemap type to use. Chose from:
 #' \link[maptiles]{get_tiles}.
 #' @param zoom integer passed on to \link[maptiles]{get_tiles}. This value will
 #' override the default set by the package.
 #' @param add boolean should this plot be added to an already built map.
-#' @param actually_plot boolean actually draw the plot? Use to get data subset only.
+#' @param actually_plot boolean actually draw the plot? Used to get data subset only.
 #' @param flowline_only boolean only subset and plot flowlines only, default=FALSE
 #' @param cache_data character path to rds file where all plot data can be cached.
 #' If file doesn't exist, it will be created. If set to FALSE, all caching will
@@ -48,8 +48,10 @@
 #'         nwissite = list(col = "grey40", border = NA, pch = 17, cex = 1),
 #'         huc12pp = list(col = "white", border = "black", pch = 22, cex = 1),
 #'         wqp = list(col = "red", border = NA, pch = 20, cex = 1))}
-#'   \item network_wtbd  \code{list(lwd = 1, col = "lightblue", border = "black")}
-#'   \item off_network_wtbd  \code{list(lwd = 1, col = "darkblue", border = "black")}
+#'   \item network_wtbd \preformatted{
+#'     list(lwd = 1, col = "lightblue", border = "black")}
+#'   \item off_network_wtbd \preformatted{
+#'     list(lwd = 1, col = "darkblue", border = "black")}
 #'
 #' }
 #'
@@ -61,7 +63,6 @@
 #' @importFrom hydroloom navigate_hydro_network
 #' @examples
 #' \donttest{
-#' options("rgdal_show_exportToProj4_warnings"="none")
 #' # Beware plot_nhdplus caches data to the default location.
 #' # If you do not want data in "user space" change the default.
 #' old_dir <- hydrogeofetch::hydrogeofetch_data_dir()

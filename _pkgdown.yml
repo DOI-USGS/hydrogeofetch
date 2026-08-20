@@ -59,7 +59,6 @@ reference:
       Functions that prepare NHD data for use with hydroloom and other packages.
   - contents:
       - '`get_tocomid`'
-      - '`prepare_nhdplus`'
       - '`align_nhdplus_names`'
   - title: Package Helpers
     desc: >

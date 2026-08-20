@@ -8,7 +8,7 @@ get_xs_point(point, width, num_pts)
 }
 \arguments{
 \item{point}{sfc POINT including crs as created by:
-\code{sf::st_sfc(sf::st_point(.. ,..), crs)}crs.}
+\code{sf::st_sfc(sf::st_point(.. ,..), crs)}}
 
 \item{width}{Cross section width in meters.}
 
@@ -20,7 +20,7 @@ sf data.frame containing points retrieved.
 \description{
 Uses a cross section retrieval web services to retrieve a
 cross section given a point and specified width. Orientation is determined
-based on direction of a the flowline found near point. This function uses
+based on direction of the flowline found near point. This function uses
 a 10m National Elevation Dataset request on the back end.
 }
 \examples{

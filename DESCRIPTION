@@ -23,7 +23,7 @@ Authors@R: c(person(given = "David",
                    family = "Koenig",
                    role = "ctb",
                    comment = c(ORCID = "0000-0002-7790-330X")))
-Description: Tools for traversing and working with National Hydrography Dataset Plus (NHDPlus) data. All methods implemented in 'hydrogeofetch' are available in the NHDPlus documentation available from the US Environmental Protection Agency <https://www.epa.gov/waterdata/basic-information>. Previously published as 'nhdplusTools'.
+Description: Traverses and works with National Hydrography Dataset Plus (NHDPlus) data. All methods implemented in 'hydrogeofetch' are available in the NHDPlus documentation available from the US Environmental Protection Agency <https://www.epa.gov/waterdata/basic-information>. Previously published as 'nhdplusTools'.
 URL: https://doi-usgs.github.io/nhdplusTools/ https://github.com/doi-usgs/nhdplusTools/
 BugReports: https://github.com/doi-usgs/nhdplusTools/issues/
 Depends:

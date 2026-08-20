@@ -8,9 +8,10 @@ nhdplusTools 1.5.0 is the last feature release under the old name. This plan cov
 
 **Outstanding:**
 - **Milestone 5 (USGS release/DOI)** — not started. `inst/CITATION` has been pre-updated with the `hydrogeofetch` title/author/version text, but the DOI/URL fields are still `"TBD"`; `code.json` still describes `nhdplusTools` entirely; no DOI has been minted on code.usgs.gov yet. **This is the next concrete blocker** — milestones 6 and 7 both depend on identifiers/URLs that come out of this step.
-- **Milestone 6 (CRAN submission)** — not started. No `rc/2.0.0` branch exists yet.
+- **Milestone 6 (CRAN submission)** — under review at CRAN.
+- **Milestone 6a (reverse-dependency migration)** — not started, blocked on 6. The sweep quoted above is stale: as of 2026-07-31 there are **eight** CRAN reverse deps, not three. `elfgen` and `StreamCatTools` are `Imports`; `amadeus`, `hydroloom`, `ncdfgeom`, `geospatialsuite`, `lakefetch`, `manureshed` are `Suggests`. None calls a removed function.
 - **Milestone 7 (GitHub repo rename)** — not started. `origin` is still `doi-usgs/nhdplusTools`.
-- **Milestone 8 (deprecation shim)** — not started. No shim branch exists.
+- **Milestone 8 (deprecation shim)** — not started, and possibly unnecessary; see 6a.
 - **Milestone 9 (archive nhdplusTools, Oct 2028)** — blocked on 8; not due for ~2 years.
 
 
@@ -377,7 +378,37 @@ Submit hydrogeofetch v1.0 to CRAN. The repo is still named nhdplusTools at this 
 
 **Done when:** Package accepted and available on CRAN.
 
-**Gate:** Update README.Rmd `install.packages()` line to `install.packages("hydrogeofetch")`. Announce hydrogeofetch v1.0. Notify reverse-dependency maintainers (amadeus, elfgen, StreamCatTools) that the deprecation shim is coming and they should plan to switch their imports.
+**Gate:** Update README.Rmd `install.packages()` line to `install.packages("hydrogeofetch")`. Announce hydrogeofetch v1.0. Open the reverse-dependency PRs in milestone 6a.
+
+
+## 6a. Reverse-dependency migration
+
+CRAN rejects a package naming a dependency that isn't on a mainstream repo — including in `Suggests` — so nothing here can move until milestone 6 lands. Once it does, all eight of these are name substitutions: every function any reverse dep calls is still exported from hydrogeofetch 2.0.0 with an unchanged signature. Verified by diffing `nhdplusTools-1.5:NAMESPACE` against current (2026-07-31); none of the eight touches a function removed in milestone 4.
+
+If all eight migrate, nhdplusTools has no CRAN reverse dependencies left and milestone 8 (the shim) becomes optional — nhdplusTools could go straight to the milestone 9 archive.
+
+**Strong dependencies — do these first.** Under a shim these emit `.Deprecated()` on every call into their users' code.
+
+- [ ] **elfgen** (HARPgroup, agreed to a PR) — `Imports`. Only call is `nhdplusTools::get_nhdplus()` at `R/elfdata.R:136`. Also drop the `@import nhdplusTools` roxygen tag at `R/elfdata.R:19` — it pulls the whole namespace in for a call that's already `::`-qualified, and under a shim it would attach ~30 deprecated aliases. Swap DESCRIPTION `Imports`, re-roxygenize.
+- [ ] **StreamCatTools** (USEPA, agreed to a PR) — `Imports`. All `::`-qualified, no NAMESPACE directive. `get_waterbodies` (`R/lc_get_comid.R:59,61`), `discover_nhdplus_id` (`R/sc_get_comid.R:60`), `get_nhdplus` (`R/sc_plot.R:208`), plus `navigate_nldi`/`get_nldi_basin`/`get_waterbodies` in `vignettes/Articles/{Applications,LakeCat,NNI}.Rmd`. Swap DESCRIPTION `Imports`. Note for Marc: hydrogeofetch `Suggests: StreamCatTools` for the `source = "streamcat"` path in `get_catchment_characteristics()`, so merging this creates a Suggests↔Imports cycle. CRAN permits it, but it should not be a surprise in a check log.
+
+**Own packages — no coordination needed.**
+
+- [ ] **hydroloom** — `Suggests`. Largest diff of the eight, ~30 sites across `@examples`, tests, and vignettes. Two things beyond renaming: `nhdplusTools_data_dir()` → `hydrogeofetch_data_dir()` (`tests/testthat/test_add_pfafstetter.R:5`, `vignettes/flow-table.Rmd:18,42,108`), and `vignettes/advanced_network.Rmd:214` describes `add_plus_network_attributes` as an nhdplusTools function, which no longer exists. Six tests and four examples also `source(system.file("extdata/...", package = "nhdplusTools"))` — all four of those files (`sample_data.R`, `sample_flines.R`, `nhdplushr_data.R`, `3dhp_yahara_flowlines.R`) still ship in hydrogeofetch, only the `package =` argument changes.
+- [ ] **ncdfgeom** — `Suggests`. One vignette: `get_nldi_basin`, `get_huc` at `vignettes/polygon_intersection.Rmd:23,48-50`.
+
+**Third-party Suggests — all `requireNamespace`-guarded, none urgent.**
+
+- [ ] **amadeus** (NIEHS) — one call site, `nhdplusTools::get_huc()` at `R/process.R:4201` behind a `requireNamespace` guard at `:4193`. Also `@param`/`@seealso` doc lines at `R/process.R:4147,4149` and two `withr::local_package("nhdplusTools")` calls in `tests/testthat/test-huc.R:118,190`.
+- [ ] **geospatialsuite** — `get_huc` at `R/15-helpers.R:1038`, guard and install message at `:1015-1017`. Not yet contacted.
+- [ ] **lakefetch** — `get_waterbodies`, `get_nhdplus`, `discover_nhdplus_id`, `get_nldi_basin` in `R/nhd_integration.R`; availability check in `R/globals.R:162`; startup message in `R/zzz.R:84-87`. Not yet contacted.
+- [ ] **manureshed** — vignette only (`vignettes/advanced-features.Rmd:487-490`) plus a metadata string in `R/package_documentation.R:340`. Pins `nhdplusTools (>= 0.5.0)`; that bound should be dropped or rewritten to `hydrogeofetch (>= 2.0.0)`. Not yet contacted.
+
+**Also fix in hydrogeofetch itself:** `nhdplusTools_data_dir()` and `nhdplusTools_cache_settings()` were *renamed*, not removed. NEWS.md should list them as renames rather than leaving them implicit in the removed-function section.
+
+**Done when:** All eight merged and released, and `tools::package_dependencies("nhdplusTools", reverse = TRUE)` against CRAN returns empty.
+
+**Gate:** Re-run the reverse-dependency sweep before declaring this done — the list grew from three to eight between 2026-06-22 and 2026-07-31, so assume it has grown again.
 
 
 ## 7. Rename the GitHub repo
@@ -394,9 +425,13 @@ Rename doi-usgs/nhdplusTools to doi-usgs/hydrogeofetch. GitHub maintains redirec
 - Re-knit README.md, deploy pkgdown site
 
 
-## 8. nhdplusTools deprecation shim
+## 8. nhdplusTools deprecation shim — conditional
 
-Build a shim version of nhdplusTools (maintained as a branch in the hydrogeofetch repo). Every exported function becomes a `.Deprecated()` wrapper that forwards to `hydrogeofetch::*` or `hydroloom::*` as appropriate. Functions that were removed from hydrogeofetch because they duplicated hydroloom (indexing, navigation shorthands, network analysis wrappers) forward directly to hydroloom. Functions that remain in hydrogeofetch forward there. Submit to CRAN.
+**Decide this after 6a.** The shim exists to keep reverse dependencies working; if all eight migrate, its only remaining audience is user scripts calling `library(nhdplusTools)` directly, which the CRAN archive plus a README pointer may serve well enough. Skipping it means going from 6a straight to milestone 9.
+
+One thing to check before skipping: hydroloom's tests and examples `source(system.file("extdata/...", package = "nhdplusTools"))`. A function-alias shim ships no `inst/extdata`, so it would not have covered that case anyway — which is an argument that 6a is the real fix and the shim was never load-bearing.
+
+If the shim does get built: maintain it as a branch in the hydrogeofetch repo. Every exported function becomes a `.Deprecated()` wrapper that forwards to `hydrogeofetch::*` or `hydroloom::*` as appropriate. Functions that were removed from hydrogeofetch because they duplicated hydroloom (indexing, navigation shorthands, network analysis wrappers) forward directly to hydroloom. Functions that remain in hydrogeofetch forward there. Submit to CRAN.
 
 **Done when:** Shim accepted on CRAN. Installing nhdplusTools gives deprecation warnings that name hydrogeofetch or hydroloom as the replacement.
 

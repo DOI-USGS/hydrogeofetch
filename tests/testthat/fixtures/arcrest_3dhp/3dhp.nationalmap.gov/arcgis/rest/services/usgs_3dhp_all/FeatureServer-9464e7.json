@@ -2,99 +2,55 @@
     "currentVersion": 11.3,
     "cimVersion": "3.3.0",
     "serviceDescription": "<div style='text-align:Left;font-size:12pt'><p><span>The USGS 3D Hydrography Program (3DHP) ArcGIS REST service (3DHP_all) from The National Map is the first of several data services that will be delivered by the 3D Hydrography Program.  The 3DHP_all comprises a national network of flowlines, hydrolocations, and water bodies, and will include catchments, drainage areas, and flow network derivatives as they are populated in the future.  The 3DHP_all service will provide access to a 3D-enabled geospatial hydrography vector dataset built from 3DHP data and intended to provide the most comprehensive but general rendering of 3DHP data.  3DHP data is derived from elevation-derived hydrography (EDH) Elevation-Derived Hydrography Specifications | U.S. Geological Survey (usgs.gov) where available. Where EDH has not been collected, 3DHP data will be supplemented by data from the National Hydrography Dataset (NHD) National Hydrography Dataset | U.S. Geological Survey (usgs.gov).   As further EDH data is collected, the EDH data will replace the NHD data in that data collection area. 3DHP data ingested from EDH sources will include catchments, drainage areas derived from catchments, and flowline network attribute derivatives.<\/span><\/p><p><span /><\/p><p><span>Use Constraints: __ None. All data are open and non-proprietary. However, users should be aware that temporal changes may have occurred since this dataset was collected and that some parts of this data may no longer represent actual conditions. Users should not use this data for critical applications without a full awareness of its limitations. This dataset is not intended to be used for site-specific regulatory determinations. Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data.<\/span><\/p><p><span /><\/p><p><span>For additional information on the 3DHP, go to https://www.usgs.gov/3dhp.<\/span><\/p><p><span>See https://apps.nationalmap.gov/help/ for assistance with The National Map viewer, download client, services, or metadata.<\/span><\/p><\/div>",
-    "mapName": "3DHP_all",
+    "hasVersionedData": false,
+    "hasArchivedData": false,
+    "hasBranchVersionedData": false,
+    "supportsDisconnectedEditing": false,
+    "supportsDatumTransformation": true,
+    "supportsReturnServiceEditsOption": false,
+    "returnServiceEditsHaveSR": true,
+    "supportsQueryDataElements": true,
+    "datesInUnknownTimezone": false,
+    "supportsRelationshipsResource": true,
+    "syncEnabled": false,
+    "syncCapabilities": {
+        "supportsRegisterReplicaForServer": true,
+        "supportsSyncDirectionControl": true,
+        "supportsPerLayerSync": true,
+        "supportsPerReplicaSync": true,
+        "supportsAttachmentsSyncDirection": true,
+        "supportsSyncModelNone": true,
+        "supportsDurableUrlForSyncModelNone": false
+    },
+    "supportedExportFormats": "sqlite,filegdb,shapefile,csv,geojson",
+    "extractChangesCapabilities": {
+        "supportsReturnIdsOnly": false,
+        "supportsReturnExtentOnly": false,
+        "supportsReturnAttachments": false,
+        "supportsLayerQueries": false,
+        "supportsGeometry": false,
+        "supportsFeatureReturn": false,
+        "supportsReturnHasGeometryUpdates": false,
+        "supportsFieldsToCompare": false,
+        "supportsServerGens": false
+    },
+    "supportedQueryFormats": "JSON",
+    "maxRecordCount": 2500,
+    "maxRecordCountFactor": 1,
+    "capabilities": "Query,Extract",
     "description": "The USGS 3D Hydrography Program (3DHP) ArcGIS REST service (3DHP_all) from The National Map is the first of several data services that will be delivered by the 3D Hydrography Program.  The 3DHP_all comprises a national network of flowlines, hydrolocations, and water bodies, and will include catchments, drainage areas, and flow network derivatives as they are populated in the future.  The 3DHP_all service will provide access to a 3D-enabled geospatial hydrography vector dataset built from 3DHP data and intended to provide the most comprehensive but general rendering of 3DHP data.  3DHP data is derived from elevation-derived hydrography (EDH) Elevation-Derived Hydrography Specifications | U.S. Geological Survey (usgs.gov) where available. Where EDH has not been collected, 3DHP data will be supplemented by data from the National Hydrography Dataset (NHD) National Hydrography Dataset | U.S. Geological Survey (usgs.gov).   As further EDH data is collected, the EDH data will replace the NHD data in that data collection area. 3DHP data ingested from EDH sources will include catchments, drainage areas derived from catchments, and flowline network attribute derivatives.Use Constraints: __ None. All data are open and non-proprietary. However, users should be aware that temporal changes may have occurred since this dataset was collected and that some parts of this data may no longer represent actual conditions. Users should not use this data for critical applications without a full awareness of its limitations. This dataset is not intended to be used for site-specific regulatory determinations. Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data.For additional information on the 3DHP, go to https://www.usgs.gov/3dhp.See https://apps.nationalmap.gov/help/ for assistance with The National Map viewer, download client, services, or metadata.",
-    "copyrightText": "Credits: USGS TNM / NGTOC – 3D National Hydrographic Program (3DHP.) Data refreshed March 16, 2026.",
-    "supportsDynamicLayers": true,
-    "layers": [
-        {
-            "id": 20,
-            "name": "HydroLocation - Sink, Spring, Waterbody Outlet",
-            "parentLayerId": -1,
-            "defaultVisibility": true,
-            "subLayerIds": null,
-            "minScale": 300000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPoint",
-            "supportsDynamicLegends": true
-        },
-        {
-            "id": 30,
-            "name": "HydroLocation - Headwater, Terminus, Divergence, Confluence, Catchment Outlet",
-            "parentLayerId": -1,
-            "defaultVisibility": true,
-            "subLayerIds": null,
-            "minScale": 72000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPoint",
-            "supportsDynamicLegends": true
-        },
-        {
-            "id": 40,
-            "name": "HydroLocation - Reach Code, External Connection",
-            "parentLayerId": -1,
-            "defaultVisibility": true,
-            "subLayerIds": null,
-            "minScale": 72000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPoint",
-            "supportsDynamicLegends": true
-        },
-        {
-            "id": 50,
-            "name": "Flowline",
-            "parentLayerId": -1,
-            "defaultVisibility": true,
-            "subLayerIds": null,
-            "minScale": 300000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPolyline",
-            "supportsDynamicLegends": true
-        },
-        {
-            "id": 60,
-            "name": "Waterbody",
-            "parentLayerId": -1,
-            "defaultVisibility": true,
-            "subLayerIds": null,
-            "minScale": 300000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPolygon",
-            "supportsDynamicLegends": true
-        },
-        {
-            "id": 70,
-            "name": "DrainageArea",
-            "parentLayerId": -1,
-            "defaultVisibility": false,
-            "subLayerIds": null,
-            "minScale": 500000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPolygon",
-            "supportsDynamicLegends": true
-        },
-        {
-            "id": 80,
-            "name": "Catchment",
-            "parentLayerId": -1,
-            "defaultVisibility": false,
-            "subLayerIds": null,
-            "minScale": 300000,
-            "maxScale": 0,
-            "type": "Feature Layer",
-            "geometryType": "esriGeometryPolygon",
-            "supportsDynamicLegends": true
+    "copyrightText": "Credits: USGS TNM / NGTOC – 3D National Hydrographic Program (3DHP.) Data refreshed June 26, 2026.",
+    "advancedEditingCapabilities": {
+        "supportsSplit": false,
+        "supportsReturnServiceEditsInSourceSR": true,
+        "supportsAsyncApplyEdits": true,
+        "supportsApplyEditsbyUploadID": true,
+        "supportedApplyEditsUploadIDFormats": "JSON",
+        "supportsMultipatchOptionForServiceEdits": true,
+        "supportedApplyEditsOptions": {
+            "supportedEditingOptions": 0
         }
-    ],
-    "tables": [
-
-    ],
+    },
     "spatialReference": {
         "wkid": 102100,
         "latestWkid": 3857,
@@ -109,12 +65,11 @@
         "falseM": -100000,
         "mUnits": 10000
     },
-    "singleFusedMapCache": false,
     "initialExtent": {
-        "xmin": -1.7208069304581944E7,
-        "ymin": 1.0663373467098413E7,
-        "xmax": -1.713806064792713E7,
-        "ymax": 1.0703314913842974E7,
+        "xmin": -1.1960342083978374E7,
+        "ymin": 4749456.721578976,
+        "xmax": -1.1956927252988137E7,
+        "ymax": 4751404.956221024,
         "spatialReference": {
             "wkid": 102100,
             "latestWkid": 3857,
@@ -131,10 +86,10 @@
         }
     },
     "fullExtent": {
-        "xmin": -2.0037507842788246E7,
-        "ymin": -3.024097145838615E7,
-        "xmax": 2.0037507842788246E7,
-        "ymax": 3.024097145838615E7,
+        "xmin": -1.99517556817E7,
+        "ymin": -1622985.3665999994,
+        "xmax": 2.0021551747199997E7,
+        "ymax": 1.1575301958199998E7,
         "spatialReference": {
             "wkid": 102100,
             "latestWkid": 3857,
@@ -150,27 +105,99 @@
             "mUnits": 10000
         }
     },
-    "datesInUnknownTimezone": false,
-    "minScale": 500000,
-    "maxScale": 0,
+    "allowGeometryUpdates": true,
+    "allowTrueCurvesUpdates": true,
+    "onlyAllowTrueCurveUpdatesByTrueCurveClients": true,
+    "supportsApplyEditsWithGlobalIds": false,
+    "supportsTrueCurve": true,
     "units": "esriMeters",
-    "supportedImageFormatTypes": "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,BMP",
     "documentInfo": {
         "Title": "usgs_3dhp_all",
         "Author": "",
         "Comments": "The USGS 3D Hydrography Program (3DHP) ArcGIS REST service (3DHP_all) from The National Map is the first of several data services that will be delivered by the 3D Hydrography Program.  The 3DHP_all comprises a national network of flowlines, hydrolocations, and water bodies, and will include catchments, drainage areas, and flow network derivatives as they are populated in the future.  The 3DHP_all service will provide access to a 3D-enabled geospatial hydrography vector dataset built from 3DHP data and intended to provide the most comprehensive but general rendering of 3DHP data.  3DHP data is derived from elevation-derived hydrography (EDH) Elevation-Derived Hydrography Specifications | U.S. Geological Survey (usgs.gov) where available. Where EDH has not been collected, 3DHP data will be supplemented by data from the National Hydrography Dataset (NHD) National Hydrography Dataset | U.S. Geological Survey (usgs.gov).   As further EDH data is collected, the EDH data will replace the NHD data in that data collection area. 3DHP data ingested from EDH sources will include catchments, drainage areas derived from catchments, and flowline network attribute derivatives.Use Constraints: __ None. All data are open and non-proprietary. However, users should be aware that temporal changes may have occurred since this dataset was collected and that some parts of this data may no longer represent actual conditions. Users should not use this data for critical applications without a full awareness of its limitations. This dataset is not intended to be used for site-specific regulatory determinations. Acknowledgment of the U.S. Geological Survey would be appreciated for products derived from these data.For additional information on the 3DHP, go to https://www.usgs.gov/3dhp.See https://apps.nationalmap.gov/help/ for assistance with The National Map viewer, download client, services, or metadata.",
         "Subject": "USGS 3D National Hydrographic Program",
         "Category": "",
-        "Version": "3.3.0",
-        "AntialiasingMode": "Fast",
-        "TextAntialiasingMode": "Force",
         "Keywords": "a-16,NGDA,water – inland,hydrography,surface-water,3DHP,EDH,water,drainage,river,stream,canal,ditch,lake,pond,spring,waterbody,water body,hydrolocation,hydrolocations,3DTNM,3DEP,elevation derived hydrography,elev-hydro,region,subregion,basin,catchment,drainage area,watershed,United States,US,NGP-TNM,REST,WMS"
     },
     "supportsQueryDomains": true,
-    "capabilities": "Map,Query,Data",
-    "supportedQueryFormats": "JSON, geoJSON, PBF",
-    "exportTilesAllowed": false,
-    "referenceScale": 0.0,
+    "supportsQueryContingentValues": true,
+    "layers": [
+        {
+            "id": 20,
+            "name": "HydroLocation - Sink, Spring, Waterbody Outlet",
+            "parentLayerId": -1,
+            "defaultVisibility": true,
+            "subLayerIds": null,
+            "minScale": 300000,
+            "maxScale": 0,
+            "type": "Feature Layer",
+            "geometryType": "esriGeometryPoint"
+        },
+        {
+            "id": 30,
+            "name": "HydroLocation - Headwater, Terminus, Divergence, Confluence, Catchment Outlet",
+            "parentLayerId": -1,
+            "defaultVisibility": true,
+            "subLayerIds": null,
+            "minScale": 72000,
+            "maxScale": 0,
+            "type": "Feature Layer",
+            "geometryType": "esriGeometryPoint"
+        },
+        {
+            "id": 40,
+            "name": "HydroLocation - Reach Code, External Connection",
+            "parentLayerId": -1,
+            "defaultVisibility": true,
+            "subLayerIds": null,
+            "minScale": 72000,
+            "maxScale": 0,
+            "type": "Feature Layer",
+            "geometryType": "esriGeometryPoint"
+        },
+        {
+            "id": 50,
+            "name": "Flowline",
+            "parentLayerId": -1,
+            "defaultVisibility": true,
+            "subLayerIds": null,
+            "minScale": 300000,
+            "maxScale": 0,
+            "type": "Feature Layer",
+            "geometryType": "esriGeometryPolyline"
+        },
+        {
+            "id": 60,
+            "name": "Waterbody",
+            "parentLayerId": -1,
+            "defaultVisibility": true,
+            "subLayerIds": null,
+            "minScale": 300000,
+            "maxScale": 0,
+            "type": "Feature Layer",
+            "geometryType": "esriGeometryPolygon"
+        },
+        {
+            "id": 80,
+            "name": "Catchment",
+            "parentLayerId": -1,
+            "defaultVisibility": false,
+            "subLayerIds": null,
+            "minScale": 300000,
+            "maxScale": 0,
+            "type": "Feature Layer",
+            "geometryType": "esriGeometryPolygon"
+        }
+    ],
+    "tables": [
+
+    ],
+    "relationships": [
+
+    ],
+    "enableZDefaults": false,
+    "allowUpdateWithoutMValues": false,
+    "supportsVCSProjection": true,
     "datumTransformations": [
         {
             "geoTransforms": [
@@ -253,19 +280,6 @@
             ]
         }
     ],
-    "supportsDatumTransformation": true,
-    "archivingInfo": {
-        "supportsHistoricMoment": false
-    },
-    "supportsClipping": true,
-    "supportsSpatialFilter": true,
-    "supportsTimeRelation": true,
-    "supportsQueryDataElements": true,
-    "mapUnits": {
-        "uwkid": 9001
-    },
-    "maxRecordCount": 2500,
-    "maxImageHeight": 4096,
-    "maxImageWidth": 4096,
-    "supportedExtensions": "FeatureServer"
+    "referenceScale": 0,
+    "hasSharedTemplates": true
 }

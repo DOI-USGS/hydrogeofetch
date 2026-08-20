@@ -44,7 +44,7 @@ hydrogeofetch fetches and prepares NHD data. hydroloom does network analysis and
 | `get_hydro_location()` | `hydroloom::get_hydro_location()` |
 | `get_partial_length()` | `hydroloom::get_partial_length()` |
 
-Functions that remain in hydrogeofetch unchanged: `get_nhdplus()`, `subset_nhdplus()`, `get_vaa()`, `prepare_nhdplus()`, `get_tocomid()`, `plot_nhdplus()`, `navigate_nldi()`, `get_nldi_basin()`, all download functions, and `get_drainage_area_estimates()`.
+Functions that remain in hydrogeofetch unchanged: `get_nhdplus()`, `subset_nhdplus()`, `get_vaa()`, `get_tocomid()`, `plot_nhdplus()`, `navigate_nldi()`, `get_nldi_basin()`, all download functions, and `get_drainage_area_estimates()`.
 
 ## Migration patterns
 

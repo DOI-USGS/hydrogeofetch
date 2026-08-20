@@ -1,5 +1,43 @@
 [
   {
+    "name": "hydrogeofetch",
+    "organization": "U.S. Geological Survey",
+    "description": "Hydrologic Geospatial Fabric Extraction Tool Chain",
+    "version": "v2.0.0",
+    "status": "Production",
+    "permissions": {
+      "usageType": "openSource",
+      "licenses": [
+        {
+          "name": "Public Domain, CC0-1.0",
+          "URL": "https://code.usgs.gov/water/nhdplusTools/-/raw/v2.0.0/LICENSE.md"
+        }
+      ]
+    },
+    "homepageURL": "https://code.usgs.gov/water/nhdplusTools/",
+    "downloadURL": "https://code.usgs.gov/water/nhdplusTools/-/archive/v2.0.0/nhdplustools-v2.0.0.zip",
+    "disclaimerURL": "https://code.usgs.gov/water/nhdplusTools/-/raw/v2.0.0/DISCLAIMER.md",
+    "repositoryURL": "https://code.usgs.gov/water/nhdplusTools.git",
+    "vcs": "git",
+    "laborHours": 2400,
+    "tags": [
+      "R",
+      "nhdplus",
+      "USGS",
+      "water"
+    ],
+    "languages": [
+      "R"
+    ],
+    "contact": {
+      "name": "David Blodgett",
+      "email": "dblodgett@usgs.gov"
+    },
+    "date": {
+      "metadataLastUpdated": "2026-08-20"
+    }
+  },
+  {
     "name": "nhdplusTools",
     "organization": "U.S. Geological Survey",
     "description": "Tools for Using NHDPlus Data",

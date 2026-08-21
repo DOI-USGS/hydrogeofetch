@@ -49,7 +49,10 @@ discover_nhdplus_id <- function(point = NULL, nldi_feature = NULL, raindrop = FA
 
       return(out)
     }
-    coords = sf::st_coordinates(point)
+    # check_point() transformed to EPSG:4326, and a transform leaves digits
+    # that differ between PROJ builds; round so the same point always asks
+    # the same question. 1e-7 degrees is about a centimeter.
+    coords = round(sf::st_coordinates(point), 7)
 
     comid <- tryCatch({
 

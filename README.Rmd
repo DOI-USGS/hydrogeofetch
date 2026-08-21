@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 
 # hydrogeofetch <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
-![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
+[![CRAN status](https://www.r-pkg.org/badges/version/hydrogeofetch)](https://CRAN.R-project.org/package=hydrogeofetch) ![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg) [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
 
 ## Renamed from `nhdplusTools`
 
-`hydrogeofetch` (hydrologic geospatial fabric extraction tool chain) is the renamed successor to `nhdplusTools`. The package scope has grown beyond NHDPlus, and the new name reflects that broader role. All functions, signatures, and behavior carry over unchanged.
+`hydrogeofetch` (hydrologic geospatial fabric extraction tool chain) is the renamed successor to `nhdplusTools`. The package scope has grown beyond NHDPlus, and the new name reflects that broader role. Functions that carry over keep their names, signatures, and behavior — the changes are in what moved out to `hydroloom`, described below.
 
-`nhdplusTools` will remain on CRAN as a deprecation shim forwarding calls to `hydrogeofetch` until **October 2028**, at which point it will be archived. Archived packages stay installable from the CRAN archive, so code pinned to `nhdplusTools` will continue to run.
+`nhdplusTools` stays on CRAN until **October 2028**, at which point it will be archived. Archived packages remain installable from the CRAN archive, so code pinned to `nhdplusTools` will continue to run. New work should use `hydrogeofetch`.
 
 ## hydrogeofetch: Tools for Accessing and Working with the NHDPlus and other US hydrographic data.
 
@@ -49,7 +49,7 @@ The typical workflow is now: use hydrogeofetch to fetch and prepare NHD data, th
 ### Installation:
 
 ```{r, eval = FALSE}
-install.packages("nhdplusTools")
+install.packages("hydrogeofetch")
 ```
 
 For the latest development:

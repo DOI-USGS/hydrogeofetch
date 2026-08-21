@@ -3,6 +3,8 @@
 
 # hydrogeofetch <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/hydrogeofetch)](https://CRAN.R-project.org/package=hydrogeofetch)
 ![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg)
 [![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
 
@@ -10,13 +12,14 @@
 
 `hydrogeofetch` (hydrologic geospatial fabric extraction tool chain) is
 the renamed successor to `nhdplusTools`. The package scope has grown
-beyond NHDPlus, and the new name reflects that broader role. All
-functions, signatures, and behavior carry over unchanged.
+beyond NHDPlus, and the new name reflects that broader role. Functions
+that carry over keep their names, signatures, and behavior — the changes
+are in what moved out to `hydroloom`, described below.
 
-`nhdplusTools` will remain on CRAN as a deprecation shim forwarding
-calls to `hydrogeofetch` until **October 2028**, at which point it will
-be archived. Archived packages stay installable from the CRAN archive,
-so code pinned to `nhdplusTools` will continue to run.
+`nhdplusTools` stays on CRAN until **October 2028**, at which point it
+will be archived. Archived packages remain installable from the CRAN
+archive, so code pinned to `nhdplusTools` will continue to run. New work
+should use `hydrogeofetch`.
 
 ## hydrogeofetch: Tools for Accessing and Working with the NHDPlus and other US hydrographic data.
 
@@ -58,7 +61,7 @@ mapping of old to new function names.
 ### Installation:
 
 ``` r
-install.packages("nhdplusTools")
+install.packages("hydrogeofetch")
 ```
 
 For the latest development:
@@ -87,9 +90,10 @@ in [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 ## Package Vision
 
 The `hydrogeofetch` package provides tools to discover, download,
-subset, and prepare U.S. NHDPlus data. Network analysis (navigation,
-indexing, attribute generation) belongs in
-[`hydroloom`](https://doi-usgs.github.io/hydroloom/).
+subset, and prepare U.S. hydrographic data. NHDPlus is its primary
+dataset, and it increasingly supports others, such as 3DHP and
+mainstems. Network analysis (navigation, indexing, attribute generation)
+belongs in [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
 
 General, globally applicable functionality has been moved to
 [`hydroloom`](https://doi-usgs.github.io/hydroloom/).
@@ -257,13 +261,13 @@ package a community created resource for us all to gain from and won’t
 be able to do that without your help!
 
 1)  Contributions should be thoroughly tested with
-    [`testthat`](https://testthat.r-lib.org/).  
+    [`testthat`](https://testthat.r-lib.org/).\
 2)  Code style should attempt to follow the [`tidyverse` style
-    guide.](https://style.tidyverse.org/)  
+    guide.](https://style.tidyverse.org/)\
 3)  Please attempt to describe what you want to do prior to contributing
-    by submitting an issue.  
+    by submitting an issue.\
 4)  Please follow the typical github [fork - pull-request
-    workflow.](https://gist.github.com/Chaser324/ce0505fbed06b947d962)  
+    workflow.](https://gist.github.com/Chaser324/ce0505fbed06b947d962)\
 5)  Make sure you use roxygen and run Check before contributing. More on
     this front as the package matures.
 

@@ -60,15 +60,22 @@ skip_if_no_integration <- function() {
 # tests/testthat/fixtures/ tree is the source of truth (committed, .Rbuildignored);
 # the tarball is the shipping artifact. When the loose tree is present (dev,
 # including re-record), the helper auto-regenerates the tarball if any fixture
-# is newer than it -- so a dev who edits or re-records fixtures never has to
-# remember to repack before committing.
+# is newer than it, or if the two hold different files -- so a dev who edits,
+# re-records, or renames fixtures never has to remember to repack before
+# committing. The name check matters because file.rename carries the old mtime
+# over, which would leave a rename invisible to the mtime check.
 fixtures_root <- local({
   if(dir.exists("fixtures")) {
     files <- list.files("fixtures", recursive = TRUE, full.names = TRUE,
                         all.files = TRUE, no.. = TRUE)
     tarball <- "fixtures.tar.gz"
+    packed <- if(file.exists(tarball)) {
+      grep("/$", utils::untar(tarball, list = TRUE), value = TRUE,
+           invert = TRUE)
+    } else character(0)
     stale <- length(files) > 0 && (!file.exists(tarball) ||
-      file.info(tarball)$mtime < max(file.info(files)$mtime))
+      file.info(tarball)$mtime < max(file.info(files)$mtime) ||
+      !setequal(files, packed))
     if(stale) {
       message("Repacking ", tarball, " (loose fixtures/ tree is newer)")
       utils::tar(tarball, files = "fixtures", compression = "gzip",

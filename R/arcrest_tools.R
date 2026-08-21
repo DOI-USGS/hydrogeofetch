@@ -235,16 +235,12 @@ query_usgs_arcrest <- function(AOI = NULL,  ids = NULL,
 }
 
 
-assign("bb_break_size", value = 2, hydrogeofetch_env)
-
-#' @title Construct a BBOX spatial filter for geoservers
-#' @description From an 'area of intferest' object (sf POINT or POLYGON),
-#' generate a WMS BBOX filter to pass to a geoserver.
+#' @title Construct a bounding box geometry filter for an ArcGIS REST service
+#' @description From an 'area of interest' object (sf POINT or POLYGON),
+#' generate an envelope geometry filter to pass to an ArcGIS REST query.
 #' @inheritParams get_nhdplus
-#' @param type needed if we want to use CQL, not for BBOX. Left for posterity
-#' @param break_size desired size of bbox tiles
-#' @param tile should the response be a tiled list or not?
-#' @return a character string XML filter
+#' @return a list holding the envelope as JSON with an EPSG:4326 spatial
+#' reference, or a list holding an empty list when AOI is NULL
 #' @keywords internal
 #' @noRd
 #' @importFrom sf st_geometry_type st_buffer st_transform st_bbox

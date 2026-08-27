@@ -1,3 +1,8 @@
+hydrogeofetch 2.0.2
+==========
+
+Improve coordinate precision test file matching to be more robust.
+
 hydrogeofetch 2.0.1
 ==========
 

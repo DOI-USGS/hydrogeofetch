@@ -116,83 +116,28 @@ coarsen_coords <- function(txt, digits = 3) {
   txt
 }
 
-# A fixture that does not exist is invisible to the tests: httptest2 aborts the
-# request, hgf_sf() catches the error, and the caller warns "No features found"
-# and returns NULL -- exactly what a legitimately empty response produces. So a
-# stale fixture name surfaces as a missing-data failure somewhere else, or not
-# at all. Misses are collected here and raised by with_mock_hgf() after the
-# block has run, where no tryCatch is left to swallow them.
-#
-# The state lives in options rather than an environment because testthat
-# re-sources this file for every test file, while the redactor is installed
-# once. An environment defined here would give the redactor and the
-# with_mock_hgf() that reads it two different objects from the second file on.
-mock_replaying <- function(value) {
-  if(missing(value)) return(isTRUE(getOption("hgf_mock_replaying")))
-  options(hgf_mock_replaying = value)
-}
-
-mock_misses <- function(value) {
-  if(missing(value)) return(getOption("hgf_mock_misses", character()))
-  options(hgf_mock_misses = value)
-}
-
-# mirrors httptest2:::find_mock_file, which matches a mock path plus any
-# single extension
-mock_file_missing <- function(f) {
-  for(path in httptest2::.mockPaths()) {
-    mp <- file.path(path, f)
-    hits <- list.files(dirname(mp), all.files = TRUE)
-    hits <- hits[tools::file_path_sans_ext(hits) == basename(mp)]
-    hits <- hits[!dir.exists(file.path(dirname(mp), hits))]
-    if(length(hits)) return(FALSE)
-  }
-  TRUE
-}
-
-if(!isTRUE(getOption("hgf_mock_redactor"))) {
-  local({
-    default_redactor <- httptest2::get_current_redactor()
-    httptest2::set_redactor(function(x) {
-      if(!inherits(x, "httr2_request")) return(default_redactor(x))
-      x$url <- coarsen_coords(x$url)
-      if(is.raw(x$body$data))
-        x$body$data <- charToRaw(coarsen_coords(rawToChar(x$body$data)))
-      out <- default_redactor(x)
-      if(mock_replaying()) {
-        f <- httptest2::build_mock_url(out)
-        if(mock_file_missing(f))
-          mock_misses(union(mock_misses(), paste0(f, "  <- ", x$url)))
-      }
-      out
-    })
-  })
-  options(hgf_mock_redactor = TRUE)
-}
+httptest2::set_redactor(function(x) {
+  x$url <- coarsen_coords(x$url)
+  if(is.raw(x$body$data))
+    x$body$data <- charToRaw(coarsen_coords(rawToChar(x$body$data)))
+  x
+})
 
 with_mock_hgf <- function(fixture, expr,
     live = identical(Sys.getenv("HYDROGEOFETCH_LIVE"), "true")) {
   if(live) return(expr)
-
-  dir <- file.path(fixtures_root, "fixtures", fixture)
-
-  mock_replaying(dir.exists(dir) ||
-    dir.exists(file.path("tests", "testthat", dir)))
-  mock_misses(character())
-  on.exit({
-    mock_replaying(FALSE)
-    mock_misses(character())
-  }, add = TRUE)
-
-  out <- httptest2::with_mock_dir(dir, expr)
-
-  missed <- mock_misses()
-  if(length(missed)) {
-    stop("No fixture matched ", length(missed), " request(s) in '",
-      fixture, "'. An unmatched request comes back as an empty result, so ",
-      "re-record rather than relaxing the assertion:\n  ",
-      paste(missed, collapse = "\n  "), call. = FALSE)
-  }
-
-  out
+  # httptest2 aborts an unmatched request, hgf_sf() catches that and warns, and
+  # the caller turns it into "No features found" -- indistinguishable from a
+  # legitimately empty response. Promote the warning back to an error so a
+  # stale fixture name fails where it happens instead of somewhere downstream.
+  # A call wrapped in capture_warnings()/expect_warning() muffles the warning
+  # before this handler sees it, so those sites stay on their own assertions.
+  withCallingHandlers(
+    httptest2::with_mock_dir(file.path(fixtures_root, "fixtures", fixture),
+                             expr),
+    warning = function(w) {
+      if(grepl("unexpected request was made", conditionMessage(w)))
+        stop("Missing fixture in '", fixture, "': ", conditionMessage(w),
+             call. = FALSE)
+    })
 }

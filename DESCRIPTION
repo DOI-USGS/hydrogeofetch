@@ -1,7 +1,7 @@
 Package: hydrogeofetch
 Type: Package
 Title: Hydrologic Geospatial Fabric Extraction Tool Chain
-Version: 2.0.2
+Version: 2.0.3
 Authors@R: c(person(given = "David", 
                     family = "Blodgett", 
                     role = c("aut", "cre"), 

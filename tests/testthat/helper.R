@@ -98,12 +98,46 @@ fixtures_root <- local({
   td
 })
 
+# httptest2 names each fixture by hashing the request's query string and body,
+# so every coordinate in a request is part of that fixture's identity. Those
+# coordinates come out of projection round trips, and their last digits differ
+# between PROJ builds -- a couple of centimeters was enough to send CRAN's
+# Fedora checks looking for fixtures that do not exist. Coarsening coordinates
+# to three decimals (about 100 m) before the hash puts four orders of magnitude
+# between that platform noise and the nearest name change. Only the copy
+# httptest2 hashes is coarsened; the request that goes over the wire keeps full
+# precision, and recording applies the same transform, so record and replay
+# agree on the name.
+coarsen_coords <- function(txt, digits = 3) {
+  if(is.null(txt) || !nzchar(txt)) return(txt)
+  m <- gregexpr("-?[0-9]+[.][0-9]{4,}", txt)
+  regmatches(txt, m) <- lapply(regmatches(txt, m), function(v)
+    formatC(round(as.numeric(v), digits), format = "f", digits = digits))
+  txt
+}
+
+httptest2::set_redactor(function(x) {
+  x$url <- coarsen_coords(x$url)
+  if(is.raw(x$body$data))
+    x$body$data <- charToRaw(coarsen_coords(rawToChar(x$body$data)))
+  x
+})
+
 with_mock_hgf <- function(fixture, expr,
     live = identical(Sys.getenv("HYDROGEOFETCH_LIVE"), "true")) {
-  if(live) {
-    expr
-  } else {
-    httptest2::with_mock_dir(
-      file.path(fixtures_root, "fixtures", fixture), expr)
-  }
+  if(live) return(expr)
+  # httptest2 aborts an unmatched request, hgf_sf() catches that and warns, and
+  # the caller turns it into "No features found" -- indistinguishable from a
+  # legitimately empty response. Promote the warning back to an error so a
+  # stale fixture name fails where it happens instead of somewhere downstream.
+  # A call wrapped in capture_warnings()/expect_warning() muffles the warning
+  # before this handler sees it, so those sites stay on their own assertions.
+  withCallingHandlers(
+    httptest2::with_mock_dir(file.path(fixtures_root, "fixtures", fixture),
+                             expr),
+    warning = function(w) {
+      if(grepl("unexpected request was made", conditionMessage(w)))
+        stop("Missing fixture in '", fixture, "': ", conditionMessage(w),
+             call. = FALSE)
+    })
 }

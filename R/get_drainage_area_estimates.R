@@ -81,7 +81,8 @@
 #'   the gage to the outlet of its catchment before the catchment is split.
 #'   When the gage is at least this far upstream, the outlet catchment is split
 #'   at the gage point and only the upstream portion is included. Default 100.
-#' @return list with elements:
+#' @return list with elements, or NULL with a warning when a required web
+#'   service is unavailable:
 #'   \describe{
 #'     \item{da_huc12_sqkm}{numeric. Total DA using NLDI-identified HUC12s only.}
 #'     \item{da_huc10_sqkm}{numeric or NA. Total DA using HUC10-level queries.
@@ -181,6 +182,9 @@ get_drainage_area_estimates <- function(start, catchments = FALSE,
 
   # 2. fetch upstream network + HUC12 outlets
   net_info <- fetch_upstream_network(outlet_comids, vaa, huc12_outlets)
+
+  if(is.null(net_info)) return(NULL)
+
   all_net <- net_info$all_net
   huc12_outlets <- net_info$huc12_outlets
 
@@ -686,7 +690,8 @@ negotiate_outlet_catchment <- function(start_info, vaa = NULL,
 #'   \code{huc12pp} query is skipped and these are filtered to the
 #'   upstream network COMID set.
 #' @return list with \code{all_net} (data.frame with toid column) and
-#'   \code{huc12_outlets} (sf data.frame with comid and identifier columns).
+#'   \code{huc12_outlets} (sf data.frame with comid and identifier columns), or
+#'   NULL with a warning when the OGC API returns no flowline attributes.
 #' @noRd
 fetch_upstream_network <- function(outlet_comids, vaa = NULL,
   huc12_outlets = NULL) {
@@ -739,10 +744,12 @@ fetch_upstream_network <- function(outlet_comids, vaa = NULL,
       skip_geometry = TRUE
     )
 
-    if(is.null(all_net) || nrow(all_net) == 0)
-      stop("Could not fetch flowline attributes for upstream network ",
+    if(is.null(all_net) || nrow(all_net) == 0) {
+      warning("Could not fetch flowline attributes for upstream network ",
         "(NHDPlusV2 OGC API unavailable). Try again or supply local data.",
         call. = FALSE)
+      return(NULL)
+    }
 
     if(local_outlets)
       huc12_outlets <- huc12_outlets[huc12_outlets$comid %in% upstream_comids, ]

@@ -88,7 +88,8 @@ When the gage is at least this far upstream, the outlet catchment is split
 at the gage point and only the upstream portion is included. Default 100.}
 }
 \value{
-list with elements:
+list with elements, or NULL with a warning when a required web
+  service is unavailable:
   \describe{
     \item{da_huc12_sqkm}{numeric. Total DA using NLDI-identified HUC12s only.}
     \item{da_huc10_sqkm}{numeric or NA. Total DA using HUC10-level queries.

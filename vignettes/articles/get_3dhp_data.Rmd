@@ -122,7 +122,7 @@ Say you want to know how to relate NHD data to 3DHP data. 3DHP hydrolocations in
   par(old_par)
 ```
 
-With this functionality, we have what we need to inter operate between older NHD data and newly released 3DHP data. This service is brand new and `hydrogeofetch` is just getting going with functionality to support what's shown here. Please [submit issues](https://github.com/DOI-USGS/nhdplusTools/issues) if you find problems or have questions!!
+With this functionality, we have what we need to inter operate between older NHD data and newly released 3DHP data. This service is brand new and `hydrogeofetch` is just getting going with functionality to support what's shown here. Please [submit issues](https://github.com/DOI-USGS/hydrogeofetch/issues) if you find problems or have questions!!
 
 ```{r teardown, include=FALSE}
 options(oldoption)

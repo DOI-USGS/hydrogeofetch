@@ -386,7 +386,7 @@ get_catchment_characteristics <- function(varname, ids,
   # Multiple variables often share the same parquet dataset (e.g. CAT_BFI,
   # ACC_BFI, TOT_BFI). Opening each dataset once and selecting all needed
   # columns in a single collect() call is much faster than per-variable access.
-  # See: https://github.com/DOI-USGS/nhdplusTools/issues/449
+  # See: https://github.com/DOI-USGS/hydrogeofetch/issues/449
   url_groups <- split(var_meta$ID, var_meta$s3_url)
 
   # The arrow S3 metadata roundtrip emits a benign "discarded from R metadata"

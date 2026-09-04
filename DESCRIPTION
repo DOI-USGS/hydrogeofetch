@@ -24,8 +24,8 @@ Authors@R: c(person(given = "David",
                    role = "ctb",
                    comment = c(ORCID = "0000-0002-7790-330X")))
 Description: Traverses and works with National Hydrography Dataset Plus (NHDPlus) data. All methods implemented in 'hydrogeofetch' are available in the NHDPlus documentation available from the US Environmental Protection Agency <https://www.epa.gov/waterdata/basic-information>. Previously published as 'nhdplusTools'.
-URL: https://doi-usgs.github.io/nhdplusTools/ https://github.com/doi-usgs/nhdplusTools/
-BugReports: https://github.com/doi-usgs/nhdplusTools/issues/
+URL: https://doi-usgs.github.io/hydrogeofetch/ https://github.com/DOI-USGS/hydrogeofetch/
+BugReports: https://github.com/DOI-USGS/hydrogeofetch/issues/
 Depends:
     R (>= 4.1)
 Imports: hydroloom, dataRetrieval, dplyr, sf, units, jsonlite, httr2, xml2, utils, data.table, methods, arrow, tools, zip, memoise, digest

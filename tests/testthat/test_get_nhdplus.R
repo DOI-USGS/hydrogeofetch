@@ -44,7 +44,7 @@ test_that("downloaders run", {
   dir <- tempdir()
   mess <- capture_messages(
     out <- download_nhdplusv2(outdir = dir,
-                              url = "https://doi-usgs.github.io/nhdplusTools/data/NHDPlus_test.gdb.7z",
+                              url = "https://doi-usgs.github.io/hydrogeofetch/data/NHDPlus_test.gdb.7z",
                               progress = FALSE))
   unlink(dir, recursive = T)
   expect_true(grepl("NHDPlus_test.gdb", out))
@@ -52,14 +52,14 @@ test_that("downloaders run", {
   dir <- tempdir()
   mess <- capture_messages(
     out <- download_rf1(outdir = dir,
-                        url = "https://doi-usgs.github.io/nhdplusTools/data/rf1_test.e00.gz",
+                        url = "https://doi-usgs.github.io/hydrogeofetch/data/rf1_test.e00.gz",
                         progress = FALSE))
   unlink(dir, recursive = T)
   expect_true(grepl("rf1_test.e00", out))
 
   dir <- tempdir()
   temp <- capture.output(mess <- capture_messages(out <- download_wbd(outdir = dir,
-                                               url = "https://doi-usgs.github.io/nhdplusTools/data/WBD_test.gdb.zip",
+                                               url = "https://doi-usgs.github.io/hydrogeofetch/data/WBD_test.gdb.zip",
                                                progress = TRUE)))
   unlink(dir, recursive = T)
   expect_true(grepl("WBD_test.gdb", out))

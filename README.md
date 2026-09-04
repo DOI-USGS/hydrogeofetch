@@ -5,8 +5,8 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/hydrogeofetch)](https://CRAN.R-project.org/package=hydrogeofetch)
-![R-CMD-check](https://github.com/doi-usgs/nhdplusTools/workflows/R-CMD-check/badge.svg)
-[![codecov](https://codecov.io/gh/doi-usgs/nhdplusTools/branch/main/graph/badge.svg)](https://app.codecov.io/gh/doi-usgs/nhdplusTools)
+![R-CMD-check](https://github.com/DOI-USGS/hydrogeofetch/workflows/R-CMD-check/badge.svg)
+[![codecov](https://codecov.io/gh/DOI-USGS/hydrogeofetch/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DOI-USGS/hydrogeofetch)
 
 ## Renamed from `nhdplusTools`
 
@@ -68,18 +68,18 @@ For the latest development:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("DOI-USGS/nhdplusTools")
+remotes::install_github("DOI-USGS/hydrogeofetch")
 ```
 
 ### Resources
 
 For data discovery and access in a U.S. context, start with the
 [**Getting Started
-page**](https://doi-usgs.github.io/nhdplusTools/articles/hydrogeofetch.html).
+page**](https://doi-usgs.github.io/hydrogeofetch/articles/hydrogeofetch.html).
 
 Detailed documentation of all the package functions can be found at the
 [**Reference
-page**](https://doi-usgs.github.io/nhdplusTools/reference/).
+page**](https://doi-usgs.github.io/hydrogeofetch/reference/).
 
 ### Data:
 

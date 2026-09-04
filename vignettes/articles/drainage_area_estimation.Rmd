@@ -93,7 +93,7 @@ oldoption <- options(scipen = 9999)
 ```
 
 *A fully rendered version of this vignette with figures is available at
-<https://doi-usgs.github.io/nhdplusTools/articles/drainage_area_estimation.html>.*
+<https://doi-usgs.github.io/hydrogeofetch/articles/drainage_area_estimation.html>.*
 
 `get_drainage_area_estimates()` combines Watershed Boundary Dataset
 (WBD) delineations and non-surface-contributing area estimates with

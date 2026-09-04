@@ -13,7 +13,7 @@ get_test_file <- function(temp_dir) {
   check_location <- check_locations[file.exists(check_locations)]
   if(length(check_location) == 0) {
     temp_file <- file.path(temp_dir, "temp.zip")
-    hgf_download("https://doi-usgs.github.io/nhdplusTools/data/03_sub.zip",
+    hgf_download("https://doi-usgs.github.io/hydrogeofetch/data/03_sub.zip",
                   temp_file)
   } else {
     temp_file <- check_location[1]

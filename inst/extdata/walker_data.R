@@ -7,7 +7,7 @@ data_dir <- file.path(tempdir(check = TRUE), "hydrogeofetch")
 f <- "walker.gpkg"
 
 if(!file.exists(file.path(data_dir, f))) {
-  download_pkg_data(f, "https://doi-usgs.github.io/nhdplusTools/data/walker.gpkg", data_dir)
+  download_pkg_data(f, "https://doi-usgs.github.io/hydrogeofetch/data/walker.gpkg", data_dir)
 }
 
 proj <- "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"

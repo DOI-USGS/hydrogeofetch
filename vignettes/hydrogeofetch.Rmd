@@ -329,7 +329,7 @@ gage <- sf::read_sf(output_file, "Gage")
 hydroloom::index_points_to_lines(flowline, sf::st_geometry(gage), precision = 10)
 ```
 
-See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and the [migrating from nhdplusTools article](https://doi-usgs.github.io/nhdplusTools/articles/migrating_from_nhdplusTools.html) for more.
+See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and the [migrating from nhdplusTools article](https://doi-usgs.github.io/hydrogeofetch/articles/migrating_from_nhdplusTools.html) for more.
 
 ```{r teardown, include=FALSE}
 options(oldoption)

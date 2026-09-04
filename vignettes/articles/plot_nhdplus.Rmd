@@ -46,7 +46,7 @@ The goal of this vignette is to demonstrate a simple and lightweight approach to
 
 ## The `plot_nhdplus` function
 
-**`plot_nhdplus` is a work in progress. Not all inputs in the function have been implemented as of 11/18/2019 and additional functionality will be added later. Please leave feature requests and issues you find in an [issue here](https://github.com/DOI-USGS/nhdplusTools/).**
+**`plot_nhdplus` is a work in progress. Not all inputs in the function have been implemented as of 11/18/2019 and additional functionality will be added later. Please leave feature requests and issues you find in an [issue here](https://github.com/DOI-USGS/hydrogeofetch/).**
 
 `plot_nhdplus` is a function that makes getting a simple plot of NHDPlus data as easy as possible. It works with other functions from `hydrogeofetch` for identifying and retrieving watershed outlet locations. See the `plot_nhdplus` documentation for more info.
 

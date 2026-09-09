@@ -1,3 +1,12 @@
+hydrogeofetch 2.0.4
+==========
+
+The GitHub repository was renamed from `nhdplusTools` to `hydrogeofetch`, which
+retired the old GitHub Pages site. The sample data files that examples and tests
+download were still requested from the old address and returned 404. All package
+URLs now point at `doi-usgs.github.io/hydrogeofetch` and
+`github.com/DOI-USGS/hydrogeofetch`.
+
 hydrogeofetch 2.0.3
 ==========
 
@@ -193,7 +202,7 @@ for more.
 nhdplusTools 1.0.0
 ==========
 
-`nhdplusTools` has been split into two packages. A new package [`hydroloom`](https://github.com/DOI-USGS/hydroloom) is now available. It contains all nhdplusTools functionality not related to specific dataset schemas. See [this issue](https://github.com/DOI-USGS/nhdplusTools/issues/307) for details.
+`nhdplusTools` has been split into two packages. A new package [`hydroloom`](https://github.com/DOI-USGS/hydroloom) is now available. It contains all nhdplusTools functionality not related to specific dataset schemas. See [this issue](https://github.com/DOI-USGS/hydrogeofetch/issues/307) for details.
 
 ## `hydroloom` 
 
@@ -262,8 +271,8 @@ for NHDPlus Version 2.1 Reach Catchments and Modified Network Routed Upstream
 Watersheds for the Conterminous United States (ver. 3.0, January 2021): U.S.
 Geological Survey data release, \doi{10.5066/F7765D7V}.
 
-See https://github.com/DOI-USGS/nhdplusTools/issues/304 and 
-https://github.com/DOI-USGS/nhdplusTools/issues/303 for details.
+See https://github.com/DOI-USGS/hydrogeofetch/issues/304 and 
+https://github.com/DOI-USGS/hydrogeofetch/issues/303 for details.
 
 nhdplusTools 0.6.2
 ==========
@@ -271,7 +280,7 @@ Update a test for a change in sf
 
 nhdplusTools 0.6.1
 ==========
-No functional changes. Package migrated to new repository: https://github.com/DOI-USGS/nhdplusTools
+No functional changes. Package migrated to new repository: https://github.com/DOI-USGS/hydrogeofetch
 
 nhdplusTools 0.6.0
 ==========
@@ -387,7 +396,7 @@ nhdplusTools 0.4.3
 
 - New function added: `get_streamlevel()` calculates stream level, a bottom up level path order used by nhdplus to categorize complete river levels.
 
-- nhdplusTools internals have started to be refactored to use all lower case attribute names. No changes should be seen from outside the package, but please [report issues](https://github.com/DOI-USGS/nhdplusTools/issues) with attribute naming.
+- nhdplusTools internals have started to be refactored to use all lower case attribute names. No changes should be seen from outside the package, but please [report issues](https://github.com/DOI-USGS/hydrogeofetch/issues) with attribute naming.
 - Package testing now runs in parallel and uses revision 3 of the `testthat` package.
 
 nhdplusTools 0.4.2

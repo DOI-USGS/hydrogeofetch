@@ -61,8 +61,8 @@ test_that("catchment chars", {
   expect_equal(nrow(meta), 3)
 
   expect_equal(names(meta), c("ID", "description", "units", "datasetLabel", "datasetURL",
-                              "themeLabel", "themeURL", "watershedType",
-                              "sbid", "end", "s3_url", "http_url"))
+                              "themeLabel", "watershedType",
+                              "sbid", "end", "s3_url", "http_url", "source"))
 
   source(system.file("extdata", "walker_data.R", package = "hydrogeofetch"))
 
@@ -83,6 +83,21 @@ test_that("catchment chars", {
   expect_null(w)
 
   options(old_opts)
+})
+
+test_that("characteristics metadata falls back to ScienceBase when S3 fails (#487)", {
+  d <- tempfile()
+
+  local_mocked_bindings(
+    hydrogeofetch_data_dir = function() d,
+    hgf_download = function(url, path, ...) {
+      if(grepl("amazonaws", url)) return(NULL)
+      writeLines(c("ID", "CAT_BFI"), path)
+      path
+    }
+  )
+
+  expect_equal(get_characteristics_metadata(cache = FALSE)$ID, "CAT_BFI")
 })
 
 test_that("streamcat catchment chars", {

@@ -1008,6 +1008,15 @@ prepare_waterbody_data <- function(waterbody_data) {
 #' @return sf data.frame with lowercase column names.
 #' @noRd
 prepare_catchment_data <- function(catchment_data) {
+  # get_drainage_area_estimates() calls this on every invocation. Each assignment below copies the
+  # whole table, which for a national CatchmentSP passed per site is three copies of several GB and
+  # is enough to exhaust memory on a long run. Return unchanged when there is nothing to do.
+  nm <- names(catchment_data)
+  if(identical(attr(catchment_data, "sf_column"), "geom") &&
+     identical(nm, tolower(nm)) &&
+     "featureid" %in% nm && "comid" %in% nm)
+    return(catchment_data)
+
   catchment_data <- rename_geometry(catchment_data, "geom")
   names(catchment_data) <- tolower(names(catchment_data))
   if(!"featureid" %in% names(catchment_data))

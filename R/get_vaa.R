@@ -272,8 +272,11 @@ get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) 
   }
 
   # USGS ScienceBase metadata (default)
+  u <- "https://prod-is-usgs-sb-prod-publish.s3.amazonaws.com/5669a79ee4b08895842a1d47/metadata_table.tsv"
+  # ScienceBase itself serves the file when it is not published to S3 (#487)
+  u_sb <- "https://www.sciencebase.gov/catalog/file/get/5669a79ee4b08895842a1d47?name=metadata_table.tsv"
+
   out <- tryCatch({
-    u <- "https://prod-is-usgs-sb-prod-publish.s3.amazonaws.com/5669a79ee4b08895842a1d47/metadata_table.tsv"
 
     f <- file.path(hydrogeofetch_data_dir(), "metadata_table.tsv")
     r <- file.path(hydrogeofetch_data_dir(), "metadata_table.rds")
@@ -289,13 +292,23 @@ get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) 
 
       if(!dir.exists(dirname(f))) dir.create(dirname(f), recursive = TRUE)
 
-      if(!file.exists(f)) hgf_download(u, f, progress = FALSE)
+      # httr2 may leave an error body at f; don't parse or keep it.
+      # Quiet here; the warning below names both urls.
+      if(!file.exists(f) && is.null(suppressWarnings(hgf_download(u, f, progress = FALSE)))) {
+        unlink(f, force = TRUE)
+        if(is.null(suppressWarnings(hgf_download(u_sb, f, progress = FALSE)))) {
+          unlink(f, force = TRUE)
+          stop("metadata download failed")
+        }
+      }
 
       out <- read.delim(f, sep = "\t")
 
-      saveRDS(out, r)
-
       unlink(f)
+
+      if(!"ID" %in% names(out)) stop("metadata table has no ID column")
+
+      saveRDS(out, r)
 
       out
     }
@@ -303,7 +316,11 @@ get_characteristics_metadata <- function(search, source = "usgs", cache = TRUE) 
     NULL
   })
 
-  if(is.null(out)) warning("Problem getting metadata, no internet?")
+  if(is.null(out)) {
+    warning("Problem getting characteristics metadata from ", u, " or ", u_sb,
+            ". No internet, or the ScienceBase file is unavailable.", call. = FALSE)
+    return(NULL)
+  }
 
   if(!missing(search)) {
     return(out[unique(unlist(
@@ -367,6 +384,13 @@ get_catchment_characteristics <- function(varname, ids,
 
   # USGS ScienceBase S3 parquet data (default path)
   metadata <- get_characteristics_metadata()
+
+  # without metadata every variable would be reported as not found
+  if(is.null(metadata)) {
+    warning("Characteristics metadata is unavailable; cannot look up variables.",
+            call. = FALSE)
+    return(NULL)
+  }
 
   uvar <- unique(varname)
 

@@ -134,10 +134,16 @@ get_split_catchment <- function(point, upstream = TRUE) {
 
   url <- paste0(url_base, "nldi-splitcatchment/execution")
 
-  out <- hgf_sf(url, body = make_json_input_split(point, upstream),
-                content_type = "application/json")
+  # a permanent failure (e.g. a hole in the flow direction grid) is not about where
+  # the point is, so the boundary advice below would mislead
+  permanent <- FALSE
+  out <- withCallingHandlers(
+    hgf_sf(url, body = make_json_input_split(point, upstream),
+           content_type = "application/json"),
+    hgf_permanent_error = function(w) permanent <<- TRUE
+  )
 
-  if(is.null(out))
+  if(is.null(out) && !permanent)
     message("Ensure that the point you submitted is within the ",
             "coterminous US and consider trying get_raindrop_trace to ensure ",
             "your point is not too close to a catchment boundary.")

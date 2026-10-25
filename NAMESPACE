@@ -22,6 +22,7 @@ export(get_gagesII)
 export(get_geoconnex_reference)
 export(get_hr_data)
 export(get_huc)
+export(get_mainstem_flowlines)
 export(get_nhdarea)
 export(get_nhdphr)
 export(get_nhdplus)
@@ -53,93 +54,115 @@ export(subset_nhdplus)
 export(subset_rpu)
 export(subset_vpu)
 export(update_mainstems)
-importFrom(arrow,open_dataset)
-importFrom(arrow,read_csv_arrow)
-importFrom(arrow,s3_bucket)
-importFrom(arrow,write_parquet)
-importFrom(data.table,as.data.table)
-importFrom(data.table,dcast)
+importFrom(arrow,
+  open_dataset,
+  read_csv_arrow,
+  s3_bucket,
+  write_parquet
+)
+importFrom(data.table,
+  as.data.table,
+  dcast
+)
 importFrom(dataRetrieval,findNLDI)
 importFrom(digest,digest)
-importFrom(dplyr,across)
-importFrom(dplyr,all_of)
-importFrom(dplyr,any_of)
-importFrom(dplyr,arrange)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,collect)
-importFrom(dplyr,contains)
-importFrom(dplyr,desc)
-importFrom(dplyr,distinct)
-importFrom(dplyr,everything)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,group_split)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,rename)
-importFrom(dplyr,rename_with)
-importFrom(dplyr,right_join)
-importFrom(dplyr,select)
-importFrom(dplyr,starts_with)
-importFrom(dplyr,summarize)
-importFrom(dplyr,ungroup)
+importFrom(dplyr,
+  across,
+  all_of,
+  any_of,
+  arrange,
+  bind_rows,
+  collect,
+  contains,
+  desc,
+  distinct,
+  everything,
+  filter,
+  group_by,
+  group_split,
+  left_join,
+  mutate,
+  rename,
+  rename_with,
+  right_join,
+  select,
+  starts_with,
+  summarize,
+  ungroup
+)
 importFrom(graphics,par)
-importFrom(httr2,req_perform)
-importFrom(httr2,request)
-importFrom(hydroloom,add_toids)
-importFrom(hydroloom,disambiguate_indexes)
-importFrom(hydroloom,get_hydro_location)
-importFrom(hydroloom,get_node)
-importFrom(hydroloom,index_points_to_lines)
-importFrom(hydroloom,navigate_hydro_network)
-importFrom(hydroloom,navigate_network_dfs)
-importFrom(hydroloom,rename_geometry)
-importFrom(hydroloom,rescale_measures)
-importFrom(hydroloom,sort_network)
-importFrom(jsonlite,fromJSON)
-importFrom(jsonlite,toJSON)
-importFrom(memoise,cache_filesystem)
-importFrom(memoise,cache_memory)
-importFrom(memoise,memoise)
-importFrom(methods,as)
-importFrom(methods,is)
-importFrom(sf,"st_geometry<-")
-importFrom(sf,read_sf)
-importFrom(sf,st_area)
-importFrom(sf,st_as_sf)
-importFrom(sf,st_as_sfc)
-importFrom(sf,st_bbox)
-importFrom(sf,st_buffer)
-importFrom(sf,st_cast)
-importFrom(sf,st_centroid)
-importFrom(sf,st_crs)
-importFrom(sf,st_distance)
-importFrom(sf,st_drop_geometry)
-importFrom(sf,st_filter)
-importFrom(sf,st_geometry)
-importFrom(sf,st_geometry_type)
-importFrom(sf,st_layers)
-importFrom(sf,st_make_valid)
-importFrom(sf,st_multilinestring)
-importFrom(sf,st_nearest_feature)
-importFrom(sf,st_sf)
-importFrom(sf,st_sfc)
-importFrom(sf,st_simplify)
-importFrom(sf,st_transform)
-importFrom(sf,st_union)
-importFrom(sf,st_zm)
-importFrom(sf,write_sf)
+importFrom(httr2,
+  req_perform,
+  request
+)
+importFrom(hydroloom,
+  add_toids,
+  disambiguate_indexes,
+  get_hydro_location,
+  get_node,
+  index_points_to_lines,
+  navigate_hydro_network,
+  navigate_network_dfs,
+  rename_geometry,
+  rescale_measures,
+  sort_network
+)
+importFrom(jsonlite,
+  fromJSON,
+  toJSON
+)
+importFrom(memoise,
+  cache_filesystem,
+  cache_memory,
+  memoise
+)
+importFrom(methods,
+  as,
+  is
+)
+importFrom(sf,
+  "st_geometry<-",
+  read_sf,
+  st_area,
+  st_as_sf,
+  st_as_sfc,
+  st_bbox,
+  st_buffer,
+  st_cast,
+  st_centroid,
+  st_crs,
+  st_distance,
+  st_drop_geometry,
+  st_filter,
+  st_geometry,
+  st_geometry_type,
+  st_layers,
+  st_make_valid,
+  st_multilinestring,
+  st_nearest_feature,
+  st_sf,
+  st_sfc,
+  st_simplify,
+  st_transform,
+  st_union,
+  st_zm,
+  write_sf
+)
 importFrom(stats,weighted.mean)
 importFrom(tools,R_user_dir)
 importFrom(units,set_units)
-importFrom(utils,download.file)
-importFrom(utils,read.delim)
-importFrom(utils,tail)
-importFrom(xml2,read_xml)
-importFrom(xml2,xml_attr)
-importFrom(xml2,xml_children)
-importFrom(xml2,xml_find_all)
-importFrom(xml2,xml_ns_strip)
-importFrom(xml2,xml_root)
-importFrom(xml2,xml_text)
+importFrom(utils,
+  download.file,
+  read.delim,
+  tail
+)
+importFrom(xml2,
+  read_xml,
+  xml_attr,
+  xml_children,
+  xml_find_all,
+  xml_ns_strip,
+  xml_root,
+  xml_text
+)
 importFrom(zip,unzip)

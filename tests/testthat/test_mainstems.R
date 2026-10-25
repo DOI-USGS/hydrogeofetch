@@ -103,3 +103,148 @@ test_that("update_mainstems flags an unresolvable supersession", {
     expect_equal(out$mainstemid, rep(2086637, 3))
   })
 })
+
+# Point hydrogeofetch_data_dir() at a temp dir holding small extracts of the
+# nhdpv2 and nhdphr lookups and the updated network attributes:
+# ref/mainstems/1003325 (two comids) with 726411 flowing into it, and
+# NHDPlusHR ref/mainstems/607430 (four flowlines) with 483254 flowing into
+# it. Returns the old data dir.
+setup_mainstem_data <- function() {
+  tmp_dir <- file.path(tempdir(), "mainstem_flowlines_cache")
+  dir.create(tmp_dir, showWarnings = FALSE)
+
+  old_dir <- hydrogeofetch_data_dir()
+  hydrogeofetch_data_dir(tmp_dir)
+
+  arrow::write_parquet(
+    utils::read.csv(test_path("data", "mainstems_nhdpv2_lookup.csv")),
+    get_mainstem_lookup_path("nhdpv2"))
+
+  arrow::write_parquet(
+    utils::read.csv(test_path("data", "mainstems_enhd.csv")),
+    get_vaa_path(updated_network = TRUE))
+
+  # the real table carries nhdplushr_id as int64
+  hr <- arrow::arrow_table(utils::read.csv(
+    test_path("data", "mainstems_nhdphr_lookup.csv"),
+    colClasses = "character"))
+  hr$nhdplushr_id <- hr$nhdplushr_id$cast(arrow::int64())
+  arrow::write_parquet(hr, get_mainstem_lookup_path("nhdphr"))
+
+  old_dir
+}
+
+ms <- function(id) paste0("https://geoconnex.us/ref/mainstems/", id)
+
+test_that("read_mainstem_lookup filters by uri", {
+  old_dir <- setup_mainstem_data()
+  on.exit(hydrogeofetch_data_dir(old_dir), add = TRUE)
+
+  out <- hydrogeofetch:::read_mainstem_lookup("nhdpv2", uris = ms(1003325))
+
+  expect_equal(nrow(out), 2)
+  expect_true(all(out$uri == ms(1003325)))
+
+  expect_error(hydrogeofetch:::read_mainstem_lookup("nhdpv2", ids = 1,
+                                                    uris = ms(1003325)),
+               "not both")
+})
+
+test_that("get_mainstem_flowlines nhdpv2 gives hy_topo with confluences", {
+  old_dir <- setup_mainstem_data()
+  on.exit(hydrogeofetch_data_dir(old_dir), add = TRUE)
+
+  with_mock_hgf("mainstem_flowlines_nhdpv2", {
+    fl <- get_mainstem_flowlines(1003325, "nhdpv2",
+                                 include_confluences = TRUE)
+  })
+
+  expect_s3_class(fl, "sf")
+  expect_equal(names(fl), c("comid", "tocomid", "lengthkm", "hydroseq",
+                            "mainstemid", "geometry"))
+  expect_true(all(sf::st_geometry_type(fl) == "LINESTRING"))
+  expect_equal(sum(fl$mainstemid == ms(1003325)), 2)
+
+  expect_s3_class(hydroloom::hy(fl), "hy_topo")
+
+  conf <- hydroloom::get_confluences(fl)
+
+  expect_equal(conf$hydro_location_id, ms(726411))
+})
+
+test_that("get_mainstem_flowlines 3dhp gives hy_topo with confluences", {
+  u <- "https://geoconnex.us/usgs/mainstems/10126436"
+
+  with_mock_hgf("mainstem_flowlines_3dhp", {
+    fl <- get_mainstem_flowlines(u, "3dhp", include_confluences = TRUE)
+  })
+
+  expect_s3_class(fl, "sf")
+  expect_equal(names(fl), c("id3dhp", "toid", "hydroseq", "lengthkm",
+                            "divergence", "featuredate", "mainstemid",
+                            "geometry"))
+  expect_true(all(sf::st_geometry_type(fl) == "LINESTRING"))
+  expect_equal(sum(fl$mainstemid == u), 2)
+
+  expect_s3_class(hydroloom::hy(fl), "hy_topo")
+
+  conf <- hydroloom::get_confluences(fl)
+
+  expect_equal(conf$hydro_location_id,
+               "https://geoconnex.us/usgs/mainstems/6591895")
+})
+
+test_that("get_mainstem_flowlines nhdphr gives hy_node with confluences", {
+  old_dir <- setup_mainstem_data()
+  on.exit(hydrogeofetch_data_dir(old_dir), add = TRUE)
+
+  with_mock_hgf("mainstem_flowlines_nhdphr", {
+    fl <- get_mainstem_flowlines(607430, "nhdphr",
+                                 include_confluences = TRUE)
+  })
+
+  expect_s3_class(fl, "sf")
+  expect_equal(names(fl), c("nhdplusid", "fromnode", "tonode", "hydroseq",
+                            "lengthkm", "divergence", "mainstemid",
+                            "geometry"))
+  expect_type(fl$nhdplusid, "character")
+  expect_equal(sum(fl$mainstemid == ms(607430)), 4)
+
+  expect_s3_class(hydroloom::hy(fl), "hy_node")
+
+  conf <- hydroloom::get_confluences(fl)
+
+  expect_equal(conf$hydro_location_id, ms(483254))
+})
+
+test_that("get_mainstem_flowlines finds New Hope tributaries live", {
+  skip_if_no_integration()
+
+  tribs <- ms(c(2408627, 2408909))
+
+  for(network in c("nhdpv2", "3dhp")) {
+    fl <- get_mainstem_flowlines(2408056, network, include_confluences = TRUE)
+
+    expect_true(all(tribs %in%
+                      hydroloom::get_confluences(fl)$hydro_location_id),
+                info = network)
+  }
+})
+
+test_that("get_mainstem_flowlines degrades to NULL with a warning", {
+  old_dir <- setup_mainstem_data()
+  on.exit(hydrogeofetch_data_dir(old_dir), add = TRUE)
+
+  local_mocked_bindings(get_nhdplus = function(...) NULL)
+
+  expect_warning(out <- get_mainstem_flowlines(ms(1003325), "nhdpv2"),
+                 "No nhdpv2 flowlines found for mainstem\\(s\\): .*1003325")
+
+  expect_null(out)
+
+  # a uri with no lookup rows is reported the same way
+  expect_warning(out <- get_mainstem_flowlines(1, "nhdpv2"),
+                 "mainstems/1$")
+
+  expect_null(out)
+})

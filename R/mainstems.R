@@ -73,7 +73,9 @@ download_mainstem_lookup <- function(type, path = get_mainstem_lookup_path(type)
 }
 
 #' @noRd
-read_mainstem_lookup <- function(type, ids = NULL) {
+read_mainstem_lookup <- function(type, ids = NULL, uris = NULL) {
+  if(!is.null(ids) && !is.null(uris)) stop("Specify ids or uris, not both.")
+
   path <- get_mainstem_lookup_path(type)
 
   if(!file.exists(path)) {
@@ -85,6 +87,7 @@ read_mainstem_lookup <- function(type, ids = NULL) {
   ds <- open_dataset(path)
 
   if(!is.null(ids)) ds <- filter(ds, .data[[id_col]] %in% ids)
+  if(!is.null(uris)) ds <- filter(ds, .data$uri %in% uris)
 
   as.data.frame(collect(ds))
 }
@@ -360,4 +363,280 @@ update_mainstems <- function(x, mainstem_col = NULL, search_radius = NULL) {
             "See mainstem_update_status column.", call. = FALSE)
 
   x
+}
+
+#' @title Get the flowlines of mainstems
+#' @description Returns the flowlines that realize one or more geoconnex
+#' mainstems in NHDPlusV2, NHDPlusHR, or 3DHP. The result carries the
+#' identifier, topology, and length attributes that \link[hydroloom]{hy}
+#' recognizes, with \code{mainstemid} holding the full mainstem uri, so it
+#' can go directly to the hydroloom functions that work on aggregate
+#' flowpaths such as \link[hydroloom]{get_confluences} and
+#' \link[hydroloom]{index_points_to_lines} with \code{aggregate_ids}.
+#' @details Each network realizes a mainstem differently, so each is
+#' fetched differently.
+#'
+#' For \code{"nhdpv2"}, comids come from the ref_rivers lookup table (see
+#' \link{add_mainstems}), topology and length from the updated network
+#' attributes (see \link{get_vaa} with \code{updated_network = TRUE}), and
+#' geometry from \link{get_nhdplus}. Columns are \code{comid},
+#' \code{tocomid}, \code{lengthkm}, \code{hydroseq}, and \code{mainstemid}.
+#' \code{tocomid} is already dendritic so no \code{divergence} is carried.
+#'
+#' For \code{"nhdphr"}, NHDPlusIDs come from the ref_rivers NHDPlusHR lookup
+#' table and the flowlines from \link{get_nhdphr}. Columns are
+#' \code{nhdplusid} (as character), \code{fromnode}, \code{tonode},
+#' \code{hydroseq}, \code{lengthkm}, \code{divergence}, and
+#' \code{mainstemid}. Flowlines link by node rather than by \code{toid}. The
+#' NHDPlusHR lookup does not cover every mainstem.
+#'
+#' For \code{"3dhp"}, 3DHP carries mainstem uris natively and flowlines come
+#' from \link{get_3dhp}. Columns are \code{id3dhp}, \code{toid} (built from
+#' \code{dnhydrosequence}, \code{""} where it leaves the result),
+#' \code{hydroseq} (renamed from \code{hydrosequence}), \code{lengthkm},
+#' \code{divergence}, \code{featuredate}, and \code{mainstemid}. 3DHP
+#' identifiers are not persistent across releases; \code{featuredate}
+#' records which release the flowlines came from.
+#'
+#' With \code{include_confluences = TRUE}, the outlet flowline of each other
+#' identified mainstem that flows into a requested mainstem is appended.
+#' Those are the rows \link[hydroloom]{get_confluences} needs to find where
+#' tributary mainstems join. They are found by attribute queries on the
+#' flowlines' downstream connections, not by area of interest, and inflowing
+#' flowlines with no mainstem uri are left out.
+#'
+#' The NHDPlusV2 lookup and updated network attribute tables are large
+#' downloads on first use (see \link{add_mainstems} and \link{get_vaa}), so
+#' this function has no example.
+#'
+#' \preformatted{
+#' fl <- get_mainstem_flowlines("https://geoconnex.us/ref/mainstems/2408056",
+#'                              "3dhp", include_confluences = TRUE)
+#'
+#' hydroloom::get_confluences(fl)}
+#'
+#' @param mainstems character vector of geoconnex mainstem uris, or
+#' \code{ref/mainstems} integer ids.
+#' @param network character one of "nhdpv2", "nhdphr", or "3dhp".
+#' @param include_confluences logical. If TRUE, append the outlet flowline
+#' of each identified mainstem that flows into a requested one.
+#' @return sf data.frame of LINESTRING flowlines, or \code{NULL} if none
+#' were found. Mainstems with no flowlines are left out with a warning.
+#' @export
+get_mainstem_flowlines <- function(mainstems,
+  network = c("nhdpv2", "nhdphr", "3dhp"),
+  include_confluences = FALSE) {
+
+  network <- match.arg(network)
+
+  uris <- as.character(mainstems)
+  is_uri <- grepl("^https?://", uris)
+  uris[!is_uri] <- mainstem_uri_from_id(uris[!is_uri])
+  uris <- unique(uris)
+
+  out <- switch(network,
+    nhdpv2 = mainstem_flowlines_nhdpv2(uris, include_confluences),
+    nhdphr = mainstem_flowlines_nhdphr(uris, include_confluences),
+    "3dhp" = mainstem_flowlines_3dhp(uris, include_confluences))
+
+  missing <- if(is.null(out)) uris else setdiff(uris, out$mainstemid)
+
+  if(length(missing) > 0)
+    warning("No ", network, " flowlines found for mainstem(s): ",
+            paste(missing, collapse = ", "), call. = FALSE)
+
+  if(is.null(out) || nrow(out) == 0) return(NULL)
+
+  sf::st_cast(sf::st_zm(out), "LINESTRING")
+}
+
+#' Keep named columns of a fetched sf table as a plain sf data.frame
+#' @description The arcrest fetchers return data.table-backed sf; this
+#' rebuilds a data.frame-backed sf and checks the expected columns are there.
+#' @noRd
+mainstem_sf <- function(x, cols) {
+  if(!inherits(x, "sf") || nrow(x) == 0) return(NULL)
+
+  if(!all(cols %in% names(x))) {
+    warning("Flowlines did not have the expected columns: ",
+            paste(setdiff(cols, names(x)), collapse = ", "), call. = FALSE)
+    return(NULL)
+  }
+
+  df <- as.data.frame(sf::st_drop_geometry(x))[cols]
+
+  sf::st_sf(df, geometry = sf::st_geometry(x))
+}
+
+#' Run an attribute query in chunks and bind the results
+#' @description An empty chunk is a legitimate result here (a headwater has
+#' no inflows), so the "No ... features found" warning is muffled; service
+#' failure warnings still surface.
+#' @noRd
+query_arcrest_chunks <- function(values, field, type, service, cols) {
+  chunks <- split(values, ceiling(seq_along(values) / 100))
+
+  out <- lapply(chunks, function(chunk) {
+    withCallingHandlers(
+      query_usgs_arcrest(NULL, NULL, type, service,
+                         where = paste0(field, " IN (",
+                                        paste(chunk, collapse = ", "), ")")),
+      warning = function(w) {
+        if(grepl("^No .* features found", conditionMessage(w)))
+          invokeRestart("muffleWarning")
+      })
+  })
+
+  out <- out[vapply(out, inherits, logical(1), what = "sf")]
+
+  if(length(out) == 0) return(NULL)
+
+  mainstem_sf(sf::st_sf(data.table::rbindlist(out)), cols)
+}
+
+#' Read rows of the updated network attribute table
+#' @description Reads only the needed rows and columns, rather than the
+#' whole table as get_vaa does.
+#' @param comids rows with these comids
+#' @param into_comids rows flowing into these comids that are not
+#' themselves among them
+#' @noRd
+read_enhd_rows <- function(comids = NULL, into_comids = NULL) {
+  path <- get_vaa_path(updated_network = TRUE)
+
+  if(!file.exists(path) &&
+     is.null(download_vaa(path, updated_network = TRUE))) return(NULL)
+
+  ds <- select(open_dataset(path),
+               all_of(c("comid", "tocomid", "lengthkm", "hydroseq")))
+
+  if(!is.null(comids)) ds <- filter(ds, .data$comid %in% comids)
+
+  if(!is.null(into_comids))
+    ds <- filter(ds, .data$tocomid %in% into_comids &
+                   !.data$comid %in% into_comids)
+
+  as.data.frame(collect(ds))
+}
+
+#' @noRd
+mainstem_flowlines_nhdpv2 <- function(uris, include_confluences) {
+
+  lk <- read_mainstem_lookup("nhdpv2", uris = uris)
+
+  if(is.null(lk) || nrow(lk) == 0) return(NULL)
+
+  lk <- lk[!duplicated(lk$comid), ]
+
+  net <- read_enhd_rows(comids = lk$comid)
+
+  if(is.null(net) || nrow(net) == 0) return(NULL)
+
+  net$mainstemid <- lk$uri[match(net$comid, lk$comid)]
+
+  if(include_confluences) {
+    trib <- read_enhd_rows(into_comids = net$comid)
+
+    if(!is.null(trib) && nrow(trib) > 0) {
+      tlk <- read_mainstem_lookup("nhdpv2", ids = trib$comid)
+      trib$mainstemid <- if(is.null(tlk)) NA_character_ else
+        tlk$uri[match(trib$comid, tlk$comid)]
+      net <- rbind(net, trib[!is.na(trib$mainstemid), names(net)])
+    }
+  }
+
+  fl <- get_nhdplus(comid = net$comid, realization = "flowline")
+
+  if(!inherits(fl, "sf") || !"comid" %in% names(fl)) return(NULL)
+
+  net <- net[net$comid %in% fl$comid, ]
+
+  if(nrow(net) == 0) return(NULL)
+
+  sf::st_sf(net[c("comid", "tocomid", "lengthkm", "hydroseq", "mainstemid")],
+            geometry = sf::st_geometry(fl)[match(net$comid, fl$comid)])
+}
+
+#' @noRd
+mainstem_flowlines_3dhp <- function(uris, include_confluences) {
+
+  cols <- c("id3dhp", "mainstemid", "hydrosequence", "dnhydrosequence",
+            "lengthkm", "divergence", "featuredate")
+
+  fl <- mainstem_sf(get_3dhp(ids = uris, type = "flowline"), cols)
+
+  if(is.null(fl)) return(NULL)
+
+  fl <- fl[fl$mainstemid %in% uris, ]
+
+  if(include_confluences) {
+    trib <- query_arcrest_chunks(fl$hydrosequence, "dnhydrosequence",
+                                 "flowline", "3DHP_all", cols)
+
+    if(!is.null(trib)) {
+      trib <- trib[!trib$id3dhp %in% fl$id3dhp &
+                     !is.na(trib$mainstemid) & trib$mainstemid != "", ]
+      fl <- rbind(fl, trib)
+    }
+  }
+
+  fl$toid <- fl$id3dhp[match(fl$dnhydrosequence, fl$hydrosequence)]
+  fl$toid[is.na(fl$toid)] <- ""
+
+  fl <- rename(fl, hydroseq = "hydrosequence")
+
+  fl[c("id3dhp", "toid", "hydroseq", "lengthkm", "divergence",
+       "featuredate", "mainstemid")]
+}
+
+#' NHDPlusHR ids as character without scientific notation
+#' @noRd
+format_hr_id <- function(x) {
+  if(is.character(x)) x else sprintf("%.0f", as.numeric(x))
+}
+
+#' @noRd
+mainstem_flowlines_nhdphr <- function(uris, include_confluences) {
+
+  lk <- read_mainstem_lookup("nhdphr", uris = uris)
+
+  if(is.null(lk) || nrow(lk) == 0) return(NULL)
+
+  lk$nhdplusid <- as.character(lk$nhdplushr_id)
+  lk <- lk[!duplicated(lk$nhdplusid), ]
+
+  cols <- c("nhdplusid", "fromnode", "tonode", "hydroseq", "lengthkm",
+            "divergence")
+
+  fl <- mainstem_sf(get_nhdphr(ids = lk$nhdplusid,
+                               type = "networknhdflowline"), cols)
+
+  if(is.null(fl)) return(NULL)
+
+  fl$nhdplusid <- format_hr_id(fl$nhdplusid)
+  fl$mainstemid <- lk$uri[match(fl$nhdplusid, lk$nhdplusid)]
+
+  if(include_confluences) {
+    trib <- query_arcrest_chunks(format_hr_id(unique(fl$fromnode)), "tonode",
+                                 "networknhdflowline", "NHDPlus_HR", cols)
+
+    if(!is.null(trib)) {
+      trib$nhdplusid <- format_hr_id(trib$nhdplusid)
+      trib <- trib[!trib$nhdplusid %in% fl$nhdplusid, ]
+
+      # the flowline above a divergence also ends at the node where a minor
+      # path (divergence == 2) begins; that is a split, not a confluence
+      minor_start <- fl$fromnode[!is.na(fl$divergence) & fl$divergence == 2]
+      trib <- trib[!trib$tonode %in% minor_start, ]
+
+      tlk <- read_mainstem_lookup("nhdphr",
+                                  ids = as.numeric(trib$nhdplusid))
+      trib$mainstemid <- if(is.null(tlk)) NA_character_ else
+        tlk$uri[match(trib$nhdplusid, as.character(tlk$nhdplushr_id))]
+
+      fl <- rbind(fl, trib[!is.na(trib$mainstemid), ])
+    }
+  }
+
+  fl[c(cols, "mainstemid")]
 }

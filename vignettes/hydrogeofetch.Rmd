@@ -331,6 +331,38 @@ hydroloom::index_points_to_lines(flowline, sf::st_geometry(gage), precision = 10
 
 See the [hydroloom indexing documentation](https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing) and the [migrating from nhdplusTools article](https://doi-usgs.github.io/hydrogeofetch/articles/migrating_from_nhdplusTools.html) for more.
 
+### Mainstems across networks
+
+A mainstem (a river from its headwater to its outlet, identified by a geoconnex `ref/mainstems` uri) is carried by NHDPlusV2, NHDPlusHR and 3DHP, but each network breaks it into different flowlines with different identifiers. `get_mainstem_flowlines()` returns the flowlines of one or more mainstems from any of the three, with `mainstemid` set to the mainstem uri and the topology and length attributes hydroloom expects. With `include_confluences = TRUE` it also returns the outlet flowline of each identified tributary, which is what `hydroloom::get_confluences()` needs to find where tributaries join.
+
+```{r mainstem_flowlines}
+new_hope <- "https://geoconnex.us/ref/mainstems/2408056"
+
+nh_3dhp <- get_mainstem_flowlines(new_hope, "3dhp", include_confluences = TRUE)
+
+confluences <- hydroloom::get_confluences(nh_3dhp)
+
+confluences[grepl("/ref/", confluences$hydro_location_id), ]
+```
+
+Because the mainstem uri is shared, a point or flowline indexed on one network can be moved to another while staying on its own river — a gage just above a confluence is not pulled onto the tributary. `translate_hydrolocations()` does this for points in one of two ways. `method = "geometry"` indexes each point to the target flowlines of its mainstem. `method = "hydro_location"` records each point as a distance from the nearest confluence that both networks carry and lays that distance out on the target. The second is approximate in absolute terms, since each network puts the confluence in its own place, but it keeps the point on the same side of the confluence. `translate_flowlines()` does the same for flowlines, returning the pieces of target flowlines that cover each source flowline.
+
+Both functions read the ref_rivers lookup and updated network attribute tables for NHDPlusV2, which are large downloads on first use, so the calls below are not run here.
+
+```{r translate, eval = FALSE}
+# a point on New Hope River just above the Northeast Creek mouth
+pt <- sf::st_sf(comid = 8894344,
+                geometry = sf::st_sfc(sf::st_point(c(-78.9763, 35.8355)),
+                                      crs = 4326))
+
+translate_hydrolocations(pt, "nhdpv2", "3dhp", method = "hydro_location")
+
+# a Morgan Creek flowline
+translate_flowlines(8896344, "nhdpv2", "3dhp")
+```
+
+Two properties of the data bound these results. 3DHP identifiers are not persistent across releases, so a placement on 3DHP holds for the release recorded in `measured_on`. The NHDPlusHR lookup in ref_rivers v3.2 covers only part of the country (New Hope is not in it), so `"nhdphr"` returns nothing for many mainstems.
+
 ```{r teardown, include=FALSE}
 options(oldoption)
 

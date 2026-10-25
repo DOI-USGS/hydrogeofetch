@@ -53,6 +53,7 @@ export(rescale_catchment_characteristics)
 export(subset_nhdplus)
 export(subset_rpu)
 export(subset_vpu)
+export(translate_hydrolocations)
 export(update_mainstems)
 importFrom(arrow,
   open_dataset,

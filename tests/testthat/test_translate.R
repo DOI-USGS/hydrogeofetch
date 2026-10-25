@@ -54,6 +54,10 @@ local_translate_mocks <- function(env = parent.frame()) {
       if(nrow(out) == 0) NULL else out
     },
     fetch_superseded_mainstems = function() data.frame(uri = ms(2)),
+    get_3dhp = function(ids, type, ...) {
+      fl <- nets[["3dhp"]]
+      fl[fl$id3dhp %in% ids, ]
+    },
     .env = env)
 
   nets
@@ -174,4 +178,85 @@ test_that("translate_hydrolocations works on New Hope live", {
     expect_equal(out$status, "placed", info = method)
     expect_equal(out$mainstem_uri, ms(2408056), info = method)
   }
+})
+
+test_that("translate_flowlines works on Morgan Creek live", {
+  skip_if_no_integration()
+
+  # a mid-chain Morgan Creek comid (4.284 km), to 3DHP and back. The bottom
+  # comid is a poor case: it ends in Jordan Lake, where the V2 and 3DHP
+  # confluences with New Hope are about 700 m apart.
+  out <- translate_flowlines(8896344, "nhdpv2", "3dhp")
+
+  expect_true(all(out$status == "placed"))
+  expect_lt(abs(sum(out$length_km) - 4.284) / 4.284, 0.1)
+
+  back <- translate_flowlines(out$id, "3dhp", "nhdpv2")
+
+  # 3DHP flowlines shorter than snap_m (7Q8YP is 46 m) collapse to one point
+  expect_true(all(back$status == "placed" |
+                    (back$status == "collapsed" &
+                       back$line_id %in% out$id[out$length_km < 0.05])))
+  expect_true(8896344 %in% back$id)
+})
+
+
+test_that("translate_flowlines covers a flowline with target pieces", {
+  nets <- local_translate_mocks()
+  on.exit(hydrogeofetch_data_dir(attr(nets, "old_dir")), add = TRUE)
+
+  out <- translate_flowlines(8894344, "nhdpv2", "3dhp")
+
+  expect_s3_class(out, "sf")
+  expect_equal(names(out), c("line_id", "segment_order", "id",
+                             "id_from_measure", "id_to_measure",
+                             "line_from_measure", "line_to_measure",
+                             "length_km", "from_offset", "to_offset",
+                             "status", "measured_on", "geometry"))
+  expect_true(all(out$status == "placed"))
+  expect_equal(out$segment_order, seq_len(nrow(out)))
+
+  # the upstream end snaps to a 3DHP flowline boundary; no sliver piece on
+  # the flowline above it
+  expect_true(all(out$length_km > 0.001))
+
+  nh_3dhp <- nets[["3dhp"]]$id3dhp[nets[["3dhp"]]$mainstemid == ms(2408056)]
+  expect_true(all(out$id %in% nh_3dhp))
+
+  src_km <- nets$nhdpv2$lengthkm[nets$nhdpv2$comid == 8894344]
+  expect_lt(abs(sum(out$length_km) - src_km) / src_km, 0.1)
+
+  expect_equal(out$line_from_measure[1], 0)
+  expect_equal(out$line_to_measure[nrow(out)], 100)
+
+  # and back, from a 3DHP id to V2
+  back <- translate_flowlines(out$id[1], "3dhp", "nhdpv2")
+
+  expect_true(all(back$status == "placed"))
+  expect_true(all(back$id %in% nets$nhdpv2$comid[
+    nets$nhdpv2$mainstemid == ms(2408056)]))
+  expect_equal(unique(back$measured_on), "nhdpv2 ref_rivers v3.2")
+})
+
+test_that("translate_flowlines reports flowlines it cannot place", {
+  nets <- local_translate_mocks()
+  on.exit(hydrogeofetch_data_dir(attr(nets, "old_dir")), add = TRUE)
+
+  out <- suppressWarnings(
+    translate_flowlines(c(1, 8894344), "nhdpv2", "3dhp",
+                        search_radius = units::set_units(1e-7, "degrees")))
+
+  expect_equal(out$line_id, c(1, 8894344))
+  expect_equal(out$status, c("no_mainstem", "not_placed"))
+  expect_true(all(is.na(out$id)))
+
+  local_mocked_bindings(get_mainstem_flowlines = function(mainstems, network,
+                                                          ...) {
+    if(network == "3dhp") NULL else nets[[network]]
+  })
+
+  out <- translate_flowlines(8894344, "nhdpv2", "3dhp")
+
+  expect_equal(out$status, "mainstem_not_in_target")
+  expect_false(inherits(out, "sf"))
 })

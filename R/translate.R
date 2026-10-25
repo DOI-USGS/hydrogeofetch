@@ -316,3 +316,227 @@ translate_hydrolocations <- function(x, from, to,
 
   x
 }
+
+
+#' One unplaced row of the translate_flowlines() piece table
+#' @noRd
+translate_piece_rows <- function(line_id, status, from_offset = NA_real_,
+                                 to_offset = NA_real_) {
+  n <- length(line_id)
+
+  data.frame(line_id = line_id, segment_order = rep(NA_integer_, n),
+             id = rep(NA, n), id_from_measure = rep(NA_real_, n),
+             id_to_measure = rep(NA_real_, n),
+             line_from_measure = rep(NA_real_, n),
+             line_to_measure = rep(NA_real_, n),
+             length_km = rep(NA_real_, n),
+             from_offset = rep_len(from_offset, n),
+             to_offset = rep_len(to_offset, n), status = status)
+}
+
+#' Empty LINESTRINGs, for rows of the piece table with no geometry
+#' @noRd
+empty_lines <- function(n, crs) {
+  sf::st_sfc(rep(list(sf::st_linestring()), n), crs = crs)
+}
+
+#' Pieces of the target flowlines covering each source flowline
+#' @description Indexes each source flowline's downstream (end) and upstream
+#' (start) nodes on the target flowlines of its mainstem and takes the
+#' subpath between them.
+#' @returns piece table as data.frame, with attribute "geom" holding piece
+#' geometry parallel to the rows, or NULL when get_subpath() returned none
+#' @noRd
+translate_flowline_pieces <- function(src, uris, line_ids, tgt, snap_m,
+                                      search_radius, precision) {
+
+  tgt <- hydroloom::hy(tgt)
+  src <- sf::st_transform(src, sf::st_crs(tgt))
+
+  ends <- lapply(c(bottom = "end", top = "start"), function(position) {
+    nodes <- sf::st_geometry(hydroloom::get_node(src, position))
+
+    idx <- hydroloom::index_points_to_lines(
+      tgt, nodes, search_radius = search_radius, precision = precision,
+      aggregate_ids = uris)
+
+    idx <- idx[!is.na(idx$id), ]
+
+    idx[match(seq_along(uris), idx$point_id), ]
+  })
+
+  bottom <- ends$bottom
+  top <- ends$top
+
+  ok <- !is.na(bottom$id) & !is.na(top$id)
+
+  out <- translate_piece_rows(line_ids[!ok], rep("not_placed", sum(!ok)),
+                              bottom$offset[!ok], top$offset[!ok])
+  geom <- NULL
+
+  if(any(ok)) {
+    sp <- hydroloom::get_subpath(
+      data.frame(id = bottom$id[ok], id_measure = bottom$id_measure[ok],
+                 line_id = line_ids[ok]),
+      data.frame(id = top$id[ok], id_measure = top$id_measure[ok]),
+      tgt, snap_m)
+
+    # get_subpath() keeps any piece longer than zero; a snapped end at a
+    # boundary computed two ways can leave a floating-point sliver
+    sliver <- !is.na(sp$id) & sp$length_km < 1e-6
+
+    if(inherits(sp, "sf")) {
+      geom <- c(empty_lines(nrow(out), sf::st_crs(sp)),
+                sf::st_geometry(sp)[!sliver])
+      sp <- sf::st_drop_geometry(sp)
+    }
+
+    sp <- as.data.frame(sp)[!sliver, ]
+    sp$segment_order <- stats::ave(sp$segment_order, sp$line_id,
+                                   FUN = seq_along)
+
+    # measures along the source flowline, 0 at the downstream end of the
+    # subpath, from the pieces' lengths
+    tot <- stats::ave(sp$length_km, sp$line_id, FUN = sum)
+    cum <- stats::ave(sp$length_km, sp$line_id, FUN = cumsum)
+    sp$line_from_measure <- 100 * (cum - sp$length_km) / tot
+    sp$line_to_measure <- 100 * cum / tot
+
+    k <- match(sp$line_id, line_ids[ok])
+    sp$from_offset <- bottom$offset[ok][k]
+    sp$to_offset <- top$offset[ok][k]
+
+    sp$status <- ifelse(is.na(sp$id), "collapsed",
+                        ifelse(sp$reversed, "inverted", "placed"))
+
+    collapsed <- sp$status == "collapsed"
+    sp$line_from_measure[collapsed] <- NA
+    sp$line_to_measure[collapsed] <- NA
+
+    out <- rbind(out, sp[names(out)])
+  }
+
+  attr(out, "geom") <- geom
+
+  out
+}
+
+#' @title Translate flowlines between networks
+#' @description Finds the stretch of another network's flowlines (NHDPlusV2,
+#' NHDPlusHR, or 3DHP) that covers each given flowline, on the same mainstem.
+#' Each source flowline comes back as one or more pieces of target flowlines,
+#' each cut by measure.
+#' @details The mainstem of each source flowline comes from its identifier,
+#' as described in \link{translate_hydrolocations}. The source and target
+#' flowlines of that mainstem come from \link{get_mainstem_flowlines}.
+#'
+#' The downstream (end) and upstream (start) nodes of each source flowline
+#' are indexed to the target flowlines of its mainstem with
+#' \link[hydroloom]{index_points_to_lines} and \code{aggregate_ids}, and the
+#' stretch between them is taken with \link[hydroloom]{get_subpath}. An end
+#' within \code{snap_m} meters of a target flowline boundary moves to that
+#' boundary, so two source flowlines that share a node share one cut.
+#' \code{line_from_measure} and \code{line_to_measure} place each piece along
+#' the source flowline, 0 at its downstream end, by the pieces' lengths.
+#' \code{from_offset} and \code{to_offset} are the distances from the source
+#' flowline's downstream and upstream nodes to the target flowlines, in the
+#' units of the target network's coordinate reference system.
+#'
+#' \code{status} is one of: \code{placed}; \code{inverted} (the source
+#' flowline's downstream node is upstream of its upstream node on the
+#' target); \code{collapsed} (both ends land on one point, one row with
+#' \code{NA} \code{id}); \code{not_placed} (an end has no target flowline
+#' within \code{search_radius}); \code{no_mainstem};
+#' \code{mainstem_superseded}; \code{source_not_found} (the source flowline is
+#' not among the fetched flowlines of its mainstem); and
+#' \code{mainstem_not_in_target}. Rows that are not placed have \code{NA}
+#' pieces. \code{measured_on} is as described in
+#' \link{translate_hydrolocations}. The reverse translation is the same call
+#' with \code{from} and \code{to} swapped.
+#'
+#' The ref_rivers lookup tables are large downloads on first use (see
+#' \link{add_mainstems}), so this function has no example.
+#'
+#' \preformatted{
+#' translate_flowlines(8894344, "nhdpv2", "3dhp")}
+#'
+#' @param ids vector of source flowline identifiers: comids for
+#' \code{"nhdpv2"}, NHDPlusIDs for \code{"nhdphr"}, or id3dhp for
+#' \code{"3dhp"}.
+#' @param snap_m numeric meters, passed to \link[hydroloom]{get_subpath}.
+#' @inheritParams translate_hydrolocations
+#' @return data.frame with \code{line_id} (the source id),
+#' \code{segment_order} (1 at the downstream end), \code{id} (target
+#' flowline), \code{id_from_measure}, \code{id_to_measure},
+#' \code{line_from_measure}, \code{line_to_measure}, \code{length_km},
+#' \code{from_offset}, \code{to_offset}, \code{status}, and
+#' \code{measured_on}; an sf data.frame of piece geometry when
+#' \pkg{lwgeom} is installed.
+#' @export
+translate_flowlines <- function(ids, from, to, snap_m = 50,
+  search_radius = NULL, precision = NA) {
+
+  from <- match.arg(from, translate_networks)
+  to <- match.arg(to, translate_networks)
+
+  id_col <- translate_id_col[[from]]
+
+  src_ids <- unique(ids)
+  n <- length(src_ids)
+
+  uri <- resolve_mainstem_uris(stats::setNames(data.frame(src_ids), id_col),
+                               from)
+
+  status <- rep(NA_character_, n)
+  status[is.na(uri)] <- "no_mainstem"
+  status[is.na(status) & translate_superseded(uri)] <- "mainstem_superseded"
+
+  measured_on <- NA_character_
+  pieces <- NULL
+
+  todo <- unique(uri[is.na(status)])
+
+  if(length(todo) > 0) {
+
+    src <- get_mainstem_flowlines(todo, from)
+
+    m <- if(is.null(src)) rep(NA_integer_, n) else
+      match(as.character(src_ids), as.character(src[[id_col]]))
+
+    status[is.na(status) & is.na(m)] <- "source_not_found"
+
+    tgt <- get_mainstem_flowlines(unique(uri[is.na(status)]), to)
+
+    in_tgt <- if(is.null(tgt)) rep(FALSE, n) else uri %in% tgt$mainstemid
+
+    status[is.na(status) & !in_tgt] <- "mainstem_not_in_target"
+
+    rows <- which(is.na(status))
+
+    if(length(rows) > 0) {
+      measured_on <- translate_measured_on(tgt, to)
+
+      pieces <- translate_flowline_pieces(src[m[rows], ], uri[rows],
+                                          src_ids[rows], tgt, snap_m,
+                                          search_radius, precision)
+    }
+  }
+
+  done <- !is.na(status)
+  out <- translate_piece_rows(src_ids[done], status[done])
+  geom <- attr(pieces, "geom")
+
+  if(!is.null(pieces)) out <- rbind(out, pieces)
+
+  ord <- order(match(out$line_id, src_ids), out$segment_order)
+
+  out <- out[ord, ]
+  rownames(out) <- NULL
+  out$measured_on <- rep(measured_on, nrow(out))
+
+  if(is.null(geom)) return(out)
+
+  geom <- c(empty_lines(sum(done), sf::st_crs(geom)), geom)[ord]
+
+  sf::st_sf(out, geometry = geom)
+}

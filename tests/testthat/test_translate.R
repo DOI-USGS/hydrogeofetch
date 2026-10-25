@@ -108,6 +108,9 @@ test_that("geometry places points on their own mainstem in the target", {
   expect_equal(out$status, c("placed", "placed"))
   expect_equal(out$method, c("geometry", "geometry"))
 
+  # offsets are meters from indexing in EPSG:5070
+  expect_true(all(out$offset > 0 & out$offset < 1000))
+
   nh_3dhp <- nets[["3dhp"]]$id3dhp[nets[["3dhp"]]$mainstemid == ms(2408056)]
   expect_true(all(out$id %in% nh_3dhp))
   expect_false("distance_km" %in% names(out))
@@ -144,9 +147,7 @@ test_that("rows that cannot be placed say why", {
                    geometry = sf::st_sfc(sf::st_point(c(-79.5, 35.2)),
                                          crs = 4326))
 
-  # hydroloom warns from min()/max() over an empty match; the status is what
-  # this test checks
-  out <- suppressWarnings(translate_hydrolocations(far, "nhdpv2", "3dhp"))
+  out <- translate_hydrolocations(far, "nhdpv2", "3dhp")
 
   expect_equal(out$status, "not_placed")
   expect_true(is.na(out$id))
@@ -242,9 +243,8 @@ test_that("translate_flowlines reports flowlines it cannot place", {
   nets <- local_translate_mocks()
   on.exit(hydrogeofetch_data_dir(attr(nets, "old_dir")), add = TRUE)
 
-  out <- suppressWarnings(
-    translate_flowlines(c(1, 8894344), "nhdpv2", "3dhp",
-                        search_radius = units::set_units(1e-7, "degrees")))
+  out <- translate_flowlines(c(1, 8894344), "nhdpv2", "3dhp",
+                             search_radius = units::set_units(1, "mm"))
 
   expect_equal(out$line_id, c(1, 8894344))
   expect_equal(out$status, c("no_mainstem", "not_placed"))

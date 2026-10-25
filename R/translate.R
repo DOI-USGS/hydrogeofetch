@@ -84,16 +84,48 @@ translate_measured_on <- function(fl, network) {
         get("ref_rivers_release", envir = hydrogeofetch_env))
 }
 
+#' Index points on flowlines in EPSG:5070
+#' @description Both are projected so search_radius, precision and offset are
+#' meters, whatever the networks' own coordinate reference systems. Points
+#' with no flowline of their aggregate_id within search_radius are left out
+#' before indexing: with precision set, hydroloom::index_points_to_lines()
+#' fails on a group with no line near its points.
+#' @returns index_points_to_lines() output, point_id into pts
+#' @noRd
+translate_index <- function(lines, pts, uris, search_radius, precision) {
+
+  lines <- sf::st_transform(lines, 5070)
+  pts <- sf::st_transform(sf::st_geometry(pts), 5070)
+
+  near <- rep(FALSE, length(pts))
+
+  for(u in unique(uris)) {
+    i <- which(uris == u)
+    near[i] <- lengths(sf::st_is_within_distance(
+      pts[i], lines[lines$aggregate_id %in% u, ], dist = search_radius)) > 0
+  }
+
+  if(!any(near))
+    return(data.frame(point_id = integer(0), id = lines$id[0],
+                      id_measure = numeric(0), offset = numeric(0)))
+
+  idx <- hydroloom::index_points_to_lines(
+    lines, pts[near], search_radius = search_radius, precision = precision,
+    aggregate_ids = uris[near])
+
+  idx$point_id <- which(near)[idx$point_id]
+
+  idx
+}
+
 #' Index points on the target flowlines of their own mainstem
 #' @noRd
 translate_by_geometry <- function(pts, uris, tgt, search_radius, precision) {
 
   n <- length(uris)
 
-  idx <- hydroloom::index_points_to_lines(
-    hydroloom::hy(tgt), sf::st_transform(sf::st_geometry(pts), sf::st_crs(tgt)),
-    search_radius = search_radius, precision = precision,
-    aggregate_ids = uris)
+  idx <- translate_index(hydroloom::hy(tgt), pts, uris, search_radius,
+                         precision)
 
   idx <- idx[!is.na(idx$id), ]
 
@@ -134,10 +166,8 @@ translate_by_hydro_location <- function(pts, uris, from, tgt, search_radius,
 
   if(length(on_src) == 0) return(out)
 
-  idx <- hydroloom::index_points_to_lines(
-    src, sf::st_transform(sf::st_geometry(pts)[on_src], sf::st_crs(src)),
-    search_radius = search_radius, precision = precision,
-    aggregate_ids = uris[on_src])
+  idx <- translate_index(src, pts[on_src, ], uris[on_src], search_radius,
+                         precision)
 
   idx <- idx[!is.na(idx$id), ]
 
@@ -193,8 +223,7 @@ translate_by_hydro_location <- function(pts, uris, from, tgt, search_radius,
 #' \code{method = "geometry"} indexes the point to the target flowlines of
 #' its mainstem with \link[hydroloom]{index_points_to_lines} and
 #' \code{aggregate_ids}. \code{offset} is the distance from the point to the
-#' target flowline. On NHDPlusV2, whose flowlines are generalized, a
-#' \code{precision} of a few tens of meters gives a better measure.
+#' target flowline.
 #'
 #' \code{method = "hydro_location"} indexes the point on the source flowlines,
 #' records it as a distance from the nearest confluence that both networks
@@ -217,6 +246,9 @@ translate_by_hydro_location <- function(pts, uris, from, tgt, search_radius,
 #' \code{featuredate}. 3DHP identifiers are not persistent, so a 3DHP
 #' placement holds for that release.
 #'
+#' Points and flowlines are indexed in EPSG:5070 (CONUS Albers), so
+#' \code{offset} is in meters.
+#'
 #' The ref_rivers lookup tables are large downloads on first use (see
 #' \link{add_mainstems}), so this function has no example.
 #'
@@ -237,9 +269,14 @@ translate_by_hydro_location <- function(pts, uris, from, tgt, search_radius,
 #' "nhdphr", or "3dhp".
 #' @param method character "geometry" or "hydro_location". See details.
 #' @param search_radius units distance passed to
-#' \link[hydroloom]{index_points_to_lines}. \code{NULL} uses its default.
+#' \link[hydroloom]{index_points_to_lines}, in a linear unit since indexing
+#' is in EPSG:5070. Only flowlines of the point's own mainstem are searched,
+#' so the radius can be wide enough to span differences between networks,
+#' such as a reservoir that one network routes differently from another.
 #' @param precision numeric meters, passed to
-#' \link[hydroloom]{index_points_to_lines}.
+#' \link[hydroloom]{index_points_to_lines}. Lines near each point are
+#' segmentized to this spacing so the match is to the nearest point on a
+#' line, not the nearest vertex; \code{NA} matches vertices only.
 #' @return \code{x} with \code{mainstem_uri}, \code{id} (target flowline),
 #' \code{id_measure}, \code{offset}, \code{past_end_km}, \code{status},
 #' \code{method}, and \code{measured_on} added, and for
@@ -248,7 +285,7 @@ translate_by_hydro_location <- function(pts, uris, from, tgt, search_radius,
 #' @export
 translate_hydrolocations <- function(x, from, to,
   method = c("geometry", "hydro_location"),
-  search_radius = NULL, precision = NA) {
+  search_radius = units::set_units(1000, "m"), precision = 10) {
 
   from <- match.arg(from, translate_networks)
   to <- match.arg(to, translate_networks)
@@ -351,14 +388,11 @@ translate_flowline_pieces <- function(src, uris, line_ids, tgt, snap_m,
                                       search_radius, precision) {
 
   tgt <- hydroloom::hy(tgt)
-  src <- sf::st_transform(src, sf::st_crs(tgt))
 
   ends <- lapply(c(bottom = "end", top = "start"), function(position) {
-    nodes <- sf::st_geometry(hydroloom::get_node(src, position))
+    nodes <- hydroloom::get_node(src, position)
 
-    idx <- hydroloom::index_points_to_lines(
-      tgt, nodes, search_radius = search_radius, precision = precision,
-      aggregate_ids = uris)
+    idx <- translate_index(tgt, nodes, uris, search_radius, precision)
 
     idx <- idx[!is.na(idx$id), ]
 
@@ -439,8 +473,8 @@ translate_flowline_pieces <- function(src, uris, line_ids, tgt, snap_m,
 #' \code{line_from_measure} and \code{line_to_measure} place each piece along
 #' the source flowline, 0 at its downstream end, by the pieces' lengths.
 #' \code{from_offset} and \code{to_offset} are the distances from the source
-#' flowline's downstream and upstream nodes to the target flowlines, in the
-#' units of the target network's coordinate reference system.
+#' flowline's downstream and upstream nodes to the target flowlines, in
+#' meters (indexing is in EPSG:5070, as in \link{translate_hydrolocations}).
 #'
 #' \code{status} is one of: \code{placed}; \code{inverted} (the source
 #' flowline's downstream node is upstream of its upstream node on the
@@ -474,7 +508,7 @@ translate_flowline_pieces <- function(src, uris, line_ids, tgt, snap_m,
 #' \pkg{lwgeom} is installed.
 #' @export
 translate_flowlines <- function(ids, from, to, snap_m = 50,
-  search_radius = NULL, precision = NA) {
+  search_radius = units::set_units(1000, "m"), precision = 10) {
 
   from <- match.arg(from, translate_networks)
   to <- match.arg(to, translate_networks)

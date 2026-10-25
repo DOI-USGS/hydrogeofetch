@@ -9,8 +9,8 @@ translate_hydrolocations(
   from,
   to,
   method = c("geometry", "hydro_location"),
-  search_radius = NULL,
-  precision = NA
+  search_radius = units::set_units(1000, "m"),
+  precision = 10
 )
 }
 \arguments{
@@ -27,10 +27,15 @@ translate_hydrolocations(
 \item{method}{character "geometry" or "hydro_location". See details.}
 
 \item{search_radius}{units distance passed to
-\link[hydroloom]{index_points_to_lines}. \code{NULL} uses its default.}
+\link[hydroloom]{index_points_to_lines}, in a linear unit since indexing
+is in EPSG:5070. Only flowlines of the point's own mainstem are searched,
+so the radius can be wide enough to span differences between networks,
+such as a reservoir that one network routes differently from another.}
 
 \item{precision}{numeric meters, passed to
-\link[hydroloom]{index_points_to_lines}.}
+\link[hydroloom]{index_points_to_lines}. Lines near each point are
+segmentized to this spacing so the match is to the nearest point on a
+line, not the nearest vertex; \code{NA} matches vertices only.}
 }
 \value{
 \code{x} with \code{mainstem_uri}, \code{id} (target flowline),
@@ -61,8 +66,7 @@ The target flowlines of each mainstem come from
 \code{method = "geometry"} indexes the point to the target flowlines of
 its mainstem with \link[hydroloom]{index_points_to_lines} and
 \code{aggregate_ids}. \code{offset} is the distance from the point to the
-target flowline. On NHDPlusV2, whose flowlines are generalized, a
-\code{precision} of a few tens of meters gives a better measure.
+target flowline.
 
 \code{method = "hydro_location"} indexes the point on the source flowlines,
 records it as a distance from the nearest confluence that both networks
@@ -84,6 +88,9 @@ to be on \code{mainstem_uri}), \code{past_end} and
 target network and the ref_rivers release, or for 3DHP the range of
 \code{featuredate}. 3DHP identifiers are not persistent, so a 3DHP
 placement holds for that release.
+
+Points and flowlines are indexed in EPSG:5070 (CONUS Albers), so
+\code{offset} is in meters.
 
 The ref_rivers lookup tables are large downloads on first use (see
 \link{add_mainstems}), so this function has no example.

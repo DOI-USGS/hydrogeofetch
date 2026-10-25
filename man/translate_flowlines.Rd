@@ -9,8 +9,8 @@ translate_flowlines(
   from,
   to,
   snap_m = 50,
-  search_radius = NULL,
-  precision = NA
+  search_radius = units::set_units(1000, "m"),
+  precision = 10
 )
 }
 \arguments{
@@ -27,10 +27,15 @@ translate_flowlines(
 \item{snap_m}{numeric meters, passed to \link[hydroloom]{get_subpath}.}
 
 \item{search_radius}{units distance passed to
-\link[hydroloom]{index_points_to_lines}. \code{NULL} uses its default.}
+\link[hydroloom]{index_points_to_lines}, in a linear unit since indexing
+is in EPSG:5070. Only flowlines of the point's own mainstem are searched,
+so the radius can be wide enough to span differences between networks,
+such as a reservoir that one network routes differently from another.}
 
 \item{precision}{numeric meters, passed to
-\link[hydroloom]{index_points_to_lines}.}
+\link[hydroloom]{index_points_to_lines}. Lines near each point are
+segmentized to this spacing so the match is to the nearest point on a
+line, not the nearest vertex; \code{NA} matches vertices only.}
 }
 \value{
 data.frame with \code{line_id} (the source id),
@@ -61,8 +66,8 @@ boundary, so two source flowlines that share a node share one cut.
 \code{line_from_measure} and \code{line_to_measure} place each piece along
 the source flowline, 0 at its downstream end, by the pieces' lengths.
 \code{from_offset} and \code{to_offset} are the distances from the source
-flowline's downstream and upstream nodes to the target flowlines, in the
-units of the target network's coordinate reference system.
+flowline's downstream and upstream nodes to the target flowlines, in
+meters (indexing is in EPSG:5070, as in \link{translate_hydrolocations}).
 
 \code{status} is one of: \code{placed}; \code{inverted} (the source
 flowline's downstream node is upstream of its upstream node on the

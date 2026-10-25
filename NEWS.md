@@ -1,3 +1,12 @@
+hydrogeofetch 2.0.5
+==========
+
+- Failed web service requests now report the service's error message and whether retrying can help.
+- `get_characteristics_metadata()` falls back to ScienceBase when the S3 copy is unavailable (#487).
+- `get_drainage_area_estimates()` no longer copies `catchment_data` on every call.
+- Removed use of `%||%`, which requires R 4.4 (#483).
+- Added a 3DHP flowline sample for the New Hope basin.
+
 hydrogeofetch 2.0.4
 ==========
 

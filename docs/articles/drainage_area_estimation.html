@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hydrogeofetch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
       </span>
     </div>
 
@@ -58,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/doi-usgs/nhdplusTools/" class="external-link">
+  <a href="https://github.com/DOI-USGS/hydrogeofetch/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -80,7 +80,7 @@
                         <h4 data-toc-skip class="author"><a href="mailto:dblodgett@usgs.gov" class="email">dblodgett@usgs.gov</a></h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/doi-usgs/nhdplusTools/blob/HEAD/vignettes/articles/drainage_area_estimation.Rmd" class="external-link"><code>vignettes/articles/drainage_area_estimation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DOI-USGS/hydrogeofetch/blob/HEAD/vignettes/articles/drainage_area_estimation.Rmd" class="external-link"><code>vignettes/articles/drainage_area_estimation.Rmd</code></a></small>
       <div class="hidden name"><code>drainage_area_estimation.Rmd</code></div>
 
     </div>
@@ -106,7 +106,7 @@ img {
 }
 </style>
 <p><em>A fully rendered version of this vignette with figures is
-available at <a href="https://doi-usgs.github.io/nhdplusTools/articles/drainage_area_estimation.html" class="uri">https://doi-usgs.github.io/nhdplusTools/articles/drainage_area_estimation.html</a>.</em></p>
+available at <a href="https://doi-usgs.github.io/hydrogeofetch/articles/drainage_area_estimation.html" class="uri">https://doi-usgs.github.io/hydrogeofetch/articles/drainage_area_estimation.html</a>.</em></p>
 <p><code><a href="../reference/get_drainage_area_estimates.html">get_drainage_area_estimates()</a></code> combines Watershed
 Boundary Dataset (WBD) delineations and non-surface-contributing area
 estimates with National Hydrography Dataset Plus version 2 (NHDPlusV2)
@@ -166,11 +166,25 @@ estimate.</p></li>
 gage and the immediate HU12 outlets are summed. Split-catchment logic is
 applied at both the HU12 outlets and (optionally) the gage
 point.</p></li>
+<li><p><strong>Dissolve the NHDPlusV2 basin (optional).</strong> The
+catchment polygons for the upstream network are dissolved into a single
+boundary, <code>drainage_basin</code>, with the outlet catchment
+replaced by the upstream side of its split so the portion below the gage
+is not included. No HU boundaries take part. This needs the upstream
+catchment polygons, so it requires <code>catchments = TRUE</code> or a
+<code>catchment_data</code> table – except for headwater starts, where
+the gap zone is already the whole upstream network and the basin comes
+back either way.</p></li>
 <li><p><strong>Assemble scalar estimates.</strong> Six drainage area
 estimates are computed: total and contributing at the HU12, HU10, and
 HU8 query levels. Each equals the HU12 polygon area sum plus the gap
-area. A seventh scalar, <code>network_da_sqkm</code>, is the NHDPlusV2
-cumulative drainage area at the outlet – a comparison baseline.</p></li>
+area. Two more scalars serve as comparison baselines.
+<code>network_da_sqkm</code> is the NHDPlusV2 cumulative drainage area
+<em>attribute</em> at the outlet, which covers the whole outlet
+catchment. <code>basin_da_sqkm</code> is the <em>geometric</em> area of
+<code>drainage_basin</code>, with the below-gage portion removed. The
+two differ by that portion plus the usual drift between a published
+attribute and a measured geometry.</p></li>
 <li><p><strong>NHDPlus High Resolution (NHDPlusHR) estimate
 (optional).</strong> When <code>nhdplushr = TRUE</code>, the function
 fetches NHDPlusHR flowlines and catchments for the basin bounding box,
@@ -193,6 +207,11 @@ a catchment, and the portion upstream of the pour point overlaps with
 HU12 area already counted. The split-catchment service divides this
 catchment and the upstream overlap is excluded from the gap area to
 avoid double-counting.</p>
+<p>In a headwater catchment the split carries more weight than
+elsewhere. Nothing drains to the gage from further upstream, so the
+upstream side of the split is the entire basin by construction, and the
+drainage area is taken from that one polygon rather than assembled from
+HU12 areas and a gap.</p>
 <p>The <em>Outlet Catchment Splitting</em> section later in this
 vignette illustrates both splits using Davidson Creek (USGS streamgage
 08110075).</p>
@@ -246,8 +265,10 @@ The <code>huc12pp</code> query is skipped when
 <li><p><strong>NHDPlusV2 OGC API</strong> (<code>get_nhdplus</code>):
 fetches flowline attributes, catchment geometries in the gap zone, and
 (when <code>catchments = TRUE</code>) the full upstream catchment
-polygon set. Skipped for flowline attributes when
-<code>local_navigation = TRUE</code>.</p></li>
+polygon set. That full set is also what the dissolved
+<code>drainage_basin</code> is built from, so
+<code>catchments = TRUE</code> buys both. Skipped for flowline
+attributes when <code>local_navigation = TRUE</code>.</p></li>
 <li><p><strong>WBD / HU service</strong> (<code>get_huc</code>,
 <code>get_huc12_by_huc</code>): fetches HU12 polygons by ID or by parent
 HU. Skipped when <code>huc12_data</code> is provided.</p></li>
@@ -277,7 +298,6 @@ hydrogeofetch data directory so that subsequent runs skip the web
 service calls.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.14.1, GDAL 3.12.1, PROJ 9.7.1; sf_use_s2() is TRUE</span></span>
 <span></span>
 <span><span class="va">data_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hydrogeofetch_data_dir.html">hydrogeofetch_data_dir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">data_dir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -316,8 +336,11 @@ service calls.</p>
 <span>  <span class="st">"james"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fetch_or_load</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">name</span>, <span class="va">start</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># v2 caches carry drainage_basin / basin_da_sqkm. Bumping the name</span></span>
+<span>  <span class="co"># retires pre-basin caches rather than reading past their missing</span></span>
+<span>  <span class="co"># elements.</span></span>
 <span>  <span class="va">rds_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">data_dir</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"da_est_"</span>, <span class="va">name</span>, <span class="st">".rds"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"da_est_v2_"</span>, <span class="va">name</span>, <span class="st">".rds"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">rds_path</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Loading cached: "</span>, <span class="va">name</span><span class="op">)</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">rds_path</span><span class="op">)</span><span class="op">)</span></span>
@@ -426,13 +449,14 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <span><span class="co">#&gt;  [1] "da_huc12_sqkm"            "da_huc10_sqkm"           </span></span>
 <span><span class="co">#&gt;  [3] "da_huc08_sqkm"            "contrib_da_huc12_sqkm"   </span></span>
 <span><span class="co">#&gt;  [5] "contrib_da_huc10_sqkm"    "contrib_da_huc08_sqkm"   </span></span>
-<span><span class="co">#&gt;  [7] "network_da_sqkm"          "nhdplushr_network_dasqkm"</span></span>
-<span><span class="co">#&gt;  [9] "nhdplushr_boundary"       "start_feature"           </span></span>
-<span><span class="co">#&gt; [11] "hu12_by_huc12"            "hu12_by_huc10"           </span></span>
-<span><span class="co">#&gt; [13] "hu12_by_huc08"            "extra_catchments"        </span></span>
-<span><span class="co">#&gt; [15] "split_catchment"          "all_network"             </span></span>
-<span><span class="co">#&gt; [17] "all_catchments"           "outlet_flowline_measure" </span></span>
-<span><span class="co">#&gt; [19] "outlet_split_catchment"   "hu12_outlet"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [7] "network_da_sqkm"          "basin_da_sqkm"           </span></span>
+<span><span class="co">#&gt;  [9] "nhdplushr_network_dasqkm" "nhdplushr_boundary"      </span></span>
+<span><span class="co">#&gt; [11] "start_feature"            "hu12_by_huc12"           </span></span>
+<span><span class="co">#&gt; [13] "hu12_by_huc10"            "hu12_by_huc08"           </span></span>
+<span><span class="co">#&gt; [15] "extra_catchments"         "split_catchment"         </span></span>
+<span><span class="co">#&gt; [17] "drainage_basin"           "all_network"             </span></span>
+<span><span class="co">#&gt; [19] "all_catchments"           "outlet_flowline_measure" </span></span>
+<span><span class="co">#&gt; [21] "outlet_split_catchment"   "hu12_outlet"</span></span></code></pre></div>
 <p>The scalar estimates (square kilometers) across all basins:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">basin_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -448,6 +472,9 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <span><span class="va">summary_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  basin <span class="op">=</span> <span class="va">basin_labels</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">da_results</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>  network_da <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">da_results</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">network_da_sqkm</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  basin_da <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">da_results</span>,</span>
+<span>    \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">basin_da_sqkm</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="va">x</span><span class="op">$</span><span class="va">basin_da_sqkm</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  da_huc12 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">da_results</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">da_huc12_sqkm</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  da_huc10 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">da_results</span>,</span>
 <span>    \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">da_huc10_sqkm</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="va">x</span><span class="op">$</span><span class="va">da_huc10_sqkm</span><span class="op">)</span>,</span>
@@ -477,27 +504,29 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">summary_df</span>, digits <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Basin"</span>, <span class="st">"Network DA"</span>, <span class="st">"HU12 DA"</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Basin"</span>, <span class="st">"Network DA"</span>, <span class="st">"Basin DA"</span>, <span class="st">"HU12 DA"</span>,</span>
 <span>    <span class="st">"HU10 DA"</span>, <span class="st">"HU8 DA"</span>, <span class="st">"NHDPlusHR DA"</span>,</span>
 <span>    <span class="st">"NWIS DA"</span>, <span class="st">"NWIS Contributing DA"</span><span class="op">)</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"Drainage area estimates (sq km) by basin and method"</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<table style="width:99%;" class="table">
 <caption>Drainage area estimates (sq km) by basin and method</caption>
 <colgroup>
-<col width="11%">
-<col width="16%">
+<col width="10%">
+<col width="15%">
 <col width="9%">
 <col width="7%">
-<col width="8%">
-<col width="8%">
-<col width="11%">
-<col width="8%">
-<col width="18%">
+<col width="6%">
+<col width="7%">
+<col width="7%">
+<col width="10%">
+<col width="7%">
+<col width="17%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">Basin</th>
 <th align="right">Network DA</th>
+<th align="right">Basin DA</th>
 <th align="right">HU12 DA</th>
 <th align="right">HU10 DA</th>
 <th align="right">HU8 DA</th>
@@ -510,6 +539,7 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">black_earth</td>
 <td align="left">Black Earth Creek</td>
 <td align="right">114.3</td>
+<td align="right">114.9</td>
 <td align="right">118.0</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -521,10 +551,11 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">french_broad</td>
 <td align="left">French Broad</td>
 <td align="right">2446.9</td>
+<td align="right">NA</td>
 <td align="right">2446.0</td>
 <td align="right">2446.0</td>
 <td align="right">NA</td>
-<td align="right">2446.3</td>
+<td align="right">NA</td>
 <td align="right">2447.5</td>
 <td align="right">NA</td>
 </tr>
@@ -532,9 +563,10 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">brazos</td>
 <td align="left">Brazos at Rosharon</td>
 <td align="right">103578.2</td>
-<td align="right">99672.7</td>
-<td align="right">108939.7</td>
-<td align="right">118107.4</td>
+<td align="right">NA</td>
+<td align="right">99654.3</td>
+<td align="right">108921.3</td>
+<td align="right">118088.9</td>
 <td align="right">NA</td>
 <td align="right">117427.6</td>
 <td align="right">92651.7</td>
@@ -543,8 +575,9 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">james</td>
 <td align="left">James River</td>
 <td align="right">1442.4</td>
-<td align="right">1436.6</td>
-<td align="right">1655.5</td>
+<td align="right">NA</td>
+<td align="right">1426.0</td>
+<td align="right">1644.9</td>
 <td align="right">NA</td>
 <td align="right">620.4</td>
 <td align="right">1849.3</td>
@@ -554,9 +587,10 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">malheur</td>
 <td align="left">Malheur Lake</td>
 <td align="right">4585.6</td>
-<td align="right">7307.9</td>
-<td align="right">9096.7</td>
-<td align="right">12840.2</td>
+<td align="right">NA</td>
+<td align="right">7278.7</td>
+<td align="right">9067.5</td>
+<td align="right">12811.0</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -565,10 +599,11 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">purgatoire</td>
 <td align="left">Purgatoire River</td>
 <td align="right">8930.0</td>
+<td align="right">NA</td>
 <td align="right">8875.0</td>
 <td align="right">8875.0</td>
 <td align="right">NA</td>
-<td align="right">8217.8</td>
+<td align="right">NA</td>
 <td align="right">8912.2</td>
 <td align="right">8881.6</td>
 </tr>
@@ -576,10 +611,11 @@ data frames. Here are the elements for Black Earth Creek:</p>
 <td align="left">davidson</td>
 <td align="left">Davidson Creek</td>
 <td align="right">183.9</td>
-<td align="right">176.0</td>
+<td align="right">NA</td>
+<td align="right">181.9</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">136.0</td>
 <td align="right">178.5</td>
 <td align="right">178.5</td>
 </tr>
@@ -628,7 +664,7 @@ across all sources.</p>
 </tr>
 <tr class="odd">
 <td align="left">NHDPlusHR</td>
-<td align="right">2446.3</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">NWIS</td>
@@ -712,15 +748,15 @@ between total and contributing drainage area.</p>
 </tr>
 <tr class="even">
 <td align="left">HU12</td>
-<td align="right">99672.7</td>
+<td align="right">99654.3</td>
 </tr>
 <tr class="odd">
 <td align="left">HU10</td>
-<td align="right">108939.7</td>
+<td align="right">108921.3</td>
 </tr>
 <tr class="even">
 <td align="left">HU8</td>
-<td align="right">118107.4</td>
+<td align="right">118088.9</td>
 </tr>
 <tr class="odd">
 <td align="left">NHDPlusHR</td>
@@ -752,7 +788,7 @@ noncontributing designations in western sub-basins.</li>
 <code class="sourceCode R"><span><span class="fu">plot_network_brazos</span><span class="op">(</span><span class="va">da_results</span><span class="op">$</span><span class="va">brazos</span>, <span class="va">flowlines</span><span class="op">$</span><span class="va">brazos</span>,</span>
 <span>  <span class="st">"Brazos at Rosharon"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Coordinate system already present.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Adding new coordinate system, which will replace the existing one.</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ Adding new coordinate system, which will replace the existing one.</span></span></code></pre></div>
 <p><img src="drainage_area_figures/brazos_network-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="vignette-note">
 <ul>
@@ -816,11 +852,11 @@ create a large noncontributing fraction that varies by sub-basin.</p>
 </tr>
 <tr class="even">
 <td align="left">HU12</td>
-<td align="right">1436.6</td>
+<td align="right">1426.0</td>
 </tr>
 <tr class="odd">
 <td align="left">HU10</td>
-<td align="right">1655.5</td>
+<td align="right">1644.9</td>
 </tr>
 <tr class="even">
 <td align="left">HU8</td>
@@ -1005,15 +1041,15 @@ tributaries.</p>
 </tr>
 <tr class="even">
 <td align="left">HU12</td>
-<td align="right">7307.9</td>
+<td align="right">7278.7</td>
 </tr>
 <tr class="odd">
 <td align="left">HU10</td>
-<td align="right">9096.7</td>
+<td align="right">9067.5</td>
 </tr>
 <tr class="even">
 <td align="left">HU8</td>
-<td align="right">12840.2</td>
+<td align="right">12811.0</td>
 </tr>
 <tr class="odd">
 <td align="left">NHDPlusHR</td>
@@ -1120,7 +1156,7 @@ and all downstream stations. Documented in <a href="https://pubs.usgs.gov/tm/11c
 </tr>
 <tr class="odd">
 <td align="left">NHDPlusHR</td>
-<td align="right">8217.8</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">NWIS</td>
@@ -1239,7 +1275,6 @@ boundary.</p>
 <span>    <span class="st">" -- Gage and HU12 Outlet Positions"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">map_theme</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p_overview</span><span class="op">)</span></span></code></pre></div>
-<p><img src="drainage_area_figures/outlet_split_overview-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="vignette-note">
 <ul>
 <li>The gage (triangle) and the HU12 pour point (x) sit on different
@@ -1290,7 +1325,6 @@ outlet.</p>
 <span>    <span class="st">" (500 m view)"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">map_theme</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p_huc_zoom</span><span class="op">)</span></span></code></pre></div>
-<p><img src="drainage_area_figures/outlet_split_huc_zoom-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="vignette-note">
 <ul>
 <li>The HU12 outlet (x) and its split catchment (orange fill, dashed
@@ -1368,7 +1402,6 @@ HU12 area already counted in the drainage area estimate.</p>
 <span>  <span class="fu">map_theme</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p_split</span><span class="op">)</span></span></code></pre></div>
-<p><img src="drainage_area_figures/outlet_split_detail-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="vignette-note">
 <ul>
 <li>

@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hydrogeofetch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
       </span>
     </div>
 
@@ -58,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/doi-usgs/nhdplusTools/" class="external-link">
+  <a href="https://github.com/DOI-USGS/hydrogeofetch/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -80,7 +80,7 @@
                         <h4 data-toc-skip class="author"><a href="mailto:dblodgett@usgs.gov" class="email">dblodgett@usgs.gov</a></h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/doi-usgs/nhdplusTools/blob/HEAD/vignettes/hydrogeofetch.Rmd" class="external-link"><code>vignettes/hydrogeofetch.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DOI-USGS/hydrogeofetch/blob/HEAD/vignettes/hydrogeofetch.Rmd" class="external-link"><code>vignettes/hydrogeofetch.Rmd</code></a></small>
       <div class="hidden name"><code>hydrogeofetch.Rmd</code></div>
 
     </div>
@@ -93,13 +93,14 @@
 <p>Pick an outlet location and download some data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Uncomment to install!</span></span>
-<span><span class="co"># install.packages("nhdplusTools")</span></span>
+<span><span class="co"># install.packages("hydrogeofetch")</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://doi-usgs.github.io/nhdplusTools/">hydrogeofetch</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://doi-usgs.github.io/hydrogeofetch/">hydrogeofetch</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">start_point</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">89.362239</span>, <span class="fl">43.090266</span><span class="op">)</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4269</span><span class="op">)</span></span>
 <span><span class="va">start_comid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discover_nhdplus_id.html">discover_nhdplus_id</a></span><span class="op">(</span><span class="va">start_point</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?bbox=-89.362239,43.090266,-89.362239,43.090266&amp;properties=featureid&amp;skipGeometry=true</span></span>
 <span></span>
 <span><span class="va">flowline</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/navigate_nldi.html">navigate_nldi</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>featureSource <span class="op">=</span> <span class="st">"comid"</span>, </span>
 <span>                               featureID <span class="op">=</span> <span class="va">start_comid</span><span class="op">)</span>, </span>
@@ -112,6 +113,13 @@
 <span>                         nhdplus_data <span class="op">=</span> <span class="st">"download"</span>, </span>
 <span>                         flowline_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                         return_data <span class="op">=</span> <span class="cn">TRUE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; {"op":"in","args":[{"property":"comid"},[13293376,13293378,13293380,13293382,13293384,13293386,13293388,13293390,13293392,13293394,13293396,13293398,13293400,13293404,13293406,13293410,13293412,13293416,13293418,13293420,13293422,13293424,13293426,13293428,13293430,13293432,13293434,13293436,13293438,13293440,13293442,13293444,13293446,13293448,13293450,13293452,13293454,13293456,13293458,13293460,13293462,13293464,13293468,13293472,13293474,13293476,13293478,13293480,13293484,13293486,13293488,13293490,13293492,13293494,13293496,13293498,13293502,13293504,13293506,13293508,13293512,13293514,13293516,13293518,13293520,13293522,13293524,13293526,13293530,13293532,13293536,13293540,13293542,13293548,13293550,13293552,13293554,13293556,13293558,13293562,13293564,13293568,13293570,13293572,13293574,13293576,13293578,13293584,13293586,13293588,13293590,13293600,13293612,13293614,13293620,13293624,13293634,13293646,13293672,13293674,13293676,13293678,13293688,13293690,13293692,13293694,13293696,13293750,13294110,13294112,13294114,13294116,13294118,13294120,13294122,13294124,13294128,13294130,13294132,13294134,13294138,13294140,13294144,13294148,13294150,13294152,13294154,13294158,13294166,13294168,13294174,13294176,13294178,13294184,13294264,13294268,13294270,13294272,13294274,13294276,13294278,13294280,13294282,13294284,13294286,13294288,13294290,13294292,13294294,13294296,13294298,13294300,13294304,13294306,13294308,13294310,13294312,13294314,13294366,13294368,13294382,13294384,13294386,13294394,13302588,13302590,937090090,937090091]]}</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; {"op":"in","args":[{"property":"featureid"},[13293376,13293378,13293380,13293382,13293384,13293386,13293388,13293390,13293392,13293394,13293396,13293398,13293400,13293404,13293406,13293410,13293412,13293416,13293418,13293420,13293422,13293424,13293426,13293428,13293430,13293432,13293434,13293436,13293438,13293440,13293442,13293444,13293446,13293448,13293450,13293452,13293454,13293456,13293458,13293460,13293462,13293464,13293468,13293472,13293474,13293476,13293478,13293480,13293484,13293486,13293488,13293490,13293492,13293494,13293496,13293498,13293502,13293504,13293506,13293508,13293512,13293514,13293516,13293518,13293520,13293522,13293524,13293526,13293530,13293532,13293536,13293540,13293542,13293548,13293550,13293552,13293554,13293556,13293558,13293562,13293564,13293568,13293570,13293572,13293574,13293576,13293578,13293584,13293586,13293588,13293590,13293600,13293612,13293614,13293620,13293624,13293634,13293646,13293672,13293674,13293676,13293678,13293688,13293690,13293692,13293694,13293696,13293750,13294110,13294112,13294114,13294116,13294118,13294120,13294122,13294124,13294128,13294130,13294132,13294134,13294138,13294140,13294144,13294148,13294150,13294152,13294154,13294158,13294166,13294168,13294174,13294176,13294178,13294184,13294264,13294268,13294270,13294272,13294274,13294276,13294278,13294280,13294282,13294284,13294286,13294288,13294290,13294292,13294294,13294296,13294298,13294300,13294304,13294306,13294308,13294310,13294312,13294314,13294366,13294368,13294382,13294384,13294386,13294394,13302588,13302590,937090090,937090091]]}</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdarea/items?bbox=-89.604801,43.035073,-89.203787,43.366077&amp;limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdwaterbody/items?bbox=-89.604801,43.035073,-89.203787,43.366077&amp;limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_nonnetwork/items?bbox=-89.604801,43.035073,-89.203787,43.366077&amp;limit=500&amp;offset=0</span></span>
 <span></span>
 <span><span class="va">flowline</span> <span class="op">&lt;-</span> <span class="va">subset</span><span class="op">$</span><span class="va">NHDFlowline_Network</span></span>
 <span><span class="va">catchment</span> <span class="op">&lt;-</span> <span class="va">subset</span><span class="op">$</span><span class="va">CatchmentSP</span></span>
@@ -134,7 +142,9 @@ is returned and/or stored in a local file for later use.</p>
 <code class="sourceCode R"><span><span class="co"># ?plot_nhdplus for more</span></span>
 <span><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_nhdplus.html">plot_nhdplus</a></span><span class="op">(</span></span>
 <span>  outlets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>featureSource <span class="op">=</span> <span class="st">"nwissite"</span>, featureID <span class="op">=</span> <span class="st">"USGS-05428500"</span><span class="op">)</span>, </span>
-<span>  gpkg <span class="op">=</span> <span class="va">subset_file</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  gpkg <span class="op">=</span> <span class="va">subset_file</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-05428500/basin?simplify=true&amp;splitCatchment=false</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-89.604655,43.035066,-89.20378,43.366069&amp;filter=streamorde%20&gt;%202&amp;limit=500&amp;offset=0</span></span></code></pre></div>
 <p><img src="hydrogeofetch_files/figure-html/tldr2-1.png" class="r-plt" alt="" width="576"></p>
 <p>This vignette covers a range of utilities the hydrogeofetch package
 offers for working with data in a U.S. context.</p>
@@ -273,18 +283,43 @@ info. See <code><a href="../reference/get_raindrop_trace.html">get_raindrop_trac
 functionality.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">start_comid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/discover_nhdplus_id.html">discover_nhdplus_id</a></span><span class="op">(</span><span class="va">start_point</span>, raindrop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/nldi/pygeoapi/processes/nldi-flowtrace/execution</span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;   "inputs": [</span></span>
+<span><span class="co">#&gt;     {</span></span>
+<span><span class="co">#&gt;       "id": "lat",</span></span>
+<span><span class="co">#&gt;       "type": "text/plain",</span></span>
+<span><span class="co">#&gt;       "value": "43.09"</span></span>
+<span><span class="co">#&gt;     },</span></span>
+<span><span class="co">#&gt;     {</span></span>
+<span><span class="co">#&gt;       "id": "lon",</span></span>
+<span><span class="co">#&gt;       "type": "text/plain",</span></span>
+<span><span class="co">#&gt;       "value": "-89.36"</span></span>
+<span><span class="co">#&gt;     },</span></span>
+<span><span class="co">#&gt;     {</span></span>
+<span><span class="co">#&gt;       "id": "raindroptrace",</span></span>
+<span><span class="co">#&gt;       "type": "text/plain",</span></span>
+<span><span class="co">#&gt;       "value": "true"</span></span>
+<span><span class="co">#&gt;     },</span></span>
+<span><span class="co">#&gt;     {</span></span>
+<span><span class="co">#&gt;       "id": "direction",</span></span>
+<span><span class="co">#&gt;       "type": "text/plain",</span></span>
+<span><span class="co">#&gt;       "value": "none"</span></span>
+<span><span class="co">#&gt;     }</span></span>
+<span><span class="co">#&gt;   ]</span></span>
+<span><span class="co">#&gt; }</span></span>
 <span><span class="va">start_comid</span></span>
 <span><span class="co">#&gt; Simple feature collection with 2 features and 7 fields</span></span>
 <span><span class="co">#&gt; Geometry type: LINESTRING</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -89.37037 ymin: 43.08522 xmax: -89.35393 ymax: 43.09491</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -89.37038 ymin: 43.08522 xmax: -89.35394 ymax: 43.09492</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 8</span></span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 8</span></span>
 <span><span class="co">#&gt;   id    gnis_name   comid reachcode raindrop_pathDist measure intersection_point</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> nhdF… Yahara R…  1.33<span style="color: #949494;">e</span>7 07090002…              91.7    42.4 <span style="color: #949494;">&lt;dbl [2]&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> rain… <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  <span style="color: #BB0000;">NA</span>                     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   <span style="color: #949494;">&lt;dbl [0]&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;LINESTRING [°]&gt;</span></span></span>
+<span><span class="co">#&gt; * &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;            </span></span>
+<span><span class="co">#&gt; 1 nhdF… Yahara R…  1.33e7 07090002…              91.3    42.3 &lt;dbl [2]&gt;         </span></span>
+<span><span class="co">#&gt; 2 rain… &lt;NA&gt;      NA      &lt;NA&gt;                   NA      NA   &lt;dbl [0]&gt;         </span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: geometry &lt;LINESTRING [°]&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">start_comid</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowline</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -326,10 +361,10 @@ below.</p>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: -89.37037 ymin: 43.08521 xmax: -89.35393 ymax: 43.09491</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 4</span></span>
 <span><span class="co">#&gt;   sourceName    identifier    comid                                     geometry</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;LINESTRING [°]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> NHDPlus comid 13293750   13<span style="text-decoration: underline;">293</span>750 (-89.37037 43.09491, -89.36997 43.09475, -8…</span></span></code></pre></div>
+<span><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;         &lt;int&gt;                             &lt;LINESTRING [°]&gt;</span></span>
+<span><span class="co">#&gt; 1 NHDPlus comid 13293750   13293750 (-89.37037 43.09491, -89.36997 43.09475, -8…</span></span></code></pre></div>
 <p>We can use <code><a href="../reference/get_nldi_feature.html">get_nldi_feature()</a></code> as a way to make sure the
 featureID is available for the chosen “featureSource”. Now that we know
 the NLDI has our comid, we can use the “upstreamTributaries” navigation
@@ -355,6 +390,8 @@ shown below.</p>
 <span>                                      output_file <span class="op">=</span> <span class="va">output_file_download</span>,</span>
 <span>                                      nhdplus_data <span class="op">=</span> <span class="st">"download"</span>, return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                      overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; {"op":"in","args":[{"property":"comid"},[13293376,13293378,13293380,13293382,13293384,13293386,13293388,13293390,13293392,13293394,13293396,13293398,13293400,13293404,13293406,13293410,13293412,13293416,13293418,13293420,13293422,13293424,13293426,13293428,13293430,13293432,13293434,13293436,13293438,13293440,13293442,13293444,13293446,13293448,13293450,13293452,13293454,13293456,13293458,13293460,13293462,13293464,13293468,13293472,13293474,13293476,13293478,13293480,13293484,13293486,13293488,13293490,13293492,13293494,13293496,13293498,13293502,13293504,13293506,13293508,13293512,13293514,13293516,13293518,13293520,13293522,13293524,13293526,13293530,13293532,13293536,13293540,13293542,13293548,13293550,13293552,13293554,13293556,13293558,13293562,13293564,13293568,13293570,13293572,13293574,13293576,13293578,13293584,13293586,13293588,13293590,13293600,13293612,13293614,13293620,13293624,13293634,13293646,13293672,13293674,13293676,13293678,13293688,13293690,13293692,13293694,13293696,13293750,13294110,13294112,13294114,13294116,13294118,13294120,13294122,13294124,13294128,13294130,13294132,13294134,13294138,13294140,13294144,13294148,13294150,13294152,13294154,13294158,13294166,13294168,13294174,13294176,13294178,13294184,13294264,13294268,13294270,13294272,13294274,13294276,13294278,13294280,13294282,13294284,13294286,13294288,13294290,13294292,13294294,13294296,13294298,13294300,13294304,13294306,13294308,13294310,13294312,13294314,13294366,13294368,13294382,13294384,13294386,13294394,13302588,13302590,937090090,937090091]]}</span></span>
 <span></span>
 <span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">output_file_download</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Driver: GPKG </span></span>
@@ -513,8 +550,8 @@ hydrogeofetch to fetch flowline data and hydroloom to index points to
 those flowlines.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="va">start_point</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   point_id    comid      reachcode reachcode_measure       offset</span></span>
-<span><span class="co">#&gt; 1        1 13293750 07090002007373           41.8003 0.0009619034</span></span></code></pre></div>
+<span><span class="co">#&gt;   point_id    comid id_measure      reachcode reachcode_measure       offset</span></span>
+<span><span class="co">#&gt; 1        1 13293750   41.80031 07090002007373           41.8003 0.0009619034</span></span></code></pre></div>
 <p><code>index_points_to_lines()</code> works with a list of points too.
 For demonstration purposes, we can use the gages in our subset from
 above.</p>
@@ -522,32 +559,32 @@ above.</p>
 <code class="sourceCode R"><span><span class="va">gage</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">output_file</span>, <span class="st">"Gage"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/index_points_to_lines.html" class="external-link">index_points_to_lines</a></span><span class="op">(</span><span class="va">flowline</span>, <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">gage</span><span class="op">)</span>, precision <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    point_id    comid      reachcode reachcode_measure         offset</span></span>
-<span><span class="co">#&gt; 1         2 13294276 07090002008387           14.8355 0.000020891030</span></span>
-<span><span class="co">#&gt; 2         3 13294264 07090002007650           56.4439 0.000031104771</span></span>
-<span><span class="co">#&gt; 3         4 13293750 07090002007373           42.5089 0.000016222605</span></span>
-<span><span class="co">#&gt; 4         5 13294312 07090002008383            1.2211 0.000013118677</span></span>
-<span><span class="co">#&gt; 5         6 13294264 07090002007650           41.0519 0.000040136119</span></span>
-<span><span class="co">#&gt; 6         7 13294264 07090002007650            2.0872 0.000009600705</span></span>
-<span><span class="co">#&gt; 7         9 13294300 07090002008379           85.4441 0.000024421783</span></span>
-<span><span class="co">#&gt; 8        10 13293690 07090002007648            0.7642 0.000022907103</span></span>
-<span><span class="co">#&gt; 9        11 13294264 07090002007650           71.4042 0.008212854054</span></span>
-<span><span class="co">#&gt; 10       13 13294176 07090002007664            6.1174 0.000037883863</span></span>
-<span><span class="co">#&gt; 11       15 13294290 07090002008374           88.0213 0.000037222413</span></span>
-<span><span class="co">#&gt; 12       16 13294138 07090002007709           73.3717 0.000010914584</span></span>
-<span><span class="co">#&gt; 13       18 13293486 07090002007724            8.8530 0.000019633805</span></span>
-<span><span class="co">#&gt; 14       19 13293512 07090002007723            5.9868 0.000003962819</span></span>
-<span><span class="co">#&gt; 15       20 13294176 07090002007664           16.9958 0.000011728694</span></span>
-<span><span class="co">#&gt; 16       22 13293474 07090002007713           72.0814 0.000009896451</span></span>
-<span><span class="co">#&gt; 17       23 13293520 07090002007676           18.1942 0.000038997161</span></span>
-<span><span class="co">#&gt; 18       26 13293512 07090002007723           68.1716 0.000019188910</span></span>
-<span><span class="co">#&gt; 19       27 13294264 07090002007650           97.1673 0.000022821372</span></span>
-<span><span class="co">#&gt; 20       29 13293456 07090002007738           90.8364 0.000027257370</span></span>
-<span><span class="co">#&gt; 21       31 13293512 07090002007723           67.6223 0.000030945071</span></span>
-<span><span class="co">#&gt; 22       33 13293576 07090002008236            2.7112 0.000016468104</span></span></code></pre></div>
+<span><span class="co">#&gt;    point_id    comid id_measure      reachcode reachcode_measure         offset</span></span>
+<span><span class="co">#&gt; 1         2 13294276  14.835510 07090002008387           14.8355 0.000020891030</span></span>
+<span><span class="co">#&gt; 2         3 13294264  56.443870 07090002007650           56.4439 0.000031104771</span></span>
+<span><span class="co">#&gt; 3         4 13293750  42.508943 07090002007373           42.5089 0.000016222605</span></span>
+<span><span class="co">#&gt; 4         5 13294312   1.221144 07090002008383            1.2211 0.000013118677</span></span>
+<span><span class="co">#&gt; 5         6 13294264  41.051940 07090002007650           41.0519 0.000040136119</span></span>
+<span><span class="co">#&gt; 6         7 13294264   2.087173 07090002007650            2.0872 0.000009600705</span></span>
+<span><span class="co">#&gt; 7         9 13294300  85.444074 07090002008379           85.4441 0.000024421783</span></span>
+<span><span class="co">#&gt; 8        10 13293690   6.969749 07090002007648            0.7642 0.000022907103</span></span>
+<span><span class="co">#&gt; 9        11 13294264  71.404235 07090002007650           71.4042 0.008212854054</span></span>
+<span><span class="co">#&gt; 10       13 13294176   6.117427 07090002007664            6.1174 0.000037883863</span></span>
+<span><span class="co">#&gt; 11       15 13294290  88.021298 07090002008374           88.0213 0.000037222413</span></span>
+<span><span class="co">#&gt; 12       16 13294138  73.371669 07090002007709           73.3717 0.000010914584</span></span>
+<span><span class="co">#&gt; 13       18 13293486   8.853011 07090002007724            8.8530 0.000019633805</span></span>
+<span><span class="co">#&gt; 14       19 13293512   5.986762 07090002007723            5.9868 0.000003962819</span></span>
+<span><span class="co">#&gt; 15       20 13294176  16.995826 07090002007664           16.9958 0.000011728694</span></span>
+<span><span class="co">#&gt; 16       22 13293474  72.081391 07090002007713           72.0814 0.000009896451</span></span>
+<span><span class="co">#&gt; 17       23 13293520  18.194214 07090002007676           18.1942 0.000038997161</span></span>
+<span><span class="co">#&gt; 18       26 13293512  68.171618 07090002007723           68.1716 0.000019188910</span></span>
+<span><span class="co">#&gt; 19       27 13294264  97.167344 07090002007650           97.1673 0.000022821372</span></span>
+<span><span class="co">#&gt; 20       29 13293456  90.836380 07090002007738           90.8364 0.000027257370</span></span>
+<span><span class="co">#&gt; 21       31 13293512  67.622334 07090002007723           67.6223 0.000030945071</span></span>
+<span><span class="co">#&gt; 22       33 13293576  62.499937 07090002008236            2.7112 0.000016468104</span></span></code></pre></div>
 <p>See the <a href="https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing" class="external-link">hydroloom
-indexing documentation</a> and
-<code>vignette("migrating_from_nhdplusTools")</code> for more.</p>
+indexing documentation</a> and the <a href="https://doi-usgs.github.io/hydrogeofetch/articles/migrating_from_nhdplusTools.html">migrating
+from nhdplusTools article</a> for more.</p>
 </div>
   </div>
 

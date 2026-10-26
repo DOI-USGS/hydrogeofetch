@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hydrogeofetch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
       </span>
     </div>
 
@@ -58,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/doi-usgs/nhdplusTools/" class="external-link">
+  <a href="https://github.com/DOI-USGS/hydrogeofetch/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -80,7 +80,7 @@
                         <h4 data-toc-skip class="author"><a href="mailto:dblodgett@usgs.gov" class="email">dblodgett@usgs.gov</a></h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/doi-usgs/nhdplusTools/blob/HEAD/vignettes/articles/plot_nhdplus.Rmd" class="external-link"><code>vignettes/articles/plot_nhdplus.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DOI-USGS/hydrogeofetch/blob/HEAD/vignettes/articles/plot_nhdplus.Rmd" class="external-link"><code>vignettes/articles/plot_nhdplus.Rmd</code></a></small>
       <div class="hidden name"><code>plot_nhdplus.Rmd</code></div>
 
     </div>
@@ -98,7 +98,7 @@ approach to building maps with NHDPlus data.</p>
 <p><strong><code>plot_nhdplus</code> is a work in progress. Not all
 inputs in the function have been implemented as of 11/18/2019 and
 additional functionality will be added later. Please leave feature
-requests and issues you find in an <a href="https://github.com/DOI-USGS/nhdplusTools/" class="external-link">issue
+requests and issues you find in an <a href="https://github.com/DOI-USGS/hydrogeofetch/" class="external-link">issue
 here</a>.</strong></p>
 <p><code>plot_nhdplus</code> is a function that makes getting a simple
 plot of NHDPlus data as easy as possible. It works with other functions
@@ -170,8 +170,7 @@ other options are possible with <code>discover_nhdplus_id</code> and
 <code><a href="https://rdrr.io/pkg/dataRetrieval/man/get_nldi_sources.html" class="external-link">dataRetrieval::get_nldi_sources</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.14.1, GDAL 3.12.1, PROJ 9.7.1; sf_use_s2() is TRUE</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://doi-usgs.github.io/nhdplusTools/">hydrogeofetch</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://doi-usgs.github.io/hydrogeofetch/">hydrogeofetch</a></span><span class="op">)</span></span>
 <span><span class="va">nwissite</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>featureSource <span class="op">=</span> <span class="st">"nwissite"</span>, </span>
 <span>                     featureID <span class="op">=</span> <span class="st">"USGS-05428500"</span><span class="op">)</span></span>
 <span></span>
@@ -183,6 +182,8 @@ other options are possible with <code>discover_nhdplus_id</code> and
 <span>                          output_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">work_dir</span>, <span class="st">"nhdplus.gpkg"</span><span class="op">)</span>,</span>
 <span>                          nhdplus_data <span class="op">=</span> <span class="st">"download"</span>,</span>
 <span>                          overwrite <span class="op">=</span> <span class="cn">TRUE</span>, return_data <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; {"op":"in","args":[{"property":"comid"},[13293634,13293750,13294298,13294300,13294304,13294308,13294310,13294312,13294314,13294368]]}</span></span>
 <span></span>
 <span><span class="va">flowline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="va">nhdplus</span>, <span class="st">"NHDFlowline_Network"</span><span class="op">)</span></span>
 <span></span>
@@ -190,7 +191,8 @@ other options are possible with <code>discover_nhdplus_id</code> and
 <span>                               mode <span class="op">=</span> <span class="st">"upstreamTributaries"</span>,</span>
 <span>                               data_source <span class="op">=</span> <span class="st">"nwissite"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nldi_basin.html">get_nldi_basin</a></span><span class="op">(</span><span class="va">nwissite</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nldi_basin.html">get_nldi_basin</a></span><span class="op">(</span><span class="va">nwissite</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-05428500/basin?simplify=true&amp;splitCatchment=false</span></span></code></pre></div>
 <p>Now we have a file at the path held in the variable
 <code>nhdplus</code> and three <code>sf</code> <code>data.frame</code>s
 with contents that look like:</p>

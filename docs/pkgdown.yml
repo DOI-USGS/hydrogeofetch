@@ -1,4 +1,4 @@
-pandoc: 3.8.3
+pandoc: '3.12'
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -9,7 +9,7 @@ articles:
   articles/migrating_from_nhdplusTools: migrating_from_nhdplusTools.html
   articles/nhdplushr: nhdplushr.html
   articles/plot_nhdplus: plot_nhdplus.html
-last_built: 2026-07-22T16:50Z
+last_built: 2026-10-25T21:29Z
 urls:
-  reference: https://doi-usgs.github.io/nhdplusTools/reference
-  article: https://doi-usgs.github.io/nhdplusTools/articles
+  reference: https://doi-usgs.github.io/hydrogeofetch/reference
+  article: https://doi-usgs.github.io/hydrogeofetch/articles

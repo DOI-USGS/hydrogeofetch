@@ -65,6 +65,7 @@ reference:
       Functions that make the package easier to work with.
   - contents:
       - '`hydrogeofetch_cache_settings`'
+      - '`hydrogeofetch_cache_clear`'
       - '`nhdplus_path`'
       - '`hydrogeofetch_data_dir`'
       - '`plot_nhdplus`'

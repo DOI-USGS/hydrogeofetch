@@ -1,6 +1,25 @@
 hydrogeofetch 2.0.5
 ==========
 
+`get_mainstem_flowlines()` returns the flowlines of geoconnex mainstems from
+NHDPlusV2, NHDPlusHR or 3DHP in the shape hydroloom's aggregate flowpath
+functions take, with `mainstemid` set to the mainstem uri. With
+`include_confluences = TRUE` it adds the outlet flowline of each identified
+tributary so that `hydroloom::get_confluences()` can find where tributaries
+join. hydrogeofetch now requires hydroloom 1.3.0.
+
+`translate_hydrolocations()` places points indexed to one of those networks on
+another, keeping each point on the mainstem its source identifier refers to.
+It indexes to the target mainstem's flowlines directly, or records the point
+as a distance from a confluence both networks carry and lays that distance out
+on the target.
+
+`translate_flowlines()` returns the pieces of target flowlines that cover each
+source flowline on its own mainstem.
+
+OGC API Features requests no longer fetch the queryables of every collection
+on the server before each query; only the collection list is read.
+
 - Failed web service requests now report the service's error message and whether retrying can help.
 - `get_characteristics_metadata()` falls back to ScienceBase when the S3 copy is unavailable (#487).
 - `get_drainage_area_estimates()` no longer copies `catchment_data` on every call.

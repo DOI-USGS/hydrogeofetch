@@ -159,9 +159,11 @@ query_usgs_oafeat <- function(AOI = NULL,  ids = NULL,
 #'
 #' @return data.frame containing layers available and fields that are available to query.
 #' @param landing_url url of landing page of OGC API
+#' @param queryables logical. If FALSE, only list the collections; skips one
+#' queryables request per collection.
 #' @noRd
 #'
-discover_oafeat <- function(landing_url) {
+discover_oafeat <- function(landing_url, queryables = TRUE) {
 
   landing <- mem_get_json(landing_url)
   if(is.null(landing)) {
@@ -187,6 +189,8 @@ discover_oafeat <- function(landing_url) {
                                              "rel", "self", n = 1)$href)))) |>
     dplyr::filter(.data$itemType == "feature") |>
     dplyr::select(-"itemType")
+
+  if(!queryables) return(collections_meta)
 
 
   q_ables <- dplyr::bind_rows(lapply(collections$collections, \(x) {
@@ -231,14 +235,19 @@ get_oafeat <- function(base,
                        properties = NULL,
                        skip_geometry = FALSE) {
 
-  avail <- discover_oafeat(base)
-
-  if(is.null(avail)) return(NULL)
-
   if(is.null(type)) {
+    avail <- discover_oafeat(base)
+
+    if(is.null(avail)) return(NULL)
+
     warning("type is required, returning choices.")
     return(avail)
   }
+
+  # only collection ids are needed here; queryables cost one request each
+  avail <- discover_oafeat(base, queryables = FALSE)
+
+  if(is.null(avail)) return(NULL)
 
   test <- grepl(paste0("^", type), unique(avail$id))
   if(sum(test) == 1) type <- unique(avail$id)[test]

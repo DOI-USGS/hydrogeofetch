@@ -118,7 +118,8 @@ coarsen_coords <- function(txt, digits = 3) {
 
 httptest2::set_redactor(function(x) {
   x$url <- coarsen_coords(x$url)
-  if(is.raw(x$body$data))
+  # recording passes responses through here too; their body is raw, not a list
+  if(is.list(x$body) && is.raw(x$body$data))
     x$body$data <- charToRaw(coarsen_coords(rawToChar(x$body$data)))
   x
 })

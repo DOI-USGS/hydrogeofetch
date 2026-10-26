@@ -78,6 +78,9 @@ reference:
       - '`add_mainstems`'
       - '`check_mainstems`'
       - '`update_mainstems`'
+      - '`get_mainstem_flowlines`'
+      - '`translate_hydrolocations`'
+      - '`translate_flowlines`'
 
 articles:
   - title: Vignettes

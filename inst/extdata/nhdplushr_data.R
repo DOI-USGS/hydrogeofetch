@@ -18,11 +18,13 @@ hr_gpkg <- file.path(work_dir, "hr_data.gpkg")
 if(!exists("layers")) {
   layers <- NULL
 }
-suppressWarnings(
-  hr_data <- hydrogeofetch::get_nhdplushr(work_dir, layers = layers,
-                                         out_gpkg = hr_gpkg,
-                                         pattern = "03_sub.gpkg")
-)
+if(file.exists(hr_source)) {
+  suppressWarnings(
+    hr_data <- hydrogeofetch::get_nhdplushr(work_dir, layers = layers,
+                                           out_gpkg = hr_gpkg,
+                                           pattern = "03_sub.gpkg")
+  )
+}
 # hr_catchment <- sf::read_sf(hr_path, "NHDPlusCatchment")
 # hr_catchment <- sf::st_transform(hr_catchment, proj)
 #

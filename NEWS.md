@@ -25,6 +25,7 @@ on the server before each query; only the collection list is read.
 - `get_drainage_area_estimates()` no longer copies `catchment_data` on every call.
 - Removed use of `%||%`, which requires R 4.4 (#483).
 - Added a 3DHP flowline sample for the New Hope basin.
+- The sample data scripts in `inst/extdata` no longer stop with an error when the download fails; they leave their objects undefined so callers can check with `exists()`.
 
 hydrogeofetch 2.0.4
 ==========

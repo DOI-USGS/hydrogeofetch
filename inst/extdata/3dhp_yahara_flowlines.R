@@ -20,4 +20,6 @@ download_pkg_data("3dhp_yahara_flowlines.geojson",
                   "https://doi-usgs.github.io/hydrogeofetch/data/3dhp_yahara_flowlines.geojson",
                   data_dir)
 
-sample_3dhp_data <- file.path(data_dir, "3dhp_yahara_flowlines.geojson")
+if(file.exists(file.path(data_dir, "3dhp_yahara_flowlines.geojson"))) {
+  sample_3dhp_data <- file.path(data_dir, "3dhp_yahara_flowlines.geojson")
+}

@@ -6,4 +6,6 @@ download_pkg_data("petapsco_flowlines.gpkg",
                   "https://doi-usgs.github.io/hydrogeofetch/data/petapsco_flowlines.gpkg",
                   data_dir)
 
-sample_flines <- sf::read_sf(file.path(data_dir, "petapsco_flowlines.gpkg"))
+if(file.exists(file.path(data_dir, "petapsco_flowlines.gpkg"))) {
+  sample_flines <- sf::read_sf(file.path(data_dir, "petapsco_flowlines.gpkg"))
+}

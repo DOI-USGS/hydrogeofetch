@@ -29,9 +29,19 @@ download_pkg_data <- function(f, u, work_dir) {
     file.copy(project_file, d, overwrite = TRUE)
   } else {
     url <- u
-    invisible(httr2::request(url) |>
-                httr2::req_retry(max_tries = 3) |>
-                httr2::req_perform(path = d))
+    resp <- tryCatch(httr2::request(url) |>
+                       httr2::req_retry(max_tries = 3) |>
+                       httr2::req_perform(path = d),
+                     error = function(e) {
+                       message("could not download ", url, ": ", conditionMessage(e))
+                       NULL
+                     })
+
+    # a failed request can leave the error body or a partial file at d
+    if(is.null(resp)) {
+      unlink(d)
+      return(invisible(NULL))
+    }
   }
 
   if(grepl(".zip$", d)) {

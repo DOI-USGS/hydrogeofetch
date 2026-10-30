@@ -1,0 +1,2791 @@
+{
+    "collections": [
+        {
+            "id": "hu02",
+            "title": "HU02",
+            "description": "Two-digit Hydrologic Regions from USGS NHDPlus High Resolution",
+            "keywords": [
+                "Hydrologic Regions",
+                "HU02",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Hydrologic Unit Documentation",
+                    "href": "https://water.usgs.gov/themes/hydrologic-units/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu02?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu02?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu02?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu02/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu02/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu02/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu02/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/hu02/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu02/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu02/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/hu02/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu02/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu02/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "hu04",
+            "title": "HU04",
+            "description": "Four-digit Hydrologic Subregion from USGS NHDPlus High Resolution",
+            "keywords": [
+                "Hydrologic Subregions",
+                "HU04",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Hydrologic Unit Documentation",
+                    "href": "https://water.usgs.gov/themes/hydrologic-units/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu04?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu04?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu04?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu04/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu04/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu04/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu04/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/hu04/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu04/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu04/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/hu04/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu04/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu04/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "hu06",
+            "title": "HU06",
+            "description": "Six-digit Hydrologic Basins from USGS NHDPlus High Resolution",
+            "keywords": [
+                "Hydrologic Basins",
+                "HU06",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Hydrologic Unit Documentation",
+                    "href": "https://water.usgs.gov/themes/hydrologic-units/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu06?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu06?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu06?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu06/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu06/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu06/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu06/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/hu06/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu06/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu06/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/hu06/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu06/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu06/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "hu08",
+            "title": "HU08",
+            "description": "Eight-digit Hydrologic Subbasins from USGS NHDPlus High Resolution",
+            "keywords": [
+                "Hydrologic Subbasins",
+                "HU08",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Hydrologic Unit Documentation",
+                    "href": "https://water.usgs.gov/themes/hydrologic-units/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu08?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu08?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu08?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu08/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu08/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu08/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu08/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/hu08/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu08/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu08/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/hu08/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu08/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu08/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "hu10",
+            "title": "HU10",
+            "description": "Ten-digit Watersheds from USGS NHDPlus High Resolution",
+            "keywords": [
+                "Watersheds",
+                "HU10",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://www.usgs.gov/core-science-systems/ngp/national-hydrography/access-national-hydrography-products",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Hydrologic Unit Documentation",
+                    "href": "https://water.usgs.gov/themes/hydrologic-units/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu10?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu10?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu10?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu10/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu10/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu10/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu10/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/hu10/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu10/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu10/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/hu10/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu10/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu10/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "hu12",
+            "title": "HU12",
+            "description": "Twelve-digit Subwatershed from USGS Water Boundary Dataset (WBD)",
+            "keywords": [
+                "Subwatershed",
+                "HU12",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://doi.org/10.5066/P1HR67C5",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Hydrologic Unit Documentation",
+                    "href": "https://water.usgs.gov/themes/hydrologic-units/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu12?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu12?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu12?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu12/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu12/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu12/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu12/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/hu12/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/hu12/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu12/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/hu12/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/hu12/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/hu12/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "nat_aq",
+            "title": "USGS National Aquifers",
+            "description": "National Aquifers of the United States from USGS National Water Information System National Aquifer code list",
+            "keywords": [
+                "National Aquifers",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://cida.usgs.gov/ngwmn/",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "code list with links",
+                    "href": "https://water.usgs.gov/ogw/NatlAqCode-reflist.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/nat_aq/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -160,
+                            18,
+                            -64,
+                            50
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "principal_aq",
+            "title": "USGS Principal Aquifers",
+            "description": "Principal Aquifers of the United States from 2003 USGS data release",
+            "keywords": [
+                "Principal Aquifers",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://water.usgs.gov/GIS/metadata/usgswrd/XML/aquifers_us.xml",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/principal_aq/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -160,
+                            18,
+                            -64,
+                            50
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "sec_hydrg_reg",
+            "title": "USGS Secondary Hydrogeologic Regions",
+            "description": "Secondary Hydrogeologic Regions of the Conterminous United States from 2018 USGS data release",
+            "keywords": [
+                "Hydrogeologic Regions",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://doi.org/10.5066/F7F76BSS",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "report documenting data",
+                    "href": "https://doi.org/10.1111/gwat.12806",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/sec_hydrg_reg/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -125,
+                            26,
+                            -66,
+                            50
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "gages",
+            "title": "Reference Gages",
+            "description": "United States Community Contributed Reference Stream Gages",
+            "keywords": [
+                "Stream Gages",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://github.com/internetofwater/ref_gages",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/gages?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/gages?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/gages?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/gages/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/gages/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/gages/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/gages/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/gages/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/gages/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/gages/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/gages/items?f=csv"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "mainstems",
+            "title": "Reference Mainstems",
+            "description": "United States Community Contributed Reference Mainstem Rivers",
+            "keywords": [
+                "Mainstem",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://github.com/internetofwater/ref_rivers",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/mainstems?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -125,
+                            26,
+                            -66,
+                            50
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "mainstems_v3",
+            "title": "Reference Mainstems V3",
+            "description": "United States Community Contributed Reference Mainstem Rivers",
+            "keywords": [
+                "Mainstem",
+                "USGS"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://github.com/internetofwater/ref_rivers",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/mainstems_v3/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -125,
+                            26,
+                            -66,
+                            50
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "dams",
+            "title": "Reference Dams",
+            "description": "United States Community Contributed Reference Dams",
+            "keywords": [
+                "Dams",
+                "Community"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Data source",
+                    "href": "https://github.com/internetofwater/ref_dams",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/dams?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/dams?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/dams?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/dams/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/dams/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/dams/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/dams/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/dams/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/dams/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/dams/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/dams/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/dams/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/dams/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "pws",
+            "title": "Public Water Systems",
+            "description": "Public Water Systems from United States EPA Safe Drinking Water Information System",
+            "keywords": [
+                "Public Water Systems",
+                "EPA"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "EPA PWSID List source",
+                    "href": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://github.com/cgs-earth/ref_pws",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/pws?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/pws?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/pws?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/pws/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/pws/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/pws/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/pws/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/pws/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/pws/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/pws/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/pws/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/pws/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/pws/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "states",
+            "title": "States",
+            "description": "States from United States Census Bureau Cartographic Boundaries",
+            "keywords": [
+                "States",
+                "Census"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Census data source",
+                    "href": "https://data.census.gov/cedsci",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/states?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/states?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/states?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/states/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/states/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/states/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/states/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/states/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/states/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/states/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/states/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/states/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/states/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "counties",
+            "title": "Counties",
+            "description": "Counties from United States Census Bureau Cartographic Boundaries",
+            "keywords": [
+                "Counties",
+                "Census"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Census data source",
+                    "href": "https://data.census.gov/cedsci",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/counties?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/counties?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/counties?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/counties/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/counties/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/counties/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/counties/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/counties/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/counties/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/counties/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/counties/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/counties/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/counties/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "aiannh",
+            "title": "American Indian/Alaska Native Areas/Hawaiian Home Lands",
+            "description": "Federally recognized American Indian/Alaska Native Areas/Hawaiian Home Lands (AIANNH)",
+            "keywords": [
+                "American Indian Areas",
+                "Alaska Native Areas",
+                "Hawaiian Home Lands",
+                "Census"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/aiannh?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/aiannh?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/aiannh?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/aiannh/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "cbsa",
+            "title": "Core-based statistical areas",
+            "description": "United States Metropolitan and Micropolitan Statistical Areas",
+            "keywords": [
+                "CBSA",
+                "Census"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/cbsa?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/cbsa?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/cbsa?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/cbsa/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "ua10",
+            "title": "Urban Areas",
+            "description": "United States Urbanized Areas and Urban Clusters from the 2010 Census",
+            "keywords": [
+                "Urban Areas",
+                "Census"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Descriptive data source",
+                    "href": "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/urban-rural/2010-urban-rural.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/ua10?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/ua10?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/ua10?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/ua10/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/ua10/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/ua10/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/ua10/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/ua10/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/ua10/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/ua10/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/ua10/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/ua10/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/ua10/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id": "places",
+            "title": "Places",
+            "description": "United States legally incorporated and Census designated places",
+            "keywords": [
+                "Places",
+                "Census"
+            ],
+            "links": [
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Geographic data source",
+                    "href": "https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "canonical",
+                    "title": "Census data source",
+                    "href": "https://data.census.gov/cedsci",
+                    "hreflang": "en-US"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "root",
+                    "title": "The landing page of this server as JSON",
+                    "href": "https://reference.geoconnex.us?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "root",
+                    "title": "The landing page of this server as HTML",
+                    "href": "https://reference.geoconnex.us?f=html"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "self",
+                    "title": "This document as JSON",
+                    "href": "https://reference.geoconnex.us/collections/places?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "alternate",
+                    "title": "This document as RDF (JSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/places?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "alternate",
+                    "title": "This document as HTML",
+                    "href": "https://reference.geoconnex.us/collections/places?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in JSON",
+                    "href": "https://reference.geoconnex.us/collections/places/schema?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title": "Schema of collection in HTML",
+                    "href": "https://reference.geoconnex.us/collections/places/schema?f=html"
+                },
+                {
+                    "type": "application/schema+json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as JSON",
+                    "href": "https://reference.geoconnex.us/collections/places/queryables?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title": "Queryables for this collection as HTML",
+                    "href": "https://reference.geoconnex.us/collections/places/queryables?f=html"
+                },
+                {
+                    "type": "application/geo+json",
+                    "rel": "items",
+                    "title": "Items as GeoJSON",
+                    "href": "https://reference.geoconnex.us/collections/places/items?f=json"
+                },
+                {
+                    "type": "application/ld+json",
+                    "rel": "items",
+                    "title": "Items as RDF (GeoJSON-LD)",
+                    "href": "https://reference.geoconnex.us/collections/places/items?f=jsonld"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "items",
+                    "title": "Items as HTML",
+                    "href": "https://reference.geoconnex.us/collections/places/items?f=html"
+                },
+                {
+                    "type": "text/csv; charset=utf-8",
+                    "rel": "items",
+                    "title": "Items as CSV",
+                    "href": "https://reference.geoconnex.us/collections/places/items?f=csv"
+                },
+                {
+                    "type": "application/json",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as JSON",
+                    "href": "https://reference.geoconnex.us/collections/places/tiles?f=json"
+                },
+                {
+                    "type": "text/html",
+                    "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+                    "title": "Tiles as HTML",
+                    "href": "https://reference.geoconnex.us/collections/places/tiles?f=html"
+                }
+            ],
+            "extent": {
+                "spatial": {
+                    "bbox": [
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                },
+                "temporal": {
+                    "interval": [
+                        [
+                            null,
+                            null
+                        ]
+                    ]
+                }
+            },
+            "itemType": "feature",
+            "crs": [
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+    ],
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "https://reference.geoconnex.us/collections?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "https://reference.geoconnex.us/collections?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "https://reference.geoconnex.us/collections?f=html"
+        }
+    ]
+}

@@ -472,7 +472,17 @@ hgf_download <- function(url, path, progress = TRUE) {
 }
 
 #' @noRd
-mem_get_json <- memoise::memoise(\(url) hgf_json(url, simplifyVector = FALSE))
+mem_get_json_cached <- memoise::memoise(\(url) hgf_json(url, simplifyVector = FALSE))
+
+#' get json through the memoise cache, retrying failures on the next call
+#' @description hgf_json() returns NULL on a failed request. Caching that NULL
+#' would make every later call for the url fail for the rest of the session.
+#' @noRd
+mem_get_json <- function(url) {
+  out <- mem_get_json_cached(url)
+  if(is.null(out)) memoise::drop_cache(mem_get_json_cached)(url)
+  out
+}
 
 #' round a lon/lat bounding box outward
 #' @description Coordinate transforms differ in their last few digits between

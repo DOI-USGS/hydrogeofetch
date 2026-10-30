@@ -1,0 +1,86 @@
+{
+    "links": [
+        {
+            "rel": "about",
+            "type": "text/html",
+            "title": "National Hydrologic Geospatial Fabric Feature Data Server",
+            "href": "https://code.usgs.gov/wma/nhgf/pygeoapi"
+        },
+        {
+            "rel": "self",
+            "type": "application/json",
+            "title": "This document as JSON",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi?f=json"
+        },
+        {
+            "rel": "alternate",
+            "type": "application/ld+json",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi?f=jsonld"
+        },
+        {
+            "rel": "alternate",
+            "type": "text/html",
+            "title": "This document as HTML",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi?f=html",
+            "hreflang": "en-US"
+        },
+        {
+            "rel": "service-desc",
+            "type": "application/vnd.oai.openapi+json;version=3.0",
+            "title": "The OpenAPI definition as JSON",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/openapi"
+        },
+        {
+            "rel": "service-doc",
+            "type": "text/html",
+            "title": "The OpenAPI definition as HTML",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/openapi?f=html",
+            "hreflang": "en-US"
+        },
+        {
+            "rel": "conformance",
+            "type": "application/json",
+            "title": "Conformance",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/conformance"
+        },
+        {
+            "rel": "data",
+            "type": "application/json",
+            "title": "Collections",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/collections"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+            "type": "application/json",
+            "title": "Processes",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/processes"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+            "type": "application/json",
+            "title": "The list of supported tiling schemes as JSON",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/TileMatrixSets?f=json"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+            "type": "text/html",
+            "title": "The list of supported tiling schemes as HTML",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/TileMatrixSets?f=html"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "type": "application/json",
+            "title": "Jobs",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/jobs"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "type": "text/html",
+            "title": "Jobs",
+            "href": "https://api.water.usgs.gov:443/fabric/pygeoapi/jobs?f=html"
+        }
+    ],
+    "title": "National Hydrologic Geospatial Fabric Feature Data Server",
+    "description": "This server hosts hydrologic feature data made available as part of the National Hydrologic Geospatial Fabric."
+}

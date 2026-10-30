@@ -28,7 +28,7 @@ URL: https://doi-usgs.github.io/hydrogeofetch/ https://github.com/DOI-USGS/hydro
 BugReports: https://github.com/DOI-USGS/hydrogeofetch/issues/
 Depends:
     R (>= 4.1)
-Imports: hydroloom (>= 1.3.0), dataRetrieval, dplyr, sf, units, jsonlite, httr2, xml2, utils, data.table, methods, arrow, tools, zip, memoise, digest
+Imports: hydroloom (>= 1.3.0), dataRetrieval, dplyr, sf, units, jsonlite, httr2, xml2, utils, data.table, methods, arrow, tools, zip, memoise (>= 2.0.0), digest
 Suggests: testthat, knitr, rmarkdown, ggmap, ggplot2, lwgeom, gifski, leaflet, httptest2, StreamCatTools, terra, maptiles, mapsf
 License: CC0
 Encoding: UTF-8

@@ -97,7 +97,8 @@ If NULL (default) a data.frame of available types is returned</p></dd>
 
 <dt id="arg-universalreferenceid">universalreferenceid<a class="anchor" aria-label="anchor" href="#arg-universalreferenceid"></a></dt>
 <dd><p>character vector of hydrolocation universal
-reference ids such as reachcodes</p></dd>
+reference ids. The service only populates these on sink, spring and
+waterbody outlet hydrolocations.</p></dd>
 
 
 <dt id="arg-t-srs">t_srs<a class="anchor" aria-label="anchor" href="#arg-t-srs"></a></dt>
@@ -184,12 +185,13 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-in"><span><span class="co"># ids = "workunitid:300585" -- not run here as a work unit is tens of</span></span></span>
 <span class="r-in"><span><span class="co"># thousands of features.</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># given universalreferenceid (reachcodes), can query for them but only</span></span></span>
+<span class="r-in"><span><span class="co"># given universalreferenceid, can query for them but only</span></span></span>
 <span class="r-in"><span><span class="co"># for hydrolocations. This is useful for looking up mainstem ids.</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">hydrolocation</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">get_3dhp</span><span class="op">(</span>universalreferenceid <span class="op">=</span></span></span>
-<span class="r-in"><span>           <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">hydrolocation</span><span class="op">$</span><span class="va">universalreferenceid</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">urid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">hydrolocation</span><span class="op">$</span><span class="va">universalreferenceid</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">urid</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">get_3dhp</span><span class="op">(</span>universalreferenceid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">urid</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>         type <span class="op">=</span> <span class="st">"hydrolocation"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>

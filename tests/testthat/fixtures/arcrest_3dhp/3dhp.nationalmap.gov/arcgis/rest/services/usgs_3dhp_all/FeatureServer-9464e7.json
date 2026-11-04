@@ -146,7 +146,7 @@
         },
         {
             "id": 40,
-            "name": "HydroLocation - Reach Code, External Connection",
+            "name": "HydroLocation - External Connection",
             "parentLayerId": -1,
             "defaultVisibility": true,
             "subLayerIds": null,

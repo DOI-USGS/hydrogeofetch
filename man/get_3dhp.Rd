@@ -27,7 +27,8 @@ workunitid prefixed ids (e.g. "workunitid:300585")}
 If NULL (default) a data.frame of available types is returned}
 
 \item{universalreferenceid}{character vector of hydrolocation universal
-reference ids such as reachcodes}
+reference ids. The service only populates these on sink, spring and
+waterbody outlet hydrolocations.}
 
 \item{t_srs}{character (PROJ string or EPSG code) or numeric (EPSG code).
 A user specified - target -Spatial Reference System (SRS/CRS) for returned objects.
@@ -91,12 +92,13 @@ plot(sf::st_geometry(SU_wb[grepl("Otsego", SU_wb$gnisidlabel),]),
 # ids = "workunitid:300585" -- not run here as a work unit is tens of
 # thousands of features.
 
-# given universalreferenceid (reachcodes), can query for them but only
+# given universalreferenceid, can query for them but only
 # for hydrolocations. This is useful for looking up mainstem ids.
 
-if(!is.null(hydrolocation)) {
-get_3dhp(universalreferenceid =
-           head(unique(hydrolocation$universalreferenceid), 5),
+urid <- unique(stats::na.omit(hydrolocation$universalreferenceid))
+
+if(length(urid) > 0) {
+get_3dhp(universalreferenceid = head(urid, 5),
          type = "hydrolocation")
 }
 }

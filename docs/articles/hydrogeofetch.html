@@ -585,6 +585,82 @@ above.</p>
 <p>See the <a href="https://doi-usgs.github.io/hydroloom/reference/index.html#indexing-and-linear-referencing" class="external-link">hydroloom
 indexing documentation</a> and the <a href="https://doi-usgs.github.io/hydrogeofetch/articles/migrating_from_nhdplusTools.html">migrating
 from nhdplusTools article</a> for more.</p>
+<div class="section level3">
+<h3 id="mainstems-across-networks">Mainstems across networks<a class="anchor" aria-label="anchor" href="#mainstems-across-networks"></a>
+</h3>
+<p>A mainstem (a river from its headwater to its outlet, identified by a
+geoconnex <code>ref/mainstems</code> uri) is carried by NHDPlusV2,
+NHDPlusHR and 3DHP, but each network breaks it into different flowlines
+with different identifiers. <code><a href="../reference/get_mainstem_flowlines.html">get_mainstem_flowlines()</a></code>
+returns the flowlines of one or more mainstems from any of the three,
+with <code>mainstemid</code> set to the mainstem uri and the topology
+and length attributes hydroloom expects. With
+<code>include_confluences = TRUE</code> it also returns the outlet
+flowline of each identified tributary, which is what
+<code><a href="https://doi-usgs.github.io/hydroloom/reference/get_confluences.html" class="external-link">hydroloom::get_confluences()</a></code> needs to find where
+tributaries join.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_hope</span> <span class="op">&lt;-</span> <span class="st">"https://geoconnex.us/ref/mainstems/2408056"</span></span>
+<span></span>
+<span><span class="va">nh_3dhp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mainstem_flowlines.html">get_mainstem_flowlines</a></span><span class="op">(</span><span class="va">new_hope</span>, <span class="st">"3dhp"</span>, include_confluences <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/?f=json</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
+<span><span class="co">#&gt; Warning: Failed to get JSON from https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query: HTTP 504 Gateway Timeout.</span></span>
+<span><span class="co">#&gt;   &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span></span>
+<span><span class="co">#&gt; &lt;HTML&gt;&lt;HEAD&gt;&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"&gt;</span></span>
+<span><span class="co">#&gt; &lt;TITLE&gt;ERROR: The request could not be satisfied&lt;/TITLE&gt;</span></span>
+<span><span class="co">#&gt; &lt;/HEAD&gt;&lt;BODY&gt;</span></span>
+<span><span class="co">#&gt; &lt;H1&gt;504 Gateway Timeout ERROR&lt;/H1&gt;</span></span>
+<span><span class="co">#&gt; &lt;H2&gt;The request could not be satisfied.&lt;/H2&gt;</span></span>
+<span><span class="co">#&gt; &lt;HR noshade size="1px"&gt;</span></span>
+<span><span class="co">#&gt; We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later</span></span>
+<span></span>
+<span><span class="va">confluences</span> <span class="op">&lt;-</span> <span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/get_confluences.html" class="external-link">get_confluences</a></span><span class="op">(</span><span class="va">nh_3dhp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">confluences</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"/ref/"</span>, <span class="va">confluences</span><span class="op">$</span><span class="va">hydro_location_id</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
+<span><span class="co">#&gt;   mainstemid                                 hydro_location_id id3dhp id_measure</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> https://geoconnex.us/ref/mainstems/2408056 https://geoconne… 4CVG8         100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> https://geoconnex.us/ref/mainstems/2408056 https://geoconne… 30HSV         100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> https://geoconnex.us/ref/mainstems/2408056 https://geoconne… 9MCXM         100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> https://geoconnex.us/ref/mainstems/2408056 https://geoconne… 5U5LZ         100</span></span></code></pre></div>
+<p>Because the mainstem uri is shared, a point or flowline indexed on
+one network can be moved to another while staying on its own river — a
+gage just above a confluence is not pulled onto the tributary.
+<code><a href="../reference/translate_hydrolocations.html">translate_hydrolocations()</a></code> does this for points in one of
+two ways. <code>method = "geometry"</code> indexes each point to the
+target flowlines of its mainstem. <code>method = "hydro_location"</code>
+records each point as a distance from the nearest confluence that both
+networks carry and lays that distance out on the target. The second is
+approximate in absolute terms, since each network puts the confluence in
+its own place, but it keeps the point on the same side of the
+confluence. <code><a href="../reference/translate_flowlines.html">translate_flowlines()</a></code> does the same for
+flowlines, returning the pieces of target flowlines that cover each
+source flowline.</p>
+<p>Both functions read the ref_rivers lookup and updated network
+attribute tables for NHDPlusV2, which are large downloads on first use,
+so the calls below are not run here.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># a point on New Hope River just above the Northeast Creek mouth</span></span>
+<span><span class="va">pt</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">st_sf</a></span><span class="op">(</span>comid <span class="op">=</span> <span class="fl">8894344</span>,</span>
+<span>                geometry <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">78.9763</span>, <span class="fl">35.8355</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                      crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/translate_hydrolocations.html">translate_hydrolocations</a></span><span class="op">(</span><span class="va">pt</span>, <span class="st">"nhdpv2"</span>, <span class="st">"3dhp"</span>, method <span class="op">=</span> <span class="st">"hydro_location"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># a Morgan Creek flowline</span></span>
+<span><span class="fu"><a href="../reference/translate_flowlines.html">translate_flowlines</a></span><span class="op">(</span><span class="fl">8896344</span>, <span class="st">"nhdpv2"</span>, <span class="st">"3dhp"</span><span class="op">)</span></span></code></pre></div>
+<p>Two properties of the data bound these results. 3DHP identifiers are
+not persistent across releases, so a placement on 3DHP holds for the
+release recorded in <code>measured_on</code>. The NHDPlusHR lookup in
+ref_rivers v3.2 covers only part of the country (New Hope is not in it),
+so <code>"nhdphr"</code> returns nothing for many mainstems.</p>
+</div>
 </div>
   </div>
 

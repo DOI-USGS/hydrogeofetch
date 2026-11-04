@@ -61,7 +61,7 @@ test_that("basic 3dhp service requests", {
                                                      type = "hydrolocation"))
 
     test_data <- hydrogeofetch:::query_usgs_arcrest(AOI_new, , service = "3DHP_all",
-                                                   type = "hydrolocation - reach code, external connection")
+                                                   type = "hydrolocation - external connection")
 
     expect_s3_class(test_data, "sf")
   })

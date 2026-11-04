@@ -11,7 +11,8 @@
 #' @param ids character vector of id3dhp ids, mainstem uris, or
 #' workunitid prefixed ids (e.g. "workunitid:300585")
 #' @param universalreferenceid character vector of hydrolocation universal
-#' reference ids such as reachcodes
+#' reference ids. The service only populates these on sink, spring and
+#' waterbody outlet hydrolocations.
 #' @export
 #' @examples
 #' \donttest{
@@ -48,12 +49,13 @@
 #' # ids = "workunitid:300585" -- not run here as a work unit is tens of
 #' # thousands of features.
 #'
-#' # given universalreferenceid (reachcodes), can query for them but only
+#' # given universalreferenceid, can query for them but only
 #' # for hydrolocations. This is useful for looking up mainstem ids.
 #'
-#' if(!is.null(hydrolocation)) {
-#' get_3dhp(universalreferenceid =
-#'            head(unique(hydrolocation$universalreferenceid), 5),
+#' urid <- unique(stats::na.omit(hydrolocation$universalreferenceid))
+#'
+#' if(length(urid) > 0) {
+#' get_3dhp(universalreferenceid = head(urid, 5),
 #'          type = "hydrolocation")
 #' }
 #'}
@@ -62,7 +64,7 @@ get_3dhp <- function(AOI = NULL, ids = NULL, type = NULL,
                      t_srs = NULL, buffer = 0.5,
                      page_size = 2000) {
 
-  if(!is.null(universalreferenceid) & (!is.null(type) && !grepl("outlet|reach|hydrolocation", type))) {
+  if(!is.null(universalreferenceid) & (!is.null(type) && !grepl("hydrolocation", type))) {
     stop("universalereferenceid can only be specified for hydrolocation features")
   }
 

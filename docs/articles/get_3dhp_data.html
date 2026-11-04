@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hydrogeofetch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
       </span>
     </div>
 
@@ -132,17 +132,36 @@ NHDPlusV2 comid here since we know it, but could have used the point
 location just as well.</p>
 <p>With the basin pulled from the <a href="https://doi-usgs.github.io/dataRetrieval/reference/findNLDI.html" class="external-link"><code>findNLDI()</code></a>
 function, we can pass it to <code><a href="../reference/get_3dhp.html">get_3dhp()</a></code> as a Area of
-Interest for flowlines, waterbodies, and hydrolocations. We can then use
-the mainstem ids of our two downstream mainstem rivers found above to
-get the downtream mainstem rivers.</p>
+Interest for flowlines and waterbodies. We can then use the mainstem ids
+of our two downstream mainstem rivers found above to get the downtream
+mainstem rivers.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu">dataRetrieval</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataRetrieval/man/findNLDI.html" class="external-link">findNLDI</a></span><span class="op">(</span>comid <span class="op">=</span> <span class="va">comid</span>, find <span class="op">=</span> <span class="st">"basin"</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span><span class="va">basin</span><span class="op">$</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">"flowline"</span><span class="op">)</span></span>
 <span>  <span class="va">water</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span><span class="va">basin</span><span class="op">$</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">"waterbody"</span><span class="op">)</span></span>
-<span>  <span class="va">hydrolocation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span><span class="va">basin</span><span class="op">$</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">"hydrolocation - reach code, external connection"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Failed to get features from https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/60/query: HTTP 504 Gateway Timeout.</span></span>
+<span><span class="co">#&gt;   &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span></span>
+<span><span class="co">#&gt; &lt;HTML&gt;&lt;HEAD&gt;&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"&gt;</span></span>
+<span><span class="co">#&gt; &lt;TITLE&gt;ERROR: The request could not be satisfied&lt;/TITLE&gt;</span></span>
+<span><span class="co">#&gt; &lt;/HEAD&gt;&lt;BODY&gt;</span></span>
+<span><span class="co">#&gt; &lt;H1&gt;504 Gateway Timeout ERROR&lt;/H1&gt;</span></span>
+<span><span class="co">#&gt; &lt;H2&gt;The request could not be satisfied.&lt;/H2&gt;</span></span>
+<span><span class="co">#&gt; &lt;HR noshade size="1px"&gt;</span></span>
+<span><span class="co">#&gt; We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later</span></span>
+<span><span class="co">#&gt; Warning: 1 of 2 feature requests failed, returned features are incomplete.</span></span>
 <span>  </span>
 <span>  <span class="va">down_mains</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">dm</span>, type <span class="op">=</span> <span class="st">"flowline"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Failed to get features from https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query: HTTP 504 Gateway Timeout.</span></span>
+<span><span class="co">#&gt;   &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span></span>
+<span><span class="co">#&gt; &lt;HTML&gt;&lt;HEAD&gt;&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"&gt;</span></span>
+<span><span class="co">#&gt; &lt;TITLE&gt;ERROR: The request could not be satisfied&lt;/TITLE&gt;</span></span>
+<span><span class="co">#&gt; &lt;/HEAD&gt;&lt;BODY&gt;</span></span>
+<span><span class="co">#&gt; &lt;H1&gt;504 Gateway Timeout ERROR&lt;/H1&gt;</span></span>
+<span><span class="co">#&gt; &lt;H2&gt;The request could not be satisfied.&lt;/H2&gt;</span></span>
+<span><span class="co">#&gt; &lt;HR noshade size="1px"&gt;</span></span>
+<span><span class="co">#&gt; We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later</span></span>
+<span><span class="co">#&gt; Warning: 1 of 2 feature requests failed, returned features are incomplete.</span></span>
 <span>  </span>
 <span>  <span class="va">old_par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="../reference/plot_nhdplus.html">plot_nhdplus</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">basin</span><span class="op">$</span><span class="va">basin</span><span class="op">)</span>, flowline_only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -150,7 +169,6 @@ get the downtream mainstem rivers.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">basin</span><span class="op">$</span><span class="va">basin</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">network</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.5</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">water</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.5</span>, border <span class="op">=</span> <span class="st">"skyblue"</span>, col <span class="op">=</span> <span class="st">"lightblue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">hydrolocation</span><span class="op">)</span>, pch <span class="op">=</span> <span class="st">"o"</span>, col <span class="op">=</span> <span class="st">"#80808026"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">down_mains</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"blue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="get_3dhp_data_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -162,61 +180,12 @@ get the downtream mainstem rivers.</p>
 <p><img src="get_3dhp_data_files/figure-html/unnamed-chunk-2-2.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">old_par</span><span class="op">)</span></span></code></pre></div>
-<p>Neat. Now we have flowlines, waterbodies, hydrologic locations, a
-basin boundary, and major rivers downstream to work with. These could be
-saved to a local file for use in a GIS or used in some further
-analysis.</p>
-<p>Say you want to know how to relate NHD data to 3DHP data. 3DHP
-hydrolocations include “reachcode” tops and bottoms to hel with that.
-Here, we lookup the hydrolocation with reachcode
-<code>07070004002889</code>then grab the rest of the reachcode
-hydrolocations along the mainstem that the reachcode is part of.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span>  <span class="va">reachcode</span> <span class="op">&lt;-</span> <span class="st">"07070004002889"</span></span>
-<span></span>
-<span>  <span class="va">hydrolocation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span>universalreferenceid <span class="op">=</span> <span class="va">reachcode</span>,</span>
-<span>                            type <span class="op">=</span> <span class="st">"hydrolocation - reach code, external connection"</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">hydrolocation</span></span>
-<span><span class="co">#&gt; Simple feature collection with 2 features and 9 fields</span></span>
-<span><span class="co">#&gt; Geometry type: POINT</span></span>
-<span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -89.44179 ymin: 43.48568 xmax: -89.43904 ymax: 43.48829</span></span>
-<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt;    id3dhp   featuredate                                mainstemid</span></span>
-<span><span class="co">#&gt; 1 01HAJW7 1694649600000 https://geoconnex.us/ref/mainstems/359842</span></span>
-<span><span class="co">#&gt; 2 01SVVYQ 1694649600000 https://geoconnex.us/ref/mainstems/359842</span></span>
-<span><span class="co">#&gt;   universalreferenceid gnisid gnisidlabel featuretype featuretypelabel</span></span>
-<span><span class="co">#&gt; 1       07070004002889   &lt;NA&gt;        &lt;NA&gt;          10  Reachcode Start</span></span>
-<span><span class="co">#&gt; 2       07070004002889   &lt;NA&gt;        &lt;NA&gt;          11    Reachcode End</span></span>
-<span><span class="co">#&gt;   workunitid                   geometry</span></span>
-<span><span class="co">#&gt; 1        NHD POINT (-89.44179 43.48829)</span></span>
-<span><span class="co">#&gt; 2        NHD POINT (-89.43904 43.48568)</span></span>
-<span></span>
-<span>  <span class="va">mainstem_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">hydrolocation</span><span class="op">$</span><span class="va">mainstemid</span>, type <span class="op">=</span> <span class="st">"hydrolocation - reach code, external connection"</span><span class="op">)</span></span>
-<span>  <span class="va">mainstem_lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">hydrolocation</span><span class="op">$</span><span class="va">mainstemid</span>, type <span class="op">=</span> <span class="st">"flowline"</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">old_par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">hydrolocation</span><span class="op">)</span>, pch <span class="op">=</span> <span class="st">"o"</span>, col <span class="op">=</span> <span class="st">"#808080BF"</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">mainstem_lines</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"blue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="get_3dhp_data_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="576"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">old_par</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="va">old_par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="../reference/plot_nhdplus.html">plot_nhdplus</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">basin</span><span class="op">$</span><span class="va">basin</span><span class="op">)</span>, flowline_only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>               plot_config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>flowline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span>, zoom <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">mainstem_lines</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="st">"blue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">pc</span><span class="op">(</span><span class="va">mainstem_points</span><span class="op">)</span>, pch <span class="op">=</span> <span class="st">"o"</span>, col <span class="op">=</span> <span class="st">"#808080BF"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="get_3dhp_data_files/figure-html/unnamed-chunk-3-2.png" class="r-plt" alt="" width="576"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">old_par</span><span class="op">)</span></span></code></pre></div>
-<p>With this functionality, we have what we need to inter operate
-between older NHD data and newly released 3DHP data. This service is
-brand new and <code>hydrogeofetch</code> is just getting going with
-functionality to support what’s shown here. Please <a href="https://github.com/DOI-USGS/hydrogeofetch/issues" class="external-link">submit issues</a>
-if you find problems or have questions!!</p>
+<p>Neat. Now we have flowlines, waterbodies, a basin boundary, and major
+rivers downstream to work with. These could be saved to a local file for
+use in a GIS or used in some further analysis.</p>
+<p>This service is brand new and <code>hydrogeofetch</code> is just
+getting going with functionality to support what’s shown here. Please <a href="https://github.com/DOI-USGS/hydrogeofetch/issues" class="external-link">submit
+issues</a> if you find problems or have questions!!</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

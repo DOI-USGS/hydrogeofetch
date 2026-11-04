@@ -107,7 +107,7 @@ extended search. Default = 0.5</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="fu"><a href="discover_geoconnex_reference.html">discover_geoconnex_reference</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 19 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id            title                                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> hu02          HU02                                                   </span>
@@ -121,15 +121,14 @@ extended search. Default = 0.5</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> sec_hydrg_reg USGS Secondary Hydrogeologic Regions                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> gages         Reference Gages                                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> mainstems     Reference Mainstems                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> mainstems_v3  Reference Mainstems V3                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> dams          Reference Dams                                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> pws           Public Water Systems                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> states        States                                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> counties      Counties                                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> aiannh        American Indian/Alaska Native Areas/Hawaiian Home Lands</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> cbsa          Core-based statistical areas                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> ua10          Urban Areas                                            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> places        Places                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> dams          Reference Dams                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> pws           Public Water Systems                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> states        States                                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> counties      Counties                                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> aiannh        American Indian/Alaska Native Areas/Hawaiian Home Lands</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> cbsa          Core-based statistical areas                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> ua10          Urban Areas                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> places        Places                                                 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">AOI</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">89.56684</span>, ymin <span class="op">=</span> <span class="fl">42.99816</span>,</span></span>
 <span class="r-in"><span>                                   xmax <span class="op">=</span> <span class="op">-</span><span class="fl">89.24681</span>, ymax <span class="op">=</span> <span class="fl">43.17192</span><span class="op">)</span>,</span></span>
@@ -137,16 +136,17 @@ extended search. Default = 0.5</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_geoconnex_reference</span><span class="op">(</span><span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"hu04"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://reference.geoconnex.us/collections/hu04/items?bbox=-89.56684,42.99816,-89.24681,43.17192&amp;limit=500&amp;offset=0</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Failed to get features from https://reference.geoconnex.us/collections/hu04/items?bbox=-89.56684,42.99816,-89.24681,43.17192&amp;limit=500&amp;offset=0: Failed to perform HTTP request.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `curl::curl_fetch_memory()`:</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Could not resolve hostname [reference.geoconnex.us]:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Could not resolve host: reference.geoconnex.us</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Something went wrong requesting data.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 0 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: NA ymin: NA xmax: NA ymax: NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 8 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -91.15213 ymin: 41.22784 xmax: -88.18307 ymax: 46.21648</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;0 rows&gt; (or 0-length row.names)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id      fid uri               name  gnis_url gnis_id huc4  loaddate           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0707    189 https://geoconne… Wisc… <span style="color: #949494;">""</span>       <span style="color: #BB0000;">NA</span>      0707  2017-02-01 <span style="color: #949494;">00:53:08</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0709     65 https://geoconne… Rock  <span style="color: #949494;">""</span>       <span style="color: #BB0000;">NA</span>      0709  2012-06-11 <span style="color: #949494;">07:54:59</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: geometry &lt;MULTIPOLYGON [°]&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">get_geoconnex_reference</span><span class="op">(</span><span class="st">"https://geoconnex.us/ref/mainstems/315626"</span>, type <span class="op">=</span> <span class="st">"hu04"</span>, <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://geoconnex.us/ref/mainstems/315626</span>

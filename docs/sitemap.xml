@@ -1,6 +1,5 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/404.html</loc></url>
-<url><loc>https://doi-usgs.github.io/hydrogeofetch/AGENTS.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/articles/drainage_area_estimation.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/articles/get_3dhp_data.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/articles/get_data_overview.html</loc></url>
@@ -10,13 +9,10 @@
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/articles/nhdplushr.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/articles/plot_nhdplus.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/authors.html</loc></url>
-<url><loc>https://doi-usgs.github.io/hydrogeofetch/CLAUDE.html</loc></url>
-<url><loc>https://doi-usgs.github.io/hydrogeofetch/CONTEXT.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/DISCLAIMER.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/index.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/LICENSE.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/news/index.html</loc></url>
-<url><loc>https://doi-usgs.github.io/hydrogeofetch/PLAN.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/add_mainstems.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/align_nhdplus_names.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/check_mainstems.html</loc></url>
@@ -40,6 +36,7 @@
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_geoconnex_reference.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_hr_data.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_huc.html</loc></url>
+<url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_mainstem_flowlines.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_mainstem_lookup_path.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_nhdarea.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/get_nhdphr.html</loc></url>
@@ -76,6 +73,8 @@
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/subset_nhdplus.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/subset_rpu.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/subset_vpu.html</loc></url>
+<url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/translate_flowlines.html</loc></url>
+<url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/translate_hydrolocations.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/update_mainstems.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/reference/vpu_boundaries.html</loc></url>
 <url><loc>https://doi-usgs.github.io/hydrogeofetch/slides/3dhp_tools_gwtc_2026.html</loc></url>

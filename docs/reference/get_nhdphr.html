@@ -141,19 +141,43 @@ EPSG:5070 Albers Equal Area projection</p>
 <span class="r-in"><span><span class="co"># get flowlines and hydrolocations</span></span></span>
 <span class="r-in"><span><span class="va">flowlines</span> <span class="op">&lt;-</span> <span class="fu">get_nhdphr</span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"networknhdflowline"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Failed to get JSON from https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query: HTTP 504 Gateway Timeout.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;HTML&gt;&lt;HEAD&gt;&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;TITLE&gt;ERROR: The request could not be satisfied&lt;/TITLE&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;/HEAD&gt;&lt;BODY&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;H1&gt;504 Gateway Timeout ERROR&lt;/H1&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;H2&gt;The request could not be satisfied.&lt;/H2&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;HR noshade size="1px"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No networknhdflowline features found in area of interest.</span>
 <span class="r-in"><span><span class="va">point</span> <span class="op">&lt;-</span> <span class="fu">get_nhdphr</span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"nhdpoint"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/2/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/2/query</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Failed to get JSON from https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/2/query: HTTP 504 Gateway Timeout.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   &lt;html&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;head&gt;&lt;title&gt;504 Gateway Time-out&lt;/title&gt;&lt;/head&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;body&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;center&gt;&lt;h1&gt;504 Gateway Time-out&lt;/h1&gt;&lt;/center&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;/body&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;/html&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No nhdpoint features found in area of interest.</span>
 <span class="r-in"><span><span class="va">waterbody</span> <span class="op">&lt;-</span> <span class="fu">get_nhdphr</span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">AOI</span>, type <span class="op">=</span> <span class="st">"nhdwaterbody"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/9/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/9/query</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Failed to get JSON from https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/9/query: HTTP 504 Gateway Timeout.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;HTML&gt;&lt;HEAD&gt;&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;TITLE&gt;ERROR: The request could not be satisfied&lt;/TITLE&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;/HEAD&gt;&lt;BODY&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;H1&gt;504 Gateway Timeout ERROR&lt;/H1&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;H2&gt;The request could not be satisfied.&lt;/H2&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;HR noshade size="1px"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No nhdwaterbody features found in area of interest.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">flowlines</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">point</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">waterbody</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"lightblue"</span>, border <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">flowlines</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">point</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"grey"</span>, pch <span class="op">=</span> <span class="st">"+"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">}</span></span></span>
-<span class="r-plt img"><img src="get_nhdphr-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># given universalreferenceid (reachcodes), can query for them but only</span></span></span>
 <span class="r-in"><span><span class="co"># for hydrolocations. This is useful for looking up mainstem ids.</span></span></span>

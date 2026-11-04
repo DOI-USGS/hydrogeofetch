@@ -202,7 +202,7 @@
 </h3>
 <p>Development happens on GitHub (doi-usgs/nhdplusTools). Official builds and release candidates are produced on code.usgs.gov (code.usgs.gov/water/nhdplusTools) using GitLab CI.</p>
 <p><strong>Vignettes</strong> use the <code>BUILD_VIGNETTES</code> environment variable to control code evaluation. Set <code>BUILD_VIGNETTES=TRUE</code> in a local <code>.Renviron</code> to build vignettes with live code. Without it, vignettes render with static output only. An additional <code>BUILD_VIGNETTES_CRAN=TRUE</code> variable controls image size in the drainage area vignette.</p>
-<p><strong>Local development</strong> does not require building the source package. Use <code><a href="https://rdrr.io/pkg/devtools/man/test.html" class="external-link">devtools::test()</a></code>, <code><a href="https://rdrr.io/pkg/devtools/man/check.html" class="external-link">devtools::check()</a></code>, and <code><a href="https://rdrr.io/pkg/devtools/man/document.html" class="external-link">devtools::document()</a></code> directly.</p>
+<p><strong>Local development</strong> does not require building the source package. Use <code><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">devtools::test()</a></code>, <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>, and <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> directly.</p>
 <p><strong>Release candidates</strong> are built on code.usgs.gov. Push a branch named <code>rc/&lt;version&gt;</code> (e.g. <code>rc/2.0.0</code>) to trigger the GitLab CI pipeline, which runs three stages:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -254,7 +254,7 @@
 </li>
 <li>Make sure you use roxygen and run Check before contributing. More on this front as the package matures.</li>
 </ol>
-<p>Other notes: - consider running <code>lintr</code> prior to contributing. - consider running <code>goodpractice::gp()</code> on the package before contributing. - consider running <code><a href="https://rdrr.io/pkg/devtools/man/spell_check.html" class="external-link">devtools::spell_check()</a></code> if you wrote documentation. - this package uses pkgdown. Running <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> will refresh it.</p>
+<p>Other notes: - consider running <code>lintr</code> prior to contributing. - consider running <code>goodpractice::gp()</code> on the package before contributing. - consider running <code><a href="https://devtools.r-lib.org/reference/spell_check.html" class="external-link">devtools::spell_check()</a></code> if you wrote documentation. - this package uses pkgdown. Running <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> will refresh it.</p>
 </div>
 </div>
 </div>

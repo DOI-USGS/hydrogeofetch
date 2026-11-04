@@ -374,17 +374,17 @@ at the gage point and only the upstream portion is included. Default 100.</p></d
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Fetching NHDPlusHR network for full AOI...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GET https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/?f=json</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Fetched 294 HR flowlines</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> defaulting to comid rather than permanent_identifier</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   HR outlet NHDPlusID = 22001100015000 (TotDASqKM = 107.07950025)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Navigating upstream on HR network...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> defaulting to comid rather than permanent_identifier</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Found 139 HR flowlines upstream</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Fetching NHDPlusHR catchments...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/10/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> POST https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/10/query</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   NHDPlusHR DA = 107.08</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Failed to get JSON from https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/3/query: HTTP 504 Gateway Timeout.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;HTML&gt;&lt;HEAD&gt;&lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;TITLE&gt;ERROR: The request could not be satisfied&lt;/TITLE&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;/HEAD&gt;&lt;BODY&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;H1&gt;504 Gateway Timeout ERROR&lt;/H1&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;H2&gt;The request could not be satisfied.&lt;/H2&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> &lt;HR noshade size="1px"&gt;</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> We can't connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No networknhdflowline features found in area of interest.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NHDPlusHR estimate failed: no HR flowlines in AOI</span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">da_huc10_sqkm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">network_da_sqkm</span></span></span>

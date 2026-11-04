@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hydrogeofetch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.5</span>
       </span>
     </div>
 
@@ -230,6 +230,13 @@ default map.</p>
 <span>                          output_file <span class="op">=</span> <span class="va">demo_data</span>, <span class="co"># write the data to disk</span></span>
 <span>                          return_data <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># return the data rather</span></span>
 <span>                          flowline_only <span class="op">=</span> <span class="cn">FALSE</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; {"op":"in","args":[{"property":"comid"},[6817960,9022813,9022815,9022825,9022827,9022831,9022851,9022853,9022859,9022861,9022865,9022867,9022883,9022885,9022887,9022889,9023175,9023177,9023179,9023181,9023183,9023185,9023187,9023189,9023199,9023201,9023203,9023205,9023207,9023209,9023211,9023213,9023217,9023219,9023221,9023223,9023225,9023227,9023229,9023231,9025741,9025747,9025749,9025751,9025753,9025755,9025757,9026121,9026123,9026125,9026127,9026129,9026131,9026133,9026135,9026137,9026139,9026141,9026147,9026149,9026155,9026157,9026159,9026161,9026163,9026165,9026167,9026169,9026173,9026175,9026177,9026179,9026825,9026829,9026831,9026833,9026835,9026839,9026847,9026849,9026857,9026861,9026865,9026869,9026871,9026873,9026875,9026879,9026881,9026883,9026887,9026897,9026905,9026907,9026913,9026915,9026917,9026919,9026921,9026923,9026925,9026927,9026929,9026931,9026933,9026935,9026937,9026939,9026941,9026943,9026945,9026947,9026949,9026951,9026953,9026955,9026957,9026959,9026961,9026963,9026965,9026969,9026971,9026975,9026977,9026979,9026981,9026983,9026985,9026987,9026993,9026995,9026997,9026999,9027001,9027003,9027005,9027007,9027009,9027011,9027013,9027015,9027017,9027019,9027025,9027541,9027543,9027545,9027549,9027551,9027553,9027555,9027557,9027559,9027561,9027563,9027565,9027567,9027569,9027571,9027573,9027575,9027577,9027579,9027581,9027583,9027585,9027587,9027589,9027591,9027593,9027595,9027597,9027599,9027601,9027603,9027605,9027607,9027609,9027611,9027613,9027615,9027617,9027619,9027621,9027623,9027625,9027627,9027629,9027631,9027635,9027709,9027711,9027715,9027719,9027721,9027723,9027725,9027727,9027729,9027731,9027733,9027735,9027737,9027739,9027741,9027743,9027745,9027747,9027749,9027751,9027753,9027755,9027757,9027759,9027761,9027763,9027765,9027767,9027769,9027771,9027773,9027775,9027777,9027779,9027781,9027783,9027785,9027787,9027789,9027791,9027793,9027795,9027797,9027799,9027801,9027803,9027805,9027807,9027809,9027811,9027813,9027815,9027817,9027819,9027821,9027823,9027825,9027827,9027829,9027831,9027833,9027835,9027837,9027839,9027841,9027843,9027845,9027847,9027849,9027851,9027853,9027855,9027857,9027859,9027861,9027863,9027865,9027867,9027869,9027871,9027873,9027875,9028017,9028019,9028021,9028023,9028025,9028027,9028029,9028031,9028033,9028035,9028045,9028047,9028051,9028063,9028069,9028071,9029079,9029083,9029085,9029087,9029089,9029091,9029093,9029099,9029101,9029103,9029105,9029107,9029109,9029111,9029113,9029115,9029117,9029119,9029121,9029123,9029125,9029127,9029129,9029131,9029133,9029137,9029139,9029141,9029143,9029145,9029147,9029149,9029151,9029153,9029155,9029157,9029397,9029399,9029401,9029403,9029405,9029407,9029409,9029411,9029413,9029415,9029417,9029419,9029421,9029423,9029425,9029427,9029463,9029465,9029467,9029469,9029471,9029473,9029475,9029477,9029479,9029481,9029483,9029485,9029487,9029489,9029491,9029493,9029495,9029497,9029499,9029501,9029503,9029505,9029507,9029509,9029525,9029527,9029529,9029533,9029535,9041143,904030185,904030252,904030262,904030312,904030406,904030407,904030408,904030409,904030410,904030411,904030412,904030413,904030414,904030415,904030540,904030541,904030542,904030543]]}</span></span>
+<span><span class="co">#&gt; POST https://api.water.usgs.gov/fabric/pygeoapi/collections/catchmentsp/items?limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; {"op":"in","args":[{"property":"featureid"},[6817960,9022813,9022815,9022825,9022827,9022831,9022851,9022853,9022859,9022861,9022865,9022867,9022883,9022885,9022887,9022889,9023175,9023177,9023179,9023181,9023183,9023185,9023187,9023189,9023199,9023201,9023203,9023205,9023207,9023209,9023211,9023213,9023217,9023219,9023221,9023223,9023225,9023227,9023229,9023231,9025741,9025747,9025749,9025751,9025753,9025755,9025757,9026121,9026123,9026125,9026127,9026129,9026131,9026133,9026135,9026137,9026139,9026141,9026147,9026149,9026155,9026157,9026159,9026161,9026163,9026165,9026167,9026169,9026173,9026175,9026177,9026179,9026825,9026829,9026831,9026833,9026835,9026839,9026847,9026849,9026857,9026861,9026865,9026869,9026871,9026873,9026875,9026879,9026881,9026883,9026887,9026897,9026905,9026907,9026913,9026915,9026917,9026919,9026921,9026923,9026925,9026927,9026929,9026931,9026933,9026935,9026937,9026939,9026941,9026943,9026945,9026947,9026949,9026951,9026953,9026955,9026957,9026959,9026961,9026963,9026965,9026969,9026971,9026975,9026977,9026979,9026981,9026983,9026985,9026987,9026993,9026995,9026997,9026999,9027001,9027003,9027005,9027007,9027009,9027011,9027013,9027015,9027017,9027019,9027025,9027541,9027543,9027545,9027549,9027551,9027553,9027555,9027557,9027559,9027561,9027563,9027565,9027567,9027569,9027571,9027573,9027575,9027577,9027579,9027581,9027583,9027585,9027587,9027589,9027591,9027593,9027595,9027597,9027599,9027601,9027603,9027605,9027607,9027609,9027611,9027613,9027615,9027617,9027619,9027621,9027623,9027625,9027627,9027629,9027631,9027635,9027709,9027711,9027715,9027719,9027721,9027723,9027725,9027727,9027729,9027731,9027733,9027735,9027737,9027739,9027741,9027743,9027745,9027747,9027749,9027751,9027753,9027755,9027757,9027759,9027761,9027763,9027765,9027767,9027769,9027771,9027773,9027775,9027777,9027779,9027781,9027783,9027785,9027787,9027789,9027791,9027793,9027795,9027797,9027799,9027801,9027803,9027805,9027807,9027809,9027811,9027813,9027815,9027817,9027819,9027821,9027823,9027825,9027827,9027829,9027831,9027833,9027835,9027837,9027839,9027841,9027843,9027845,9027847,9027849,9027851,9027853,9027855,9027857,9027859,9027861,9027863,9027865,9027867,9027869,9027871,9027873,9027875,9028017,9028019,9028021,9028023,9028025,9028027,9028029,9028031,9028033,9028035,9028045,9028047,9028051,9028063,9028069,9028071,9029079,9029083,9029085,9029087,9029089,9029091,9029093,9029099,9029101,9029103,9029105,9029107,9029109,9029111,9029113,9029115,9029117,9029119,9029121,9029123,9029125,9029127,9029129,9029131,9029133,9029137,9029139,9029141,9029143,9029145,9029147,9029149,9029151,9029153,9029155,9029157,9029397,9029399,9029401,9029403,9029405,9029407,9029409,9029411,9029413,9029415,9029417,9029419,9029421,9029423,9029425,9029427,9029463,9029465,9029467,9029469,9029471,9029473,9029475,9029477,9029479,9029481,9029483,9029485,9029487,9029489,9029491,9029493,9029495,9029497,9029499,9029501,9029503,9029505,9029507,9029509,9029525,9029527,9029529,9029533,9029535,9041143,904030185,904030252,904030262,904030312,904030406,904030407,904030408,904030409,904030410,904030411,904030412,904030413,904030414,904030415,904030540,904030541,904030542,904030543]]}</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdarea/items?bbox=-89.244545,45.181122,-88.696264,45.759952&amp;limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdwaterbody/items?bbox=-89.244545,45.181122,-88.696264,45.759952&amp;limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_nonnetwork/items?bbox=-89.244545,45.181122,-88.696264,45.759952&amp;limit=500&amp;offset=0</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "NHDFlowline_Network"    "CatchmentSP"            "NHDArea"               </span></span>
@@ -256,8 +263,11 @@ geometry as the Area of Interest.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nldi_basin.html">get_nldi_basin</a></span><span class="op">(</span><span class="va">site</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/nldi/linked-data/nwissite/USGS-04074950/basin?simplify=true&amp;splitCatchment=false</span></span>
 <span></span>
 <span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_nhdplus.html">get_nhdplus</a></span><span class="op">(</span>AOI <span class="op">=</span> <span class="va">basin</span>, realization <span class="op">=</span> <span class="st">"flowline"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-89.244538,45.181114,-88.696257,45.759944&amp;limit=500&amp;offset=0</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/nhdflowline_network/items?bbox=-89.244538,45.181114,-88.696257,45.759944&amp;limit=500&amp;offset=500</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -272,6 +282,7 @@ useful to discover the code needed here.</p>
 <code class="sourceCode R"><span></span>
 <span><span class="va">wolf_huc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_huc.html">get_huc</a></span><span class="op">(</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">'huc04'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; defaulting to 2025 version of WBD</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/wbd04_20250107/items?bbox=-89.244538,45.181114,-88.696257,45.759944&amp;limit=500&amp;offset=0</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">wolf_huc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2</span></span>
@@ -286,6 +297,7 @@ useful to discover the code needed here.</p>
 <code class="sourceCode R"><span></span>
 <span><span class="va">wolf_huc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_huc.html">get_huc</a></span><span class="op">(</span><span class="va">site_feature</span>, type <span class="op">=</span> <span class="st">"huc04"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; defaulting to 2025 version of WBD</span></span>
+<span><span class="co">#&gt; GET https://api.water.usgs.gov/fabric/pygeoapi/collections/wbd04_20250107/items?bbox=-88.733447,45.189965,-88.733432,45.189976&amp;limit=500&amp;offset=0</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">wolf_huc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1</span></span>
@@ -427,12 +439,18 @@ question…</p>
 <span><span class="co">#&gt; check results</span></span>
 <span></span>
 <span><span class="va">potential_matches</span></span>
-<span><span class="co">#&gt;   point_id          COMID      REACHCODE REACHCODE_measure       offset</span></span>
-<span><span class="co">#&gt; 1        1 60002700035364 04030202000126           34.9737 0.0002166323</span></span>
-<span><span class="co">#&gt; 2        1 60002700000908 04030104001542           49.1370 0.0177673341</span></span>
-<span><span class="co">#&gt; 3        1 60002700036849 04030104001542           81.5378 0.0224609122</span></span>
-<span><span class="co">#&gt; 4        1 60002700035750 04030104000533           31.4940 0.0244823037</span></span>
-<span><span class="co">#&gt; 5        1 60002700034888 04030104000136          100.0000 0.0247855142</span></span>
+<span><span class="co">#&gt;   point_id          COMID id_measure      REACHCODE REACHCODE_measure</span></span>
+<span><span class="co">#&gt; 1        1 60002700035364   50.92655 04030202000126           34.9737</span></span>
+<span><span class="co">#&gt; 2        1 60002700000908   60.26281 04030104001542           49.1370</span></span>
+<span><span class="co">#&gt; 3        1 60002700036849    0.00000 04030104001542           81.5378</span></span>
+<span><span class="co">#&gt; 4        1 60002700035750   69.56559 04030104000533           31.4940</span></span>
+<span><span class="co">#&gt; 5        1 60002700034888  100.00000 04030104000136          100.0000</span></span>
+<span><span class="co">#&gt;         offset</span></span>
+<span><span class="co">#&gt; 1 0.0002166323</span></span>
+<span><span class="co">#&gt; 2 0.0177673341</span></span>
+<span><span class="co">#&gt; 3 0.0224609122</span></span>
+<span><span class="co">#&gt; 4 0.0244823037</span></span>
+<span><span class="co">#&gt; 5 0.0247855142</span></span>
 <span></span>
 <span><span class="va">site_meta</span> <span class="op">&lt;-</span> <span class="fu">dataRetrieval</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataRetrieval/man/readNWISsite.html" class="external-link">readNWISsite</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"USGS-"</span>, <span class="st">""</span>, <span class="va">site_feature</span><span class="op">$</span><span class="va">identifier</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in dataRetrieval::readNWISsite(gsub("USGS-", "",</span></span>
@@ -448,10 +466,10 @@ question…</p>
 <span><span class="fu">hydroloom</span><span class="fu">::</span><span class="fu"><a href="https://doi-usgs.github.io/hydroloom/reference/disambiguate_indexes.html" class="external-link">disambiguate_indexes</a></span><span class="op">(</span><span class="va">potential_matches</span>,</span>
 <span>                              flowpath <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">nhdplushr</span>, <span class="va">COMID</span>, <span class="va">TotDASqKM</span><span class="op">)</span>,</span>
 <span>                              hydro_location <span class="op">=</span> <span class="va">da_df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
-<span><span class="co">#&gt;   point_id   COMID REACHCODE      REACHCODE_measure   offset</span></span>
-<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        1 6.00<span style="color: #949494;">e</span>13 04030202000126              35.0 0.000<span style="text-decoration: underline;">217</span></span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 1 × 6</span></span>
+<span><span class="co">#&gt;   point_id   COMID id_measure REACHCODE      REACHCODE_measure   offset</span></span>
+<span><span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1        1 6.00e13       50.9 04030202000126              35.0 0.000217</span></span></code></pre></div>
 <p>If what you really need is the base NHD, which is now a static
 dataset, the pattern is just the same as with nhdplushr using
 <code><a href="../reference/download_nhd.html">download_nhd()</a></code>.</p>
@@ -571,11 +589,14 @@ article for more on how to work with 3DHP data.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">sub_3dhp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_3dhp.html">get_3dhp</a></span><span class="op">(</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">"flowline"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
 <span><span class="co">#&gt; Getting features 0 to 2000 of 2199</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
 <span><span class="co">#&gt; Getting features 2000 to 2199 of 2199</span></span>
+<span><span class="co">#&gt; POST https://3dhp.nationalmap.gov/arcgis/rest/services/usgs_3dhp_all/FeatureServer/50/query</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sub_3dhp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: plotting the first 10 out of 34 attributes; use max.plot = 34 to plot</span></span>
+<span><span class="co">#&gt; Warning: plotting the first 10 out of 32 attributes; use max.plot = 32 to plot</span></span>
 <span><span class="co">#&gt; all</span></span></code></pre></div>
 <p><img src="get_data_overview_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="576"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -595,29 +616,29 @@ provides access to a full table of what’s available.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="../reference/discover_geoconnex_reference.html">discover_geoconnex_reference</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 20 × 2</span></span></span>
+<span><span class="co">#&gt; # A tibble: 20 × 2</span></span>
 <span><span class="co">#&gt;    id            title                                                  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> hu02          HU02                                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> hu04          HU04                                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> hu06          HU06                                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> hu08          HU08                                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> hu10          HU10                                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> hu12          HU12                                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> nat_aq        USGS National Aquifers                                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> principal_aq  USGS Principal Aquifers                                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> sec_hydrg_reg USGS Secondary Hydrogeologic Regions                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> gages         Reference Gages                                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> mainstems     Reference Mainstems                                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> mainstems_v3  Reference Mainstems V3                                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> dams          Reference Dams                                         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> pws           Public Water Systems                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> states        States                                                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> counties      Counties                                               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> aiannh        American Indian/Alaska Native Areas/Hawaiian Home Lands</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> cbsa          Core-based statistical areas                           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> ua10          Urban Areas                                            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> places        Places</span></span></code></pre></div>
+<span><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;                                                  </span></span>
+<span><span class="co">#&gt;  1 hu02          HU02                                                   </span></span>
+<span><span class="co">#&gt;  2 hu04          HU04                                                   </span></span>
+<span><span class="co">#&gt;  3 hu06          HU06                                                   </span></span>
+<span><span class="co">#&gt;  4 hu08          HU08                                                   </span></span>
+<span><span class="co">#&gt;  5 hu10          HU10                                                   </span></span>
+<span><span class="co">#&gt;  6 hu12          HU12                                                   </span></span>
+<span><span class="co">#&gt;  7 nat_aq        USGS National Aquifers                                 </span></span>
+<span><span class="co">#&gt;  8 principal_aq  USGS Principal Aquifers                                </span></span>
+<span><span class="co">#&gt;  9 sec_hydrg_reg USGS Secondary Hydrogeologic Regions                   </span></span>
+<span><span class="co">#&gt; 10 gages         Reference Gages                                        </span></span>
+<span><span class="co">#&gt; 11 mainstems     Reference Mainstems                                    </span></span>
+<span><span class="co">#&gt; 12 mainstems_v3  Reference Mainstems V3                                 </span></span>
+<span><span class="co">#&gt; 13 dams          Reference Dams                                         </span></span>
+<span><span class="co">#&gt; 14 pws           Public Water Systems                                   </span></span>
+<span><span class="co">#&gt; 15 states        States                                                 </span></span>
+<span><span class="co">#&gt; 16 counties      Counties                                               </span></span>
+<span><span class="co">#&gt; 17 aiannh        American Indian/Alaska Native Areas/Hawaiian Home Lands</span></span>
+<span><span class="co">#&gt; 18 cbsa          Core-based statistical areas                           </span></span>
+<span><span class="co">#&gt; 19 ua10          Urban Areas                                            </span></span>
+<span><span class="co">#&gt; 20 places        Places</span></span></code></pre></div>
 <p>Each of these sets of “reference features” includes a “uri” which is
 a persistent way to identify these features and will always lead you
 back to a representation of the feature when you look it up.</p>
@@ -625,11 +646,15 @@ back to a representation of the feature when you look it up.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">wolf_gages</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_geoconnex_reference.html">get_geoconnex_reference</a></span><span class="op">(</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">"gages"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://reference.geoconnex.us/</span></span>
+<span><span class="co">#&gt; GET https://reference.geoconnex.us/collections</span></span>
+<span><span class="co">#&gt; GET https://reference.geoconnex.us/collections/gages/items?bbox=-89.244538,45.181114,-88.696257,45.759944&amp;limit=500&amp;offset=0</span></span>
 <span></span>
 <span><span class="va">geoconnex_gage</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wolf_gages</span>, </span>
 <span>                                <span class="va">provider_id</span> <span class="op">==</span> <span class="va">site_feature</span><span class="op">$</span><span class="va">identifier</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">wolf_mainstems</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_geoconnex_reference.html">get_geoconnex_reference</a></span><span class="op">(</span><span class="va">basin</span>, type <span class="op">=</span> <span class="st">"mainstems"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; GET https://reference.geoconnex.us/collections/mainstems/items?bbox=-89.244538,45.181114,-88.696257,45.759944&amp;limit=500&amp;offset=0</span></span>
 <span></span>
 <span><span class="va">wolf_mainstem</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wolf_mainstems</span>, <span class="va">uri</span> <span class="op">==</span> <span class="va">geoconnex_gage</span><span class="op">$</span><span class="va">mainstem_uri</span><span class="op">)</span></span>
 <span></span>
